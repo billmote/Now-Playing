@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="logging">true</string>
+    <string name="logging_level">2</string> <!-- 2 = Verbose, 6 = error -->
+
+</resources>
