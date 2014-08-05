@@ -5,10 +5,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.androidfu.foundation.handlers.GetApplicationSettingsRequestHanlder;
-import com.androidfu.foundation.handlers.GetNetworkImageRequestHandler;
+import com.androidfu.foundation.api.GetApplicationSettingsRequestHanlder;
+import com.androidfu.foundation.api.GetNetworkImageRequestHandler;
+import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.Log;
+import com.androidfu.foundation.util.SharedPreferencesHelper;
 
 import hugo.weaving.DebugLog;
 
@@ -43,6 +45,8 @@ public class FoundationApplication extends Application {
 
         APP_VERSION_CODE = getApplicationVersionCode();
         APP_VERSION_NAME = getApplicationVersionName();
+
+        SharedPreferencesHelper.initialize(this);
 
         registerHandlersWithEventBus();
 

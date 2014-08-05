@@ -18,7 +18,7 @@ public class EventBus {
         mBus = new Bus();
     }
 
-    @DebugLog
+    // @DebugLog intentionally omitted
     public static EventBus getInstance() {
         if (mInstance == null) {
             mInstance = new EventBus();

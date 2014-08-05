@@ -4,4 +4,5 @@
     <string name="logging">true</string>
     <string name="logging_level">2</string> <!-- 2 = Verbose, 6 = error -->
 
+    <string name="application_settings_url">https://raw.githubusercontent.com/androidfu/foundation_api/master/v1.0/ApplicationSettings.json</string>
 </resources>

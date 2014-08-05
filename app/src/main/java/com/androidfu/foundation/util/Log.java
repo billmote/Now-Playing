@@ -3,7 +3,8 @@ package com.androidfu.foundation.util;
 import android.os.Build;
 
 /**
- * Log -- An overridden version of android.util.Log that handles turning logging on/off as well as setting the logging level
+ * Log -- An overridden version of android.util.Log that handles turning logging on/off as well as
+ * setting the logging level.  The values for these fields can be found in res/values/build_properties.xml
  *
  * <pre>
  *         20140623 -- Added wtf logging and a wrapper to protect against API versions prior to FROYO (8)

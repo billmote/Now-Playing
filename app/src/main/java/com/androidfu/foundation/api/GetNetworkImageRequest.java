@@ -1,4 +1,4 @@
-package com.androidfu.foundation.handlers;
+package com.androidfu.foundation.api;
 
 import android.widget.ImageView;
 
@@ -12,9 +12,8 @@ public class GetNetworkImageRequest {
     ImageView imageView;
     String url;
 
-    @DebugLog
-    public GetNetworkImageRequest() {
-
+    private GetNetworkImageRequest() {
+        // We really must have an ImageView and a URL so don't let this get instantiated without them.
     }
 
     @DebugLog
