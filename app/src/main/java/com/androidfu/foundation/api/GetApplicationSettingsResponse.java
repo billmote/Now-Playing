@@ -10,11 +10,8 @@ import com.google.gson.annotations.SerializedName;
 public class GetApplicationSettingsResponse {
 
     @SerializedName("results")
-    public final ApplicationSettings applicationSettings;
+    public ApplicationSettings applicationSettings;
 
-    public GetApplicationSettingsResponse(ApplicationSettings applicationSettings) {
-        this.applicationSettings = applicationSettings;
-    }
 }
 
 /*
