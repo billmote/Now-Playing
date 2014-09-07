@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 
 import com.androidfu.foundation.R;
 import com.androidfu.foundation.api.GetApplicationSettingsRequest;
-import com.androidfu.foundation.events.NetworkAvailableEvent;
 import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.util.EventBus;
 import com.squareup.otto.Subscribe;
@@ -26,7 +25,13 @@ import hugo.weaving.DebugLog;
  */
 public class PlaceholderFragment extends Fragment {
 
+    public interface OnFragmentInteractionListener {
+        public void onFragmentInteraction();
+    }
+
     public static final String TAG = PlaceholderFragment.class.getSimpleName();
+
+    private OnFragmentInteractionListener mListener;
 
     @InjectView(R.id.button)
     Button mButton;
@@ -34,9 +39,18 @@ public class PlaceholderFragment extends Fragment {
     ProgressBar mProgressBar;
     private Activity mHost;
 
+    public static PlaceholderFragment newInstance() {
+        PlaceholderFragment fragment = new PlaceholderFragment();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @DebugLog
     public PlaceholderFragment() {
-        // Register our Fragment with the Otto Bus singleton
         EventBus.register(this);
     }
 
@@ -51,6 +65,12 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
         mHost = activity;
     }
 
@@ -58,6 +78,7 @@ public class PlaceholderFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mHost = null;
+        mListener = null;
     }
 
     @DebugLog

@@ -7,20 +7,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.androidfu.foundation.R;
-import com.androidfu.foundation.ui.fragments.ReusableDialogFragment;
-import com.androidfu.foundation.ui.fragments.PlaceholderFragment;
 import com.androidfu.foundation.model.ApplicationSettings;
+import com.androidfu.foundation.ui.fragments.PlaceholderFragment;
+import com.androidfu.foundation.ui.fragments.ReusableDialogFragment;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.Log;
 import com.squareup.otto.Subscribe;
 
-import org.parceler.Parcels;
-
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import hugo.weaving.DebugLog;
 
 import static com.androidfu.foundation.util.SharedPreferencesHelper.KEY_PREFS_APP_IS_DISABLED_FLAG;
@@ -39,10 +35,9 @@ import static com.androidfu.foundation.util.SharedPreferencesHelper.getStringPre
 import static com.androidfu.foundation.util.SharedPreferencesHelper.putLong;
 
 
-public class MainActivity extends BaseActivity implements ReusableDialogFragment.ReusableDialogListener {
+public class MainActivity extends BaseActivity implements ReusableDialogFragment.ReusableDialogListener, PlaceholderFragment.OnFragmentInteractionListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    public static final String KEY_BUNDLE_SOME_PARCELABLE_POJO = "our_parcelable_pojo";
 
     @DebugLog
     @Override
@@ -53,8 +48,14 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
         ButterKnife.inject(this);
         EventBus.register(this);
 
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+        PlaceholderFragment placeholderFragment = (PlaceholderFragment) getFragmentManager().findFragmentByTag(PlaceholderFragment.TAG);
+        if (placeholderFragment == null) {
+            placeholderFragment = PlaceholderFragment.newInstance();
+            getFragmentManager().beginTransaction()
+                    //.addToBackStack(PlaceholderFragment.TAG)
+                    //.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_left, R.anim.slide_in_from_left, R.anim.slide_out_right)
+                    .replace(R.id.fragment_container, placeholderFragment, PlaceholderFragment.TAG)
+                    .commit();
         }
     }
 
@@ -76,13 +77,6 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
             default:
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @DebugLog
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(KEY_BUNDLE_SOME_PARCELABLE_POJO, Parcels.wrap(new ApplicationSettings()));
     }
 
     @Override
@@ -185,4 +179,8 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
         finish();
     }
 
+    @Override
+    public void onFragmentInteraction() {
+        // Do something fancy here.
+    }
 }
