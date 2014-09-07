@@ -44,9 +44,6 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final String KEY_BUNDLE_SOME_PARCELABLE_POJO = "our_parcelable_pojo";
 
-    @InjectView(R.id.container)
-    FrameLayout mContainer;
-
     @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {

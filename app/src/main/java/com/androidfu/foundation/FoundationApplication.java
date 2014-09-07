@@ -5,9 +5,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.androidfu.foundation.api.GetApplicationSettingsRequest;
 import com.androidfu.foundation.api.GetApplicationSettingsRequestHanlder;
-import com.androidfu.foundation.api.GetNetworkImageRequestHandler;
-import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.Log;
 import com.androidfu.foundation.util.SharedPreferencesHelper;
@@ -48,6 +47,7 @@ public class FoundationApplication extends Application {
         SharedPreferencesHelper.initialize(this);
 
         registerHandlersWithEventBus();
+        EventBus.post(new GetApplicationSettingsRequest(getString(R.string.application_settings_url)));
     }
 
     /**
@@ -56,7 +56,6 @@ public class FoundationApplication extends Application {
     @DebugLog
     private void registerHandlersWithEventBus() {
         // Register all our Handlers on the EventBus.
-        EventBus.register(new GetNetworkImageRequestHandler());
         EventBus.register(new GetApplicationSettingsRequestHanlder());
     }
 
@@ -119,7 +118,7 @@ public class FoundationApplication extends Application {
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
-                    //.penaltyDeath()  // No need to go to this extreme all the time
+                            //.penaltyDeath()  // No need to go to this extreme all the time
                     .build());
         }
     }
