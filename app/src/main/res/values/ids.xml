@@ -2,4 +2,5 @@
 <resources>
     <item name="force_crash" type="id" />
     <item name="reset_prefs" type="id" />
+    <item name="developer_preference_group" type="id" />
 </resources>

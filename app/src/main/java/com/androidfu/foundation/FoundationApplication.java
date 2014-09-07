@@ -20,6 +20,7 @@ import hugo.weaving.DebugLog;
 public class FoundationApplication extends Application {
 
     private static final String TAG = FoundationApplication.class.getSimpleName();
+
     public static int APP_VERSION_CODE;
     public static String APP_VERSION_NAME;
 
@@ -28,12 +29,10 @@ public class FoundationApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // Turn on crash reporting if we're NOT in a developer build.
         if (!BuildConfig.DEBUG) {
             // Crashlytics.start(this);
         }
 
-        // Set whether we're logging and at what level.  The string values can be found in build_properties.xml
         try {
             Log.setLogging(BuildConfig.DEBUG && Boolean.valueOf(getString(R.string.logging)));
             Log.setLogLevel(Integer.valueOf(getString(R.string.logging_level)));
@@ -49,7 +48,6 @@ public class FoundationApplication extends Application {
         SharedPreferencesHelper.initialize(this);
 
         registerHandlersWithEventBus();
-
     }
 
     /**

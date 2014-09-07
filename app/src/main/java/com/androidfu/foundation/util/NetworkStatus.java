@@ -19,7 +19,6 @@ public class NetworkStatus {
 
     }
 
-
     /**
      * Verifies the Internet connection availability.
      *

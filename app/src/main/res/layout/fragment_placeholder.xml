@@ -9,12 +9,11 @@
         android:orientation="vertical"
         tools:context=".MainActivity$PlaceholderFragment">
 
-
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder_some_text" />
+            tools:text="some test that won't show up in builds" />
 
         <ImageView
             android:id="@+id/imageView"

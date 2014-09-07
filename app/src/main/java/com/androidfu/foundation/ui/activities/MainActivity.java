@@ -1,4 +1,4 @@
-package com.androidfu.foundation;
+package com.androidfu.foundation.ui.activities;
 
 import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.androidfu.foundation.fragments.PlaceholderFragment;
+import com.androidfu.foundation.R;
+import com.androidfu.foundation.ui.fragments.ReusableDialogFragment;
+import com.androidfu.foundation.ui.fragments.PlaceholderFragment;
 import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.Log;
@@ -39,13 +41,9 @@ import static com.androidfu.foundation.util.SharedPreferencesHelper.putLong;
 
 public class MainActivity extends BaseActivity implements ReusableDialogFragment.ReusableDialogListener {
 
-    // Every class gets a public TAG
     public static final String TAG = MainActivity.class.getSimpleName();
-
-    // Example of our naming convention KEY_BUNDLE..., KEY_PREFS..., etc.
     public static final String KEY_BUNDLE_SOME_PARCELABLE_POJO = "our_parcelable_pojo";
 
-    // Our ButterKnife view injections
     @InjectView(R.id.container)
     FrameLayout mContainer;
 
@@ -55,25 +53,17 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Register this with ButterKnife
         ButterKnife.inject(this);
-
-        // Register our Activity with the Otto Bus singleton
         EventBus.register(this);
-
-        // Example of how we're going to use resources to handle screen size and orientation
-        Log.i(TAG, String.format("We're on a large screen? %1$s", getResources().getBoolean(R.bool.large_display)));
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
-
     }
 
     @DebugLog
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -81,12 +71,7 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
     @DebugLog
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        // Handle action buttons
         switch (item.getItemId()) {
-
             case R.id.action_settings:
                 Log.i(TAG, "SETTINGS");
                 return true;
@@ -100,10 +85,6 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        // Our Parceler library marshals/unmarshals our data for us with wrap() and unWrap().
-        // Parcelable is exponentially faster than serializable.
-        // This is for illustration purposes only and is not being used by the bootstrap app.
         outState.putParcelable(KEY_BUNDLE_SOME_PARCELABLE_POJO, Parcels.wrap(new ApplicationSettings()));
     }
 

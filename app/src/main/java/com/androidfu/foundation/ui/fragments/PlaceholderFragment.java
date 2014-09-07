@@ -1,4 +1,4 @@
-package com.androidfu.foundation.fragments;
+package com.androidfu.foundation.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;

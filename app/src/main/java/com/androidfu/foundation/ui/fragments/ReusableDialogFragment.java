@@ -1,4 +1,4 @@
-package com.androidfu.foundation;
+package com.androidfu.foundation.ui.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Html;
 
+import com.androidfu.foundation.R;
 import com.androidfu.foundation.util.Log;
 
 import org.xml.sax.XMLReader;

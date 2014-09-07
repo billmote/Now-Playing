@@ -2,15 +2,14 @@
 <resources>
 
     <string name="app_name">Foundation</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="btn_label_load_image">Click to Load Image</string>
     <string name="content_desc_network_image">Image from Network</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_preferences_illegal_state">You must call initialize() with an Application context first.</string>
-    <string name="force_crash">Force Crash</string>
-    <string name="reset_application_preferences">Reset Prefs</string>
+    <string name="action_force_crash">Force Crash</string>
+    <string name="action_reset_application_preferences">Reset Prefs</string>
     <string name="dialog_title_temporarily_disabled">Application is Temporarily Disabled</string>
     <string name="dialog_button_quit">QUIT</string>
     <string name="dialog_button_update">UPDATE</string>
