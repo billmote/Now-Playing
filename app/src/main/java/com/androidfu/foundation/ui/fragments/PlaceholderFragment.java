@@ -64,6 +64,7 @@ public class PlaceholderFragment extends Fragment {
         ButterKnife.inject(this, rootView);
 
         Tracker tracker = GoogleAnalyticsHelper.getInstance().getTracker(GoogleAnalyticsHelper.TrackerName.APP_TRACKER);
+        tracker.setPage(TAG);
         tracker.send(new HitBuilders.AppViewBuilder().build());
 
         return rootView;
