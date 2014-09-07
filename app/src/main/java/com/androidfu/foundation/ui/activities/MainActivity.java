@@ -13,7 +13,10 @@ import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.ui.fragments.PlaceholderFragment;
 import com.androidfu.foundation.ui.fragments.ReusableDialogFragment;
 import com.androidfu.foundation.util.EventBus;
+import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.androidfu.foundation.util.Log;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
@@ -47,6 +50,9 @@ public class MainActivity extends BaseActivity implements ReusableDialogFragment
 
         ButterKnife.inject(this);
         EventBus.register(this);
+
+        Tracker tracker = GoogleAnalyticsHelper.getInstance().getTracker(GoogleAnalyticsHelper.TrackerName.APP_TRACKER);
+        tracker.send(new HitBuilders.AppViewBuilder().build());
 
         PlaceholderFragment placeholderFragment = (PlaceholderFragment) getFragmentManager().findFragmentByTag(PlaceholderFragment.TAG);
         if (placeholderFragment == null) {

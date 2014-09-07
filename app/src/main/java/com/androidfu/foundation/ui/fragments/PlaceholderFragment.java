@@ -14,6 +14,9 @@ import com.androidfu.foundation.R;
 import com.androidfu.foundation.api.GetApplicationSettingsRequest;
 import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.util.EventBus;
+import com.androidfu.foundation.util.GoogleAnalyticsHelper;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
@@ -59,6 +62,10 @@ public class PlaceholderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_placeholder, container, false);
         ButterKnife.inject(this, rootView);
+
+        Tracker tracker = GoogleAnalyticsHelper.getInstance().getTracker(GoogleAnalyticsHelper.TrackerName.APP_TRACKER);
+        tracker.send(new HitBuilders.AppViewBuilder().build());
+
         return rootView;
     }
 
