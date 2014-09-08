@@ -77,87 +77,76 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
      * from our PaaS provider.
      */
     @DebugLog
-    @Subscribe
-    public void interruptTheUser(APIOkEvent apiOkEvent) {
+    public void interruptTheUser() {
 
-        switch (apiOkEvent.getCallNumber()) {
 
-            case R.id.call_number_get_application_settings:
+        AppSettingsLocalStorageHandler appSettingsDBHandler = new AppSettingsLocalStorageHandler(this);
 
-                AppSettingsLocalStorageHandler appSettingsDBHandler = new AppSettingsLocalStorageHandler(this);
+        mProgressBar.setVisibility(View.GONE);
 
-                mProgressBar.setVisibility(View.GONE);
+        DialogFragment dialogFragment;
+        ApplicationSettings appSettings = null;
+        boolean interruptedTheUser = false;
 
-                DialogFragment dialogFragment;
-                ApplicationSettings appSettings = null;
-                boolean interruptedTheUser = false;
-
-                try {
-                    appSettings = appSettingsDBHandler.getCurrentApplicationSettings();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                if (appSettings == null) {
-                    // We're in a bad spot.  Need to quit.
-                    Toast.makeText(this, "APPLICATION ERROR -- PLEASE TRY AGAIN", Toast.LENGTH_SHORT).show();
-                    finish();
-                    return;
-                }
-
-                if (appSettings.isApp_disabled()) {
-                /* The application has been disabled via the kill-switch */
-                    Log.wtf(TAG, "The developer has decided that this application should not be run.");
-                    dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_temporarily_disabled), appSettings.getKill_switch_message_text(), null, null, getString(R.string.dialog_button_quit), null);
-                    displayDialogFragment(dialogFragment, false);
-
-                    interruptedTheUser = true;
-                }
-
-                if (!interruptedTheUser && appSettings.getLow_watermark_version_number() > FoundationApplication.APP_VERSION_CODE) {
-                /* The developer has decided that your version should no longer be in use. */
-                    Log.wtf(TAG, "Displaying the mandatory update dialog.");
-                    dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_required), appSettings.getMandatory_update_message_text(), getString(R.string.dialog_button_update), null, getString(R.string.dialog_button_quit), null);
-                    displayDialogFragment(dialogFragment, false);
-
-                    interruptedTheUser = true;
-                }
-
-                if (!interruptedTheUser && appSettings.isUpg_nag_enabled() && appSettings.getProduction_version_number() > FoundationApplication.APP_VERSION_CODE) {
-                /* Your version is older than the current version.  Display an update nag screen with a list of new features. */
-                    Log.i(TAG, "Displaying the update nag.");
-                    dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_available), appSettings.getUpdate_nag_message_text(), getString(R.string.dialog_button_update), getString(R.string.dialog_button_not_now), null, null);
-                    displayDialogFragment(dialogFragment, true);
-                    // Display update icon on the options menu
-                    invalidateOptionsMenu();
-
-                    interruptedTheUser = true;
-                } else {
-                    // Hide the update icon on the options menu
-                    invalidateOptionsMenu();
-                }
-
-                if (!interruptedTheUser && SharedPreferencesHelper.getLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, 0) < appSettings.getLast_updated_on()) {
-                /* You haven't seen this MOTD */
-                    // getBoolean(!KEY_PREFS_MOTD_SEEN_FLAG, false) &&
-                    Log.i(TAG, "Displaying the MOTD.");
-                    SharedPreferencesHelper.putLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, System.currentTimeMillis());
-                    dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_message_of_the_day), appSettings.getMessage_of_the_day_text(), null, getString(R.string.dialog_button_ok), null, null);
-                    displayDialogFragment(dialogFragment, true);
-
-                    interruptedTheUser = true;
-                }
-
-                if (!interruptedTheUser) {
-                    carryOn();
-                }
-
-                break;
-
-            default:
-
+        try {
+            appSettings = appSettingsDBHandler.getCurrentApplicationSettings();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
+        if (appSettings == null) {
+            // We're in a bad spot.  Need to quit.
+            Toast.makeText(this, "APPLICATION ERROR -- PLEASE TRY AGAIN", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        if (appSettings.isApp_disabled()) {
+                /* The application has been disabled via the kill-switch */
+            Log.wtf(TAG, "The developer has decided that this application should not be run.");
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_temporarily_disabled), appSettings.getKill_switch_message_text(), null, null, getString(R.string.dialog_button_quit), null);
+            displayDialogFragment(dialogFragment, false);
+
+            interruptedTheUser = true;
+        }
+
+        if (!interruptedTheUser && appSettings.getLow_watermark_version_number() > FoundationApplication.APP_VERSION_CODE) {
+                /* The developer has decided that your version should no longer be in use. */
+            Log.wtf(TAG, "Displaying the mandatory update dialog.");
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_required), appSettings.getMandatory_update_message_text(), getString(R.string.dialog_button_update), null, getString(R.string.dialog_button_quit), null);
+            displayDialogFragment(dialogFragment, false);
+
+            interruptedTheUser = true;
+        }
+
+        if (!interruptedTheUser && appSettings.isUpg_nag_enabled() && appSettings.getProduction_version_number() > FoundationApplication.APP_VERSION_CODE) {
+                /* Your version is older than the current version.  Display an update nag screen with a list of new features. */
+            Log.i(TAG, "Displaying the update nag.");
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_available), appSettings.getUpdate_nag_message_text(), getString(R.string.dialog_button_update), getString(R.string.dialog_button_not_now), null, null);
+            displayDialogFragment(dialogFragment, true);
+            // Display update icon on the options menu
+            invalidateOptionsMenu();
+
+            interruptedTheUser = true;
+        } else {
+            // Hide the update icon on the options menu
+            invalidateOptionsMenu();
+        }
+
+        if (!interruptedTheUser && SharedPreferencesHelper.getLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, 0) < appSettings.getLast_updated_on()) {
+                /* You haven't seen this MOTD */
+            // getBoolean(!KEY_PREFS_MOTD_SEEN_FLAG, false) &&
+            Log.i(TAG, "Displaying the MOTD.");
+            SharedPreferencesHelper.putLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, System.currentTimeMillis());
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_message_of_the_day), appSettings.getMessage_of_the_day_text(), null, getString(R.string.dialog_button_ok), null, null);
+            displayDialogFragment(dialogFragment, true);
+
+            interruptedTheUser = true;
+        }
+
+        if (!interruptedTheUser) {
+            carryOn();
+        }
     }
 
     /**
@@ -217,20 +206,34 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
     @DebugLog
     @Subscribe
+    public void apiSuccess(APIOkEvent apiOkEvent) {
+        switch (apiOkEvent.getCallNumber()) {
+
+            case R.id.call_number_get_application_settings:
+                interruptTheUser();
+                break;
+
+            default:
+
+        }
+    }
+
+    @DebugLog
+    @Subscribe
     public void onApiErrorEvent(APIErrorEvent errorEvent) {
 
         mProgressBar.setVisibility(View.GONE);
 
         if (errorEvent.isNetworkError()) {
             Toast.makeText(this, R.string.error_no_network, Toast.LENGTH_SHORT).show();
-            interruptTheUser(null);
+            interruptTheUser();
             return;
         }
         switch (errorEvent.getHttpStatusCode()) {
             case GetApplicationSettingsEvent.ERROR_NOT_FOUND:
             default:
                 Toast.makeText(this, R.string.error_server_error, Toast.LENGTH_SHORT).show();
-                interruptTheUser(null);
+                interruptTheUser();
         }
     }
 
