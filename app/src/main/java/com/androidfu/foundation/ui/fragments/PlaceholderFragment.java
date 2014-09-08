@@ -3,7 +3,6 @@ package com.androidfu.foundation.ui.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.androidfu.foundation.R;
-import com.androidfu.foundation.api.GetApplicationSettingsRequest;
-import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -95,23 +91,5 @@ public class PlaceholderFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.reset(this);
         EventBus.unregister(this);
-    }
-
-    @DebugLog
-    @Subscribe
-    public void showProgressSpinner(GetApplicationSettingsRequest request) {
-        mProgressBar.setVisibility(View.VISIBLE);
-    }
-
-    @DebugLog
-    @Subscribe
-    public void updateAndEnableButton(ApplicationSettings applicationSettings) {
-        mProgressBar.setVisibility(View.GONE);
-        mButton.setEnabled(true);
-        if (!TextUtils.isEmpty(applicationSettings.messageOfTheDay)) {
-            mButton.setText(applicationSettings.messageOfTheDay);
-        } else {
-            mButton.setText("No MOTD Today");
-        }
     }
 }

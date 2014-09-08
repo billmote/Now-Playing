@@ -3,4 +3,7 @@
     <item name="force_crash" type="id" />
     <item name="reset_prefs" type="id" />
     <item name="developer_preference_group" type="id" />
+
+    <!-- Our unique integers for our API requests -->
+    <item name="call_number_retrieve_application_settings" type="id" />
 </resources>

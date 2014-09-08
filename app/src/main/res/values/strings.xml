@@ -19,4 +19,6 @@
     <string name="dialog_title_message_of_the_day">MESSAGE OF THE DAY</string>
     <string name="dialog_button_ok">OK</string>
     <string name="error_message_something_went_wrong">Something went wrong.  Please contact the developer.</string>
+    <string name="error_no_network">error_no_network</string>
+    <string name="error_server_error">Server Error</string>
 </resources>

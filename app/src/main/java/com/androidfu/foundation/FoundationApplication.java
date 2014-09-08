@@ -5,8 +5,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.androidfu.foundation.api.GetApplicationSettingsRequest;
-import com.androidfu.foundation.api.GetApplicationSettingsRequestHanlder;
+import com.androidfu.foundation.api.ApiEventHandler;
+import com.androidfu.foundation.events.RetrieveApplicationSettingsEvent;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.androidfu.foundation.util.Log;
@@ -49,8 +49,6 @@ public class FoundationApplication extends Application {
         SharedPreferencesHelper.initialize(this);
 
         registerHandlersWithEventBus();
-
-        EventBus.post(new GetApplicationSettingsRequest(getString(R.string.application_settings_url)));
     }
 
     /**
@@ -59,7 +57,7 @@ public class FoundationApplication extends Application {
     @DebugLog
     private void registerHandlersWithEventBus() {
         // Register all our Handlers on the EventBus.
-        EventBus.register(new GetApplicationSettingsRequestHanlder());
+        EventBus.register(new ApiEventHandler(this));
     }
 
     /**
@@ -123,6 +121,7 @@ public class FoundationApplication extends Application {
                     .penaltyLog()
                             //.penaltyDeath()  // No need to go to this extreme all the time
                     .build());
-        }
+
+}
     }
 }
