@@ -2,10 +2,13 @@ package com.androidfu.foundation.api;
 
 import android.content.Context;
 
+import com.androidfu.foundation.R;
 import com.androidfu.foundation.events.APIOkEvent;
 import com.androidfu.foundation.events.GetApplicationSettingsEvent;
+import com.androidfu.foundation.events.GetQuoteOfTheDayEvent;
 import com.androidfu.foundation.localcache.AppSettingsLocalStorageHandler;
 import com.androidfu.foundation.model.ApplicationSettings;
+import com.androidfu.foundation.model.QuoteOfTheDay;
 import com.androidfu.foundation.util.EventBus;
 import com.squareup.otto.Subscribe;
 
@@ -25,7 +28,7 @@ public class APIEventHandler {
     @DebugLog
     public APIEventHandler(Context context) {
         mApplicationSettingsLocalStorageHandler = new AppSettingsLocalStorageHandler(context);
-        mAPIRequests = APIBuilder.createApiInstance(context);
+        //mAPIRequests = APIBuilder.createApiInstance(context);
         mContext = context;
     }
 
@@ -35,7 +38,7 @@ public class APIEventHandler {
     @DebugLog
     @Subscribe
     public void getApplicationSettings(final GetApplicationSettingsEvent event) {
-        this.mAPIRequests.getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
+        APIBuilder.createApiInstance(mContext, mContext.getString(R.string.application_settings_url)).getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
             @Override
             public void success(ApplicationSettings applicationSettings, Response response) {
                 try {
@@ -44,6 +47,20 @@ public class APIEventHandler {
                     e1.printStackTrace();
                 }
                 EventBus.post(new APIOkEvent(event.getCallNumber()));
+            }
+        });
+    }
+
+    /**
+     * QUOTE OF THE DAY
+     */
+    @DebugLog
+    @Subscribe
+    public void getQuoteOfTheDay(final GetQuoteOfTheDayEvent event) {
+        APIBuilder.createApiInstance(mContext, mContext.getString(R.string.quote_of_the_day_url)).getQuoteOfTheDay(new APIHandler<QuoteOfTheDay>(event.getCallNumber()) {
+            @Override
+            public void success(QuoteOfTheDay quoteOfTheDay, Response response) {
+                EventBus.post(quoteOfTheDay);
             }
         });
     }

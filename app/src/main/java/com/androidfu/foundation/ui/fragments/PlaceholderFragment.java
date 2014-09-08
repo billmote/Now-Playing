@@ -8,13 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidfu.foundation.R;
+import com.androidfu.foundation.events.GetQuoteOfTheDayEvent;
+import com.androidfu.foundation.model.QuoteOfTheDay;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +45,8 @@ public class PlaceholderFragment extends Fragment {
     ProgressBar mProgressBar;
     @InjectView(R.id.imageView)
     ImageView mImageView;
+    @InjectView(R.id.tv_quote)
+    TextView mQuoteText;
 
     public static PlaceholderFragment newInstance() {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -100,6 +106,9 @@ public class PlaceholderFragment extends Fragment {
     @OnClick(R.id.button)
     public void fetchImage(View v) {
         mProgressBar.setVisibility(View.VISIBLE);
+        mQuoteText.setVisibility(View.GONE);
+        mImageView.setVisibility(View.GONE);
+        EventBus.post(new GetQuoteOfTheDayEvent(R.id.call_number_get_quote_of_the_day));
         Picasso.with(mHost)
                 .load("http://goo.gl/G6RHYJ")
                 .error(R.drawable.emoticon_sad)
@@ -108,14 +117,23 @@ public class PlaceholderFragment extends Fragment {
                     @Override
                     public void onSuccess() {
                         mProgressBar.setVisibility(View.GONE);
+                        mQuoteText.setVisibility(View.VISIBLE);
+                        mImageView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onError() {
                         mProgressBar.setVisibility(View.GONE);
+                        mImageView.setVisibility(View.VISIBLE);
                         Toast.makeText(mHost, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
+    }
+
+    @DebugLog
+    @Subscribe
+    public void updateQuote(QuoteOfTheDay quoteOfTheDay) {
+        mQuoteText.setText(quoteOfTheDay.getQuote());
     }
 }

@@ -31,12 +31,12 @@ public class APIBuilder {
     }
 
     @DebugLog
-    public static APIRequests createApiInstance(Context context) {
-        return createApiInstance(context, "");
+    public static APIRequests createApiInstance(Context context, String endpoint) {
+        return createApiInstance(context, "", endpoint);
     }
 
     @DebugLog
-    public static APIRequests createApiInstance(Context context, final String token) {
+    public static APIRequests createApiInstance(Context context, final String token, String endpoint) {
         final String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         GsonConverter jsonParserConverter = new GsonConverter(buildJsonParser(), "UTF-8");
@@ -45,7 +45,7 @@ public class APIBuilder {
         currentAuthToken = token;
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(context.getResources().getString(R.string.application_settings_url))
+                .setEndpoint(endpoint)
                 .setConverter(jsonParserConverter)
                 .setLogLevel(BuildConfig.DEBUG && Boolean.valueOf(context.getResources().getString(R.string.retrofit_logging_enabled)) ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setRequestInterceptor(new RequestInterceptor() {
