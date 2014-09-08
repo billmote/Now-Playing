@@ -8,7 +8,7 @@ import retrofit.http.GET;
 /**
  * Created by billmote on 9/7/14.
  */
-public interface ApiRequests {
+public interface APIRequests {
     final static String APPSETTINGS = "/ApplicationSettings.json";
 
     // APLICATION SETTINGS

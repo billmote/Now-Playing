@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.androidfu.foundation.api.ApiEventHandler;
+import com.androidfu.foundation.api.APIEventHandler;
 import com.androidfu.foundation.localcache.DBManager;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
@@ -65,7 +65,7 @@ public class FoundationApplication extends Application {
     @DebugLog
     private void registerHandlersWithEventBus() {
         // Register all our Handlers on the EventBus.
-        EventBus.register(new ApiEventHandler(this));
+        EventBus.register(new APIEventHandler(this));
     }
 
     /**

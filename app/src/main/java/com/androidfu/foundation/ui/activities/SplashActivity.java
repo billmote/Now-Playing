@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.androidfu.foundation.FoundationApplication;
 import com.androidfu.foundation.R;
+import com.androidfu.foundation.events.APIErrorEvent;
 import com.androidfu.foundation.events.APIOkEvent;
-import com.androidfu.foundation.events.ApiErrorEvent;
 import com.androidfu.foundation.events.GetApplicationSettingsEvent;
 import com.androidfu.foundation.localcache.AppSettingsLocalStorageHandler;
 import com.androidfu.foundation.model.ApplicationSettings;
@@ -205,7 +205,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
     @DebugLog
     @Subscribe
-    public void onApiErrorEvent(ApiErrorEvent errorEvent) {
+    public void onApiErrorEvent(APIErrorEvent errorEvent) {
 
         mProgressBar.setVisibility(View.GONE);
 
