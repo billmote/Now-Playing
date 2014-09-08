@@ -6,7 +6,6 @@ Clone the project and import into Android Studio.  There are no other requiremen
 
 * This "Foundation" project is intended to be the baseline on which I begin other projects.
 * v1.0
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### This project includes: ###
 
