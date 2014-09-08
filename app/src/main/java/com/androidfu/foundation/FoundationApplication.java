@@ -53,6 +53,8 @@ public class FoundationApplication extends Application {
         GoogleAnalyticsHelper.initialize(this);
         SharedPreferencesHelper.initialize(this);
 
+        DBManager.getHelper(this);
+
         registerHandlersWithEventBus();
     }
 
