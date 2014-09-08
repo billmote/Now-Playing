@@ -1,6 +1,25 @@
-.idea
-.gradle
-/local.properties
-/.idea/workspace.xml
+# Crashlytics Files
+crashlytics.properties
+crashlytics-build.properties
+
+# Mac Specific Files/Folders
 .DS_Store
-/build
+
+# Android Studio
+*.iml
+.gradle
+.idea
+build
+
+# Local Configuration Files
+/local.properties
+
+# Built Application Files
+*.apk
+*.ap_
+
+# Files for the Dex VM
+*.dex
+
+# Java Class Files
+*.class

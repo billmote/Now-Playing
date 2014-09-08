@@ -5,12 +5,13 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.androidfu.foundation.api.GetApplicationSettingsRequestHanlder;
-import com.androidfu.foundation.api.GetNetworkImageRequestHandler;
-import com.androidfu.foundation.model.ApplicationSettings;
+import com.androidfu.foundation.api.APIEventHandler;
+import com.androidfu.foundation.localcache.DBManager;
 import com.androidfu.foundation.util.EventBus;
+import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.androidfu.foundation.util.Log;
 import com.androidfu.foundation.util.SharedPreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import hugo.weaving.DebugLog;
 
@@ -20,6 +21,7 @@ import hugo.weaving.DebugLog;
 public class FoundationApplication extends Application {
 
     private static final String TAG = FoundationApplication.class.getSimpleName();
+
     public static int APP_VERSION_CODE;
     public static String APP_VERSION_NAME;
 
@@ -28,12 +30,10 @@ public class FoundationApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // Turn on crash reporting if we're NOT in a developer build.
         if (!BuildConfig.DEBUG) {
             // Crashlytics.start(this);
         }
 
-        // Set whether we're logging and at what level.  The string values can be found in build_properties.xml
         try {
             Log.setLogging(BuildConfig.DEBUG && Boolean.valueOf(getString(R.string.logging)));
             Log.setLogLevel(Integer.valueOf(getString(R.string.logging_level)));
@@ -41,15 +41,22 @@ public class FoundationApplication extends Application {
             Log.e(TAG, "Something went wrong setting logging and/or logging level.  App will set what it can and use defaults otherwise.", e);
         }
 
+        if (BuildConfig.DEBUG) {
+            Picasso.with(this).setIndicatorsEnabled(true);
+            Picasso.with(this).setLoggingEnabled(Boolean.valueOf(getString(R.string.picasso_logging_enabled)));
+        }
+
         new StrictModeHelper().setupStrictMode();
 
         APP_VERSION_CODE = getApplicationVersionCode();
         APP_VERSION_NAME = getApplicationVersionName();
 
+        GoogleAnalyticsHelper.initialize(this);
         SharedPreferencesHelper.initialize(this);
 
-        registerHandlersWithEventBus();
+        DBManager.getHelper(this);
 
+        registerHandlersWithEventBus();
     }
 
     /**
@@ -58,8 +65,7 @@ public class FoundationApplication extends Application {
     @DebugLog
     private void registerHandlersWithEventBus() {
         // Register all our Handlers on the EventBus.
-        EventBus.register(new GetNetworkImageRequestHandler());
-        EventBus.register(new GetApplicationSettingsRequestHanlder());
+        EventBus.register(new APIEventHandler(this));
     }
 
     /**
@@ -123,6 +129,7 @@ public class FoundationApplication extends Application {
                     .penaltyLog()
                     //.penaltyDeath()  // No need to go to this extreme all the time
                     .build());
+
         }
     }
 }
