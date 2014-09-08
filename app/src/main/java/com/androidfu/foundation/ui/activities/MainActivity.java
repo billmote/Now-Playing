@@ -57,6 +57,8 @@ public class MainActivity extends BaseActivity implements PlaceholderFragment.On
         PlaceholderFragment placeholderFragment = (PlaceholderFragment) getFragmentManager().findFragmentByTag(PlaceholderFragment.TAG);
         if (placeholderFragment == null) {
             placeholderFragment = PlaceholderFragment.newInstance();
+        }
+        if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     //.addToBackStack(PlaceholderFragment.TAG)
                     //.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_left, R.anim.slide_in_from_left, R.anim.slide_out_right)
