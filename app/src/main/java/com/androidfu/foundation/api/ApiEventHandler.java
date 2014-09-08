@@ -17,15 +17,15 @@ import retrofit.client.Response;
 /**
  * Created by billmote on 9/7/14.
  */
-public class APIEventHandler {
-    private APIRequests mApiRequests;
+public class ApiEventHandler {
+    private ApiRequests mApiRequests;
     private final AppSettingsLocalStorageHandler mApplicationSettingsLocalStorageHandler;
     private final Context mContext;
 
     @DebugLog
-    public APIEventHandler(Context context) {
+    public ApiEventHandler(Context context) {
         mApplicationSettingsLocalStorageHandler = new AppSettingsLocalStorageHandler(context);
-        mApiRequests = APIBuilder.createApiInstance(context);
+        mApiRequests = ApiBuilder.createApiInstance(context);
         mContext = context;
     }
 
@@ -35,11 +35,11 @@ public class APIEventHandler {
     @DebugLog
     @Subscribe
     public void getApplicationSettings(final GetApplicationSettingsEvent event) {
-        this.mApiRequests.getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
+        this.mApiRequests.getApplicationSettings(new ApiHandler<ApplicationSettings>(event.getCallNumber()) {
             @Override
             public void success(ApplicationSettings applicationSettings, Response response) {
                 try {
-                    APIEventHandler.this.mApplicationSettingsLocalStorageHandler.saveCurrentApplicationSettings(applicationSettings);
+                    ApiEventHandler.this.mApplicationSettingsLocalStorageHandler.saveCurrentApplicationSettings(applicationSettings);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }

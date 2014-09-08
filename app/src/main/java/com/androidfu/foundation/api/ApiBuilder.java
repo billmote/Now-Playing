@@ -16,27 +16,27 @@ import retrofit.converter.GsonConverter;
 /**
  * Created by billmote on 9/7/14.
  */
-public class APIBuilder {
+public class ApiBuilder {
     public static final String AUTH_TOKEN_HEADER = "Auth-Token";
     public static final String ANDROIDID_HEADER = "Device-ID";
 
     private static String currentAuthToken;
     private static String currentAndroidId;
 
-    private static APIRequests api;
+    private static ApiRequests api;
 
     @DebugLog
-    public static APIRequests getApiInstance() {
+    public static ApiRequests getApiInstance() {
         return api;
     }
 
     @DebugLog
-    public static APIRequests createApiInstance(Context context) {
+    public static ApiRequests createApiInstance(Context context) {
         return createApiInstance(context, "");
     }
 
     @DebugLog
-    public static APIRequests createApiInstance(Context context, final String token) {
+    public static ApiRequests createApiInstance(Context context, final String token) {
         final String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         GsonConverter jsonParserConverter = new GsonConverter(buildJsonParser(), "UTF-8");
@@ -57,7 +57,7 @@ public class APIBuilder {
                 })
                 .build();
 
-        api = restAdapter.create(APIRequests.class);
+        api = restAdapter.create(ApiRequests.class);
         return getApiInstance();
     }
 
