@@ -41,6 +41,13 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
     @DebugLog
     @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    }
+
+    @DebugLog
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
@@ -65,6 +72,13 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
     @DebugLog
     @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
+    @DebugLog
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.reset(this);
@@ -79,10 +93,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     @DebugLog
     public void interruptTheUser() {
 
-
         AppSettingsLocalStorageHandler appSettingsDBHandler = new AppSettingsLocalStorageHandler(this);
-
-        mProgressBar.setVisibility(View.GONE);
 
         DialogFragment dialogFragment;
         ApplicationSettings appSettings = null;
@@ -210,11 +221,12 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         switch (apiOkEvent.getCallNumber()) {
 
             case R.id.call_number_get_application_settings:
+                mProgressBar.setVisibility(View.GONE);
                 interruptTheUser();
                 break;
 
             default:
-
+                // Nothing to see here
         }
     }
 
@@ -235,20 +247,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
                 Toast.makeText(this, R.string.error_server_error, Toast.LENGTH_SHORT).show();
                 interruptTheUser();
         }
-    }
-
-    @DebugLog
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @DebugLog
-    @Override
-    protected void onStop() {
-        super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
 }
