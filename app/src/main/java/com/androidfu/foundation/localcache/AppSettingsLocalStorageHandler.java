@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * Created by billmote on 9/7/14.
  */
-public class ApplicationSettingsLocalStorageHandler extends LocalStorageHandler<ApplicationSettings> {
+public class AppSettingsLocalStorageHandler extends LocalStorageHandler<ApplicationSettings> {
 
     private final Context context;
 
-    public ApplicationSettingsLocalStorageHandler(Context ctx){
+    public AppSettingsLocalStorageHandler(Context ctx){
         this.context = ctx;
     }
 

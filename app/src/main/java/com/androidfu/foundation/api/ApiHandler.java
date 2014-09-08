@@ -1,6 +1,6 @@
 package com.androidfu.foundation.api;
 
-import com.androidfu.foundation.events.ApiErrorEvent;
+import com.androidfu.foundation.events.APIErrorEvent;
 import com.androidfu.foundation.util.EventBus;
 
 import hugo.weaving.DebugLog;
@@ -10,18 +10,18 @@ import retrofit.RetrofitError;
 /**
  * Created by billmote on 9/7/14.
  */
-public abstract class ApiHandler<T> implements Callback<T> {
+public abstract class APIHandler<T> implements Callback<T> {
     private int callNumber;
 
     @DebugLog
-    public ApiHandler(int callNumber){
+    public APIHandler(int callNumber){
         this.callNumber = callNumber;
     }
 
     @DebugLog
     @Override
     public void failure(RetrofitError error) {
-        EventBus.post(new ApiErrorEvent(error, this.callNumber));
+        EventBus.post(new APIErrorEvent(error, this.callNumber));
     }
 
     @DebugLog

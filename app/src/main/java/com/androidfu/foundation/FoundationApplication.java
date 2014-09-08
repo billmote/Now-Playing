@@ -5,12 +5,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.androidfu.foundation.api.ApiEventHandler;
-import com.androidfu.foundation.events.RetrieveApplicationSettingsEvent;
+import com.androidfu.foundation.api.APIEventHandler;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.androidfu.foundation.util.Log;
 import com.androidfu.foundation.util.SharedPreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import hugo.weaving.DebugLog;
 
@@ -40,6 +40,11 @@ public class FoundationApplication extends Application {
             Log.e(TAG, "Something went wrong setting logging and/or logging level.  App will set what it can and use defaults otherwise.", e);
         }
 
+        if (BuildConfig.DEBUG) {
+            Picasso.with(this).setIndicatorsEnabled(true);
+            Picasso.with(this).setLoggingEnabled(Boolean.valueOf(getString(R.string.picasso_logging_enabled)));
+        }
+
         new StrictModeHelper().setupStrictMode();
 
         APP_VERSION_CODE = getApplicationVersionCode();
@@ -57,7 +62,7 @@ public class FoundationApplication extends Application {
     @DebugLog
     private void registerHandlersWithEventBus() {
         // Register all our Handlers on the EventBus.
-        EventBus.register(new ApiEventHandler(this));
+        EventBus.register(new APIEventHandler(this));
     }
 
     /**
@@ -119,9 +124,9 @@ public class FoundationApplication extends Application {
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
-                            //.penaltyDeath()  // No need to go to this extreme all the time
+                    //.penaltyDeath()  // No need to go to this extreme all the time
                     .build());
 
-}
+        }
     }
 }

@@ -5,10 +5,10 @@ import retrofit.RetrofitError;
 /**
  * Created by billmote on 9/7/14.
  */
-public class ApiErrorEvent extends BaseEvent{
+public class APIErrorEvent extends BaseEvent{
     private RetrofitError error;
 
-    public ApiErrorEvent(RetrofitError error, int callNumber){
+    public APIErrorEvent(RetrofitError error, int callNumber){
         super(callNumber);
         this.error = error;
     }

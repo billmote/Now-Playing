@@ -3,8 +3,8 @@ package com.androidfu.foundation.api;
 import android.content.Context;
 
 import com.androidfu.foundation.events.APIOkEvent;
-import com.androidfu.foundation.events.RetrieveApplicationSettingsEvent;
-import com.androidfu.foundation.localcache.ApplicationSettingsLocalStorageHandler;
+import com.androidfu.foundation.events.GetApplicationSettingsEvent;
+import com.androidfu.foundation.localcache.AppSettingsLocalStorageHandler;
 import com.androidfu.foundation.model.ApplicationSettings;
 import com.androidfu.foundation.util.EventBus;
 import com.squareup.otto.Subscribe;
@@ -17,15 +17,15 @@ import retrofit.client.Response;
 /**
  * Created by billmote on 9/7/14.
  */
-public class ApiEventHandler {
-    private ApiRequests mApiRequests;
-    private final ApplicationSettingsLocalStorageHandler mApplicationSettingsLocalStorageHandler;
+public class APIEventHandler {
+    private APIRequests mApiRequests;
+    private final AppSettingsLocalStorageHandler mApplicationSettingsLocalStorageHandler;
     private final Context mContext;
 
     @DebugLog
-    public ApiEventHandler(Context context) {
-        mApplicationSettingsLocalStorageHandler = new ApplicationSettingsLocalStorageHandler(context);
-        mApiRequests = ApiBuilder.createApiInstance(context);
+    public APIEventHandler(Context context) {
+        mApplicationSettingsLocalStorageHandler = new AppSettingsLocalStorageHandler(context);
+        mApiRequests = APIBuilder.createApiInstance(context);
         mContext = context;
     }
 
@@ -34,12 +34,12 @@ public class ApiEventHandler {
      */
     @DebugLog
     @Subscribe
-    public void getApplicationSettings(final RetrieveApplicationSettingsEvent event) {
-        this.mApiRequests.getApplicationSettings(new ApiHandler<ApplicationSettings>(event.getCallNumber()) {
+    public void getApplicationSettings(final GetApplicationSettingsEvent event) {
+        this.mApiRequests.getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
             @Override
             public void success(ApplicationSettings applicationSettings, Response response) {
                 try {
-                    ApiEventHandler.this.mApplicationSettingsLocalStorageHandler.saveCurrentApplicationSettings(applicationSettings);
+                    APIEventHandler.this.mApplicationSettingsLocalStorageHandler.saveCurrentApplicationSettings(applicationSettings);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }

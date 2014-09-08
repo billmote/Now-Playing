@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.androidfu.foundation.R;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 
 /**
@@ -31,12 +35,12 @@ public class PlaceholderFragment extends Fragment {
     public static final String TAG = PlaceholderFragment.class.getSimpleName();
 
     private OnFragmentInteractionListener mListener;
+    private Activity mHost;
 
-    @InjectView(R.id.button)
-    Button mButton;
     @InjectView(R.id.progressBar)
     ProgressBar mProgressBar;
-    private Activity mHost;
+    @InjectView(R.id.imageView)
+    ImageView mImageView;
 
     public static PlaceholderFragment newInstance() {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -91,5 +95,27 @@ public class PlaceholderFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.reset(this);
         EventBus.unregister(this);
+    }
+
+    @OnClick(R.id.button)
+    public void fetchImage(View v) {
+        mProgressBar.setVisibility(View.VISIBLE);
+        Picasso.with(mHost)
+                .load("http://goo.gl/G6RHYJ")
+                .error(R.drawable.emoticon_sad)
+                .fit()
+                .into(mImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        mProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(mHost, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 }
