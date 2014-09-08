@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.StrictMode;
 
 import com.androidfu.foundation.api.APIEventHandler;
+import com.androidfu.foundation.localcache.DBManager;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.androidfu.foundation.util.Log;
