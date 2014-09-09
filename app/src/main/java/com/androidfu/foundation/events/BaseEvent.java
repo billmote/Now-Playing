@@ -1,5 +1,7 @@
 package com.androidfu.foundation.events;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Created by billmote on 9/7/14.
  */
@@ -12,14 +14,17 @@ public class BaseEvent {
 
     private int callNumber;
 
+    @DebugLog
     public BaseEvent(int callNumber){
         this.callNumber = callNumber;
     }
 
+    @DebugLog
     public int getCallNumber() {
         return callNumber;
     }
 
+    @DebugLog
     public void setCallNumber(int callNumber) {
         this.callNumber = callNumber;
     }}

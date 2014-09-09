@@ -2,6 +2,8 @@ package com.androidfu.foundation.events;
 
 import org.parceler.Parcel;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Created by Bill on 8/4/14.
  */
@@ -16,6 +18,7 @@ public class NetworkAvailableEvent {
         // Don't let this get instantiated without our booleans
     }
 
+    @DebugLog
     public NetworkAvailableEvent(boolean isWifiAvailable, boolean isMobileAvailable) {
         isNetworkAvailable = (isWifiAvailable || isMobileAvailable);
         this.isWifiAvailable = isWifiAvailable;

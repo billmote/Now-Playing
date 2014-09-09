@@ -9,6 +9,8 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Created by billmote on 9/7/14.
  */
@@ -16,15 +18,18 @@ public class AppSettingsLocalStorageHandler extends LocalStorageHandler<Applicat
 
     private final Context context;
 
+    @DebugLog
     public AppSettingsLocalStorageHandler(Context ctx){
         this.context = ctx;
     }
 
+    @DebugLog
     @Override
     protected Dao getDao() {
         return DBManager.getHelper(this.context).getApplicationSettingsDao();
     }
 
+    @DebugLog
     public ApplicationSettings getCurrentApplicationSettings() throws SQLException {
         List<ApplicationSettings> appset = this.getDao().queryForAll();
         if (appset!=null && appset.size()>0){
@@ -34,6 +39,7 @@ public class AppSettingsLocalStorageHandler extends LocalStorageHandler<Applicat
         }
     }
 
+    @DebugLog
     public void saveCurrentApplicationSettings(ApplicationSettings appset) throws SQLException {
         TableUtils.clearTable(this.getDao().getConnectionSource(), ApplicationSettings.class);
         this.getDao().create(appset);

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidfu.foundation.R;
+import com.androidfu.foundation.events.APIErrorEvent;
 import com.androidfu.foundation.events.GetQuoteOfTheDayEvent;
 import com.androidfu.foundation.model.QuoteOfTheDay;
 import com.androidfu.foundation.util.EventBus;
@@ -48,11 +49,13 @@ public class PlaceholderFragment extends Fragment {
     @InjectView(R.id.tv_quote)
     TextView mQuoteText;
 
+    @DebugLog
     public static PlaceholderFragment newInstance() {
         PlaceholderFragment fragment = new PlaceholderFragment();
         return fragment;
     }
 
+    @DebugLog
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,7 @@ public class PlaceholderFragment extends Fragment {
         return rootView;
     }
 
+    @DebugLog
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -88,6 +92,7 @@ public class PlaceholderFragment extends Fragment {
         mHost = activity;
     }
 
+    @DebugLog
     @Override
     public void onDetach() {
         super.onDetach();
@@ -103,6 +108,7 @@ public class PlaceholderFragment extends Fragment {
         EventBus.unregister(this);
     }
 
+    @DebugLog
     @OnClick(R.id.button)
     public void fetchImage(View v) {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -135,5 +141,11 @@ public class PlaceholderFragment extends Fragment {
     @Subscribe
     public void updateQuote(QuoteOfTheDay quoteOfTheDay) {
         mQuoteText.setText(quoteOfTheDay.getQuote());
+    }
+
+    @DebugLog
+    @Subscribe
+    public void apiErrorEvent(APIErrorEvent apiErrorEvent) {
+        // Do nothing for now, but maybe we should put an ! icon on the ActionBar?
     }
 }

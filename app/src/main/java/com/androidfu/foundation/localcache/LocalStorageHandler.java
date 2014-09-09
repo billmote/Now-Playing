@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Created by billmote on 9/7/14.
  */
@@ -20,16 +22,19 @@ public abstract class LocalStorageHandler<T extends BaseModel> {
     protected abstract Dao<T,Integer> getDao();
 
     /* Get */
+    @DebugLog
     public T get(String remoteId) throws SQLException {
         return this.getByRemoteId(remoteId);
     }
 
+    @DebugLog
     public Cursor getCursorForAll() throws SQLException{
         QueryBuilder<T,Integer> qb = this.getDao().queryBuilder();
         qb.where().eq("deleted",false);
         return this.getCursor(qb);
     }
 
+    @DebugLog
     public Cursor getCursor(QueryBuilder<T,Integer> qb) throws SQLException{
         CloseableIterator<T> iterator = this.getDao().iterator(qb.prepare());
         try {
@@ -40,11 +45,13 @@ public abstract class LocalStorageHandler<T extends BaseModel> {
         }
     }
 
+    @DebugLog
     public List<T> getAll() throws SQLException{
         return this.getDao().queryForEq("deleted",false);
 
     }
 
+    @DebugLog
     public T getByLocalId(int localId) throws SQLException {
         if (localId > 0) {
             return this.getDao().queryForId(localId);
@@ -53,6 +60,7 @@ public abstract class LocalStorageHandler<T extends BaseModel> {
         }
     }
 
+    @DebugLog
     public T getByRemoteId(String remoteId) throws SQLException{
         if (remoteId!=null && !remoteId.isEmpty()) {
             List<T> result = this.getDao().queryForEq("remoteid", remoteId);
@@ -67,6 +75,7 @@ public abstract class LocalStorageHandler<T extends BaseModel> {
     }
 
     /* Save */
+    @DebugLog
     public T save(T object) throws SQLException {
         T dbObject = this.getByRemoteId(object.getRemoteid());
         if (dbObject!=null) {
@@ -80,6 +89,7 @@ public abstract class LocalStorageHandler<T extends BaseModel> {
         return object;
     }
 
+    @DebugLog
     public List<T> save(List<T> objects) throws SQLException {
         ArrayList<T> result = new ArrayList<T>();
 
@@ -91,24 +101,28 @@ public abstract class LocalStorageHandler<T extends BaseModel> {
     }
 
     /* Delete One */
+    @DebugLog
     public void delete(String remoteId) throws SQLException {
         this.deleteByRemoteId(remoteId);
     }
 
+    @DebugLog
     public void delete(T object) throws SQLException {
         this.deleteByRemoteId(object.getRemoteid());
     }
 
-
+    @DebugLog
     public void deleteByRemoteId(String remoteId) throws SQLException {
         T dbObject = this.getByRemoteId(remoteId);
         this.getDao().delete(dbObject);
     }
 
+    @DebugLog
     public void deleteByLocalId(int localId) throws SQLException {
         this.getDao().deleteById(localId);
     }
 
+    @DebugLog
     public void softDeleteByLocalId(int localId) throws SQLException {
         T dbObject = this.getDao().queryForId(localId);
         dbObject.setDeleted(true);
@@ -116,33 +130,39 @@ public abstract class LocalStorageHandler<T extends BaseModel> {
     }
 
     /* Delete multiple */
+    @DebugLog
     public void delete(String[] remoteIds) throws SQLException {
         this.deleteByRemoteIds(remoteIds);
     }
 
+    @DebugLog
     public void delete(List<T> objects) throws SQLException {
         for (T o : objects){
             this.delete(o);
         }
     }
 
+    @DebugLog
     public void deleteByRemoteIds(String[] remoteIds) throws SQLException {
         for (String i : remoteIds){
             this.deleteByRemoteId(i);
         }
     }
 
+    @DebugLog
     public void deleteByLocalIds(int[] localIds) throws SQLException {
         for (int i : localIds){
             this.deleteByLocalId(i);
         }
     }
 
+    @DebugLog
     public void clean(T object) throws SQLException {
         object.setDirty(false);
         this.save(object);
     }
 
+    @DebugLog
     public void unclean(T object) throws SQLException {
         object.setDirty(true);
         this.save(object);

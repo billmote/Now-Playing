@@ -3,6 +3,7 @@ package com.androidfu.foundation.api;
 import android.content.Context;
 
 import com.androidfu.foundation.R;
+import com.androidfu.foundation.events.APIErrorEvent;
 import com.androidfu.foundation.events.APIOkEvent;
 import com.androidfu.foundation.events.GetApplicationSettingsEvent;
 import com.androidfu.foundation.events.GetQuoteOfTheDayEvent;
@@ -12,9 +13,12 @@ import com.androidfu.foundation.model.QuoteOfTheDay;
 import com.androidfu.foundation.util.EventBus;
 import com.squareup.otto.Subscribe;
 
+import org.apache.http.HttpException;
+
 import java.sql.SQLException;
 
 import hugo.weaving.DebugLog;
+import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
@@ -60,7 +64,11 @@ public class APIEventHandler {
         APIBuilder.createApiInstance(mContext, mContext.getString(R.string.quote_of_the_day_url)).getQuoteOfTheDay(new APIHandler<QuoteOfTheDay>(event.getCallNumber()) {
             @Override
             public void success(QuoteOfTheDay quoteOfTheDay, Response response) {
-                EventBus.post(quoteOfTheDay);
+                if (response.getBody().length() > 0) {
+                    EventBus.post(quoteOfTheDay);
+                } else {
+                    EventBus.post(new APIErrorEvent(RetrofitError.unexpectedError(mContext.getString(R.string.quote_of_the_day_url), new HttpException("Empty Body")), event.getCallNumber()));
+                }
             }
         });
     }

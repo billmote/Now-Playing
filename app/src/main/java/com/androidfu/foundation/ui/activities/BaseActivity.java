@@ -1,8 +1,10 @@
 package com.androidfu.foundation.ui.activities;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.androidfu.foundation.BuildConfig;
@@ -15,6 +17,14 @@ import hugo.weaving.DebugLog;
 public class BaseActivity extends Activity {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
+
+    @DebugLog
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        super.onCreate(savedInstanceState);
+    }
+
 
     @DebugLog
     @Override

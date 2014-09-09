@@ -12,16 +12,20 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
+import hugo.weaving.DebugLog;
+
 public class DBHelper extends OrmLiteSqliteOpenHelper{
     private static final String DATABASE_NAME = "foundation.db";
     private static final int DATABASE_VERSION = 1;
 
     private Dao<ApplicationSettings, Integer> applicationSettingsDao;
 
+    @DebugLog
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    @DebugLog
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 
@@ -34,6 +38,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         }
     }
 
+    @DebugLog
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
@@ -46,6 +51,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         }
     }
 
+    @DebugLog
     public Dao<ApplicationSettings, Integer> getApplicationSettingsDao() {
         if (this.applicationSettingsDao == null) {
             try {
@@ -57,6 +63,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         return this.applicationSettingsDao;
     }
 
+    @DebugLog
     @Override
     public void close() {
         super.close();
