@@ -2,7 +2,7 @@ package com.androidfu.foundation.model;
 
 import com.google.gson.annotations.Expose;
 
-public class QuoteOfTheDay extends BaseModel {
+public class QuoteOfTheDay {
 
     public String getQuote() {
         return quote;
