@@ -13,10 +13,12 @@ import android.widget.Toast;
 
 import com.androidfu.foundation.R;
 import com.androidfu.foundation.events.APIErrorEvent;
+import com.androidfu.foundation.events.GetApplicationSettingsEvent;
 import com.androidfu.foundation.events.GetQuoteOfTheDayEvent;
 import com.androidfu.foundation.model.QuoteOfTheDay;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
+import com.androidfu.foundation.util.Log;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.otto.Subscribe;
@@ -51,19 +53,11 @@ public class PlaceholderFragment extends Fragment {
 
     @DebugLog
     public static PlaceholderFragment newInstance() {
-        PlaceholderFragment fragment = new PlaceholderFragment();
-        return fragment;
-    }
-
-    @DebugLog
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return new PlaceholderFragment();
     }
 
     @DebugLog
     public PlaceholderFragment() {
-        EventBus.register(this);
     }
 
     @DebugLog
@@ -77,6 +71,20 @@ public class PlaceholderFragment extends Fragment {
         tracker.send(new HitBuilders.AppViewBuilder().build());
 
         return rootView;
+    }
+
+    @DebugLog
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.register(this);
+    }
+
+    @DebugLog
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.unregister(this);
     }
 
     @DebugLog
@@ -105,7 +113,6 @@ public class PlaceholderFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-        EventBus.unregister(this);
     }
 
     @DebugLog
@@ -145,7 +152,23 @@ public class PlaceholderFragment extends Fragment {
 
     @DebugLog
     @Subscribe
-    public void apiErrorEvent(APIErrorEvent apiErrorEvent) {
+    public void apiErrorEvent(APIErrorEvent error) {
         // Do nothing for now, but maybe we should put an ! icon on the ActionBar?
+        mProgressBar.setVisibility(View.GONE);
+        if (error.isNetworkError()) {
+            Log.wtf(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+        }
+        switch (error.getHttpStatusCode()) {
+            default:
+                Log.e(TAG, String.format("Failed with HTTP Status code: %1$d", error.getHttpStatusCode()));
+        }
+        switch (error.getCallNumber()) {
+            case R.id.call_number_get_quote_of_the_day:
+                Toast.makeText(mHost, "Failed to get our quote.", Toast.LENGTH_SHORT).show();
+                return;
+            default:
+                Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+                return;
+        }
     }
 }

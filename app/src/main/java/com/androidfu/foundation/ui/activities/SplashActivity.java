@@ -52,8 +52,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.inject(this);
-        EventBus.register(this);
-
         if (savedInstanceState == null) {
             EventBus.post(new GetApplicationSettingsEvent(R.id.call_number_get_application_settings));
             mProgressBar.setVisibility(View.VISIBLE);
@@ -67,7 +65,20 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             // App was already running.  Skip any artificial delay.
             carryOn();
         }
+    }
 
+    @DebugLog
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.register(this);
+    }
+
+    @DebugLog
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.unregister(this);
     }
 
     @DebugLog
@@ -82,7 +93,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.reset(this);
-        EventBus.unregister(this);
     }
 
     /**
@@ -219,12 +229,10 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     @Subscribe
     public void apiSuccess(APIOkEvent apiOkEvent) {
         switch (apiOkEvent.getCallNumber()) {
-
             case R.id.call_number_get_application_settings:
                 mProgressBar.setVisibility(View.GONE);
                 interruptTheUser();
                 break;
-
             default:
                 // Nothing to see here
         }
@@ -232,21 +240,27 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
     @DebugLog
     @Subscribe
-    public void onApiErrorEvent(APIErrorEvent errorEvent) {
-
+    public void onApiErrorEvent(APIErrorEvent error) {
         mProgressBar.setVisibility(View.GONE);
-
-        if (errorEvent.isNetworkError()) {
-            Toast.makeText(this, R.string.error_no_network, Toast.LENGTH_SHORT).show();
+        if (error.isNetworkError()) {
+            Log.wtf(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
             interruptTheUser();
             return;
         }
-        switch (errorEvent.getHttpStatusCode()) {
+        switch (error.getHttpStatusCode()) {
             case GetApplicationSettingsEvent.ERROR_NOT_FOUND:
             default:
-                Toast.makeText(this, R.string.error_server_error, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, String.format("Failed with HTTP Status code: %1$d", error.getHttpStatusCode()));
+        }
+        switch (error.getCallNumber()) {
+            case R.id.call_number_get_application_settings:
+                Toast.makeText(this, "Failed to get our application settings.", Toast.LENGTH_SHORT).show();
                 interruptTheUser();
+                return;
+            default:
+                Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+                interruptTheUser();
+                return;
         }
     }
-
 }

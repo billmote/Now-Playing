@@ -27,7 +27,6 @@ public class MainActivity extends BaseActivity implements PlaceholderFragment.On
         setContentView(R.layout.activity_main);
 
         ButterKnife.inject(this);
-        EventBus.register(this);
 
         Tracker tracker = GoogleAnalyticsHelper.getInstance().getTracker(GoogleAnalyticsHelper.TrackerName.APP_TRACKER);
         tracker.send(new HitBuilders.AppViewBuilder().build());
@@ -43,6 +42,20 @@ public class MainActivity extends BaseActivity implements PlaceholderFragment.On
                     .replace(R.id.fragment_container, placeholderFragment, PlaceholderFragment.TAG)
                     .commit();
         }
+    }
+
+    @DebugLog
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.register(this);
+    }
+
+    @DebugLog
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.unregister(this);
     }
 
     @DebugLog
@@ -65,12 +78,14 @@ public class MainActivity extends BaseActivity implements PlaceholderFragment.On
         return super.onOptionsItemSelected(item);
     }
 
+    @DebugLog
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.unregister(this);
+        ButterKnife.reset(this);
     }
 
+    @DebugLog
     @Override
     public void onFragmentInteraction() {
         // Do something fancy here.

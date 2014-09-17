@@ -25,7 +25,6 @@ public class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
     }
 
-
     @DebugLog
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

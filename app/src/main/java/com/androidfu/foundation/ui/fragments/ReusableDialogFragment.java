@@ -7,7 +7,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Html;
 
@@ -35,7 +34,7 @@ public class ReusableDialogFragment extends DialogFragment {
     private ReusableDialogListener mHost;
 
     @DebugLog
-    public static ReusableDialogFragment newInstance(@NonNull String dialogTitle, @NonNull String dialogBodyText, String positiveButtonLabel, String neutralButtonLabel, String negativeButtonLabel, String iconFilePath) {
+    public static ReusableDialogFragment newInstance(String dialogTitle, String dialogBodyText, String positiveButtonLabel, String neutralButtonLabel, String negativeButtonLabel, String iconFilePath) {
         Log.v(TAG, "newInstance()");
         ReusableDialogFragment reusableDialogFragment = new ReusableDialogFragment();
         Bundle bundle = new Bundle();
@@ -57,7 +56,6 @@ public class ReusableDialogFragment extends DialogFragment {
     }
 
     @DebugLog
-    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
