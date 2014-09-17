@@ -37,4 +37,21 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_quote"
+        android:divider="#FFAAAAAA"
+        android:dividerHeight="1dp"
+        tools:listitem="@layout/listview_simple_row" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Waiting on our list ..."
+        android:visibility="gone" />
+
 </RelativeLayout>
