@@ -23,3 +23,6 @@ build
 
 # Java Class Files
 *.class
+
+# API Keys, etc.
+secret.xml

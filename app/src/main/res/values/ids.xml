@@ -6,5 +6,5 @@
 
     <!-- Our unique integers for our API requests -->
     <item name="call_number_get_application_settings" type="id" />
-    <item name="call_number_get_quote_of_the_day" type="id" />
+    <item name="api_call_get_movies" type="id" />
 </resources>

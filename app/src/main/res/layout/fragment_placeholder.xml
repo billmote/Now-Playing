@@ -3,31 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/content_desc_network_image" />
-
-    <TextView
-        android:id="@+id/tv_quote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button"
-        android:layout_centerInParent="true"
-        android:layout_margin="16dp"
-        android:background="#AA666666"
-        android:textColor="#FFFFFFFF"
-        android:textSize="24sp"
-        android:visibility="gone"
-        tools:text="Some quote of the day." />
-
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="@string/btn_update" />
+        android:text="@string/btn_fetch" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -41,7 +22,7 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_quote"
+        android:layout_below="@+id/button"
         android:divider="#FFAAAAAA"
         android:dividerHeight="1dp"
         tools:listitem="@layout/listview_simple_row" />
@@ -51,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Waiting on our list ..."
+        android:text="@string/movie_list_empty_text"
         android:visibility="gone" />
 
 </RelativeLayout>

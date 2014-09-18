@@ -11,6 +11,6 @@
 
     <!-- URLs, etc -->
     <string name="application_settings_url">https://raw.githubusercontent.com/androidfu/foundation_api/master/v2.0</string>
-    <string name="quote_of_the_day_url">http://www.iheartquotes.com/api/v1</string>
+    <string name="movies_url">http://api.rottentomatoes.com/api/public/v1.0/lists/movies</string>
 
 </resources>
