@@ -5,25 +5,34 @@
 
     <string name="title_activity_base">BaseActivity</string>
 
+    <string name="error_application_settings">Failed to get our Application Settings.</string>
+    <string name="error_no_network">Are you sure you have network connectivity?</string>
     <string name="error_preferences_illegal_state">You must call initialize() with an Application context first.</string>
-    <string name="error_message_something_went_wrong">Something went wrong.  Please contact the developer.</string>
-    <string name="error_no_network">error_no_network</string>
     <string name="error_server_error">Server Error</string>
+    <string name="error_something_went_wrong">Something went wrong.  Please contact the developer.</string>
 
-    <string name="action_force_crash">Force Crash</string>
-    <string name="action_reset_application_preferences">Reset Prefs</string>
+    <string name="actionview_progress_indicator" />
 
-    <string name="dialog_button_quit">QUIT</string>
-    <string name="dialog_button_update">UPDATE</string>
-    <string name="dialog_button_not_now">NOT NOW</string>
-    <string name="dialog_button_ok">OK</string>
+    <string name="developer_action_force_crash">Force Crash</string>
+    <string name="developer_action_reset_application_preferences">Reset Prefs</string>
+
+    <string name="dialog_title_catastrophic_failure">CATASTROPHIC FAILURE</string>
+    <string name="dialog_title_no_addressees">NO ADDRESSEES</string>
     <string name="dialog_title_temporarily_disabled">APPLICATION DISABLED</string>
     <string name="dialog_title_update_required">MANDATORY UPDATE</string>
     <string name="dialog_title_update_available">UPDATE AVAILABLE</string>
-    <string name="dialog_title_message_of_the_day">MESSAGE OF THE DAY</string>
+
+    <string name="dialog_body_catastrophic_failure">Not sure how we got here, but this might be a clue: %1$s\n\nPlease consider reporting this failure to the developers.</string>
+
+    <string name="dialog_button_not_now">NOT NOW</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_quit">QUIT</string>
+    <string name="dialog_button_update">UPDATE</string>
 
     <string name="btn_fetch">FETCH</string>
     <string name="btn_refresh">REFRESH</string>
 
-    <string name="movie_list_empty_text">Waiting on our list of movies.  Try fetching some!</string>
+    <string name="listview_empty_tv_fetching_movies">Waiting on our list of movies.  Try fetching some!</string>
+    <!-- Unsorted string resources will get added below this comment by default -->
+
 </resources>

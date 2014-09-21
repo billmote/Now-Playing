@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/movie_list_empty_text"
+        android:text="@string/listview_empty_tv_fetching_movies"
         android:visibility="gone" />
 
 </RelativeLayout>

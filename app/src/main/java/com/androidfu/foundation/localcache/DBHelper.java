@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.androidfu.foundation.model.ApplicationSettings;
+import com.androidfu.foundation.model.Version;
 import com.androidfu.foundation.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -19,6 +20,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
     private static final int DATABASE_VERSION = 1;
 
     private Dao<ApplicationSettings, Integer> applicationSettingsDao;
+    private Dao<Version, Integer> versionDao;
 
     @DebugLog
     public DBHelper(Context context) {
@@ -31,6 +33,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
 
         try {
             Log.i(DBHelper.class.getName(), "onCreate");
+            TableUtils.createTable(connectionSource, Version.class);
             TableUtils.createTable(connectionSource, ApplicationSettings.class);
         } catch (SQLException e) {
             Log.e(DBHelper.class.getName(), "Can't create database", e);
@@ -44,6 +47,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         try {
             Log.i(DBHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, ApplicationSettings.class, true);
+            TableUtils.dropTable(connectionSource, Version.class, true);
             this.onCreate(db, connectionSource);
         } catch (SQLException e) {
             Log.e(DBHelper.class.getName(), "Can't drop databases", e);
@@ -63,10 +67,25 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         return this.applicationSettingsDao;
     }
 
+    // Need to create a version dao that we can access in our "wrappers"
+    @DebugLog
+    public Dao<Version, Integer> getVersionDao() {
+        if (this.versionDao == null) {
+            try {
+                this.versionDao = this.getDao(Version.class);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return this.versionDao;
+    }
+
     @DebugLog
     @Override
     public void close() {
         super.close();
         this.applicationSettingsDao = null;
+        this.versionDao = null;
     }
+
 }

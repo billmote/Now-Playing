@@ -30,8 +30,8 @@ public class BaseActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (BuildConfig.DEBUG && menu.findItem(R.id.force_crash) == null) {
             // Only show these options for developer builds
-            menu.add(R.id.developer_preference_group, R.id.force_crash, Menu.NONE, R.string.action_force_crash);
-            menu.add(R.id.developer_preference_group, R.id.reset_prefs, Menu.NONE, R.string.action_reset_application_preferences);
+            menu.add(R.id.developer_preference_group, R.id.force_crash, Menu.NONE, R.string.developer_action_force_crash);
+            menu.add(R.id.developer_preference_group, R.id.reset_prefs, Menu.NONE, R.string.developer_action_reset_application_preferences);
         }
         return super.onPrepareOptionsMenu(menu);
     }

@@ -11,10 +11,10 @@ import retrofit.http.Query;
  * Created by billmote on 9/7/14.
  */
 public interface APIRequests {
-    final static String APPSETTINGS = "/ApplicationSettings.json";
+    final static String APPSETTINGS = "/application_settings.json";
     final static String MOVIES = "/box_office.json";
 
-    // APLICATION SETTINGS
+    // APPLICATION SETTINGS
     @GET(APPSETTINGS)
     void getApplicationSettings(Callback<ApplicationSettings> cb);
 

@@ -1,4 +1,3 @@
-
 package com.androidfu.foundation.model;
 
 import com.google.gson.annotations.Expose;

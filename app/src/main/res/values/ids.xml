@@ -5,6 +5,6 @@
     <item name="developer_preference_group" type="id" />
 
     <!-- Our unique integers for our API requests -->
-    <item name="call_number_get_application_settings" type="id" />
+    <item name="api_call_get_application_settings" type="id" />
     <item name="api_call_get_movies" type="id" />
 </resources>

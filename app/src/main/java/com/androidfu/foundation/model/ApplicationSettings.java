@@ -1,141 +1,213 @@
 package com.androidfu.foundation.model;
 
+import com.androidfu.foundation.FoundationApplication;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @DatabaseTable(tableName = "applicationsettings")
-public class ApplicationSettings extends BaseModel {
+public class ApplicationSettings {
+
+    @DatabaseField(generatedId = true)
+    private int _id;
 
     @Expose
+    @SerializedName("is_app_disabled")
     @DatabaseField
-    private boolean app_disabled;
+    private boolean appDisabled;
 
     @Expose
+    @SerializedName("is_update_nag_enabled")
     @DatabaseField
-    private boolean upg_nag_enabled;
+    private boolean updateNagEnabled;
 
     @Expose
+    @SerializedName("message_of_the_day_title")
     @DatabaseField
-    private int production_version_number;
+    private String motdTitle;
 
     @Expose
+    @SerializedName("motd_frequency")
     @DatabaseField
-    private int low_watermark_version_number;
+    private long motdFrequency;
 
     @Expose
+    @SerializedName("contact_email")
     @DatabaseField
-    private String kill_switch_message_text;
+    private String contactEmail;
 
     @Expose
+    @SerializedName("production_version_number")
     @DatabaseField
-    private String mandatory_update_message_text;
+    private int prodVersionNum;
 
     @Expose
+    @SerializedName("low_watermark_version_number")
     @DatabaseField
-    private String message_of_the_day_text;
+    private int lwmVersionNum;
 
     @Expose
+    @SerializedName("kill_switch_message_text")
     @DatabaseField
-    private String update_nag_message_text;
+    private String killSwitchMessageText;
 
     @Expose
+    @SerializedName("mandatory_update_message_text")
     @DatabaseField
-    private Long last_updated_on;
+    private String mandatoryUpdateMessageText;
 
     @Expose
+    @SerializedName("message_of_the_day_text")
     @DatabaseField
-    private String terms_of_use_text;
+    private String motdMessageText;
 
     @Expose
+    @SerializedName("terms_of_use_text")
     @DatabaseField
-    private String privacy_policy_text;
+    private String termsOfUseText;
 
-    public boolean isApp_disabled() {
-        return app_disabled;
+    @Expose
+    @SerializedName("privacy_policy_text")
+    @DatabaseField
+    private String privacyPolicyText;
+
+    @Expose
+    private List<Version> versions = new ArrayList<Version>();
+    @ForeignCollectionField(eager = true)
+
+    /**
+     * We need a container for the JSON array prior to storing the data in the database as there's
+     * no ORMList container for a Java List.
+     */
+    private ForeignCollection<Version> versionsCollections;
+
+    public boolean isAppDisabled() {
+        return appDisabled;
     }
 
-    public void setApp_disabled(boolean isAppDisabled) {
-        this.app_disabled = isAppDisabled;
+    public void setAppDisabled(boolean isAppDisabled) {
+        this.appDisabled = isAppDisabled;
     }
 
-    public boolean isUpg_nag_enabled() {
-        return upg_nag_enabled;
+    public boolean isUpdateNagEnabled() {
+        return updateNagEnabled;
     }
 
-    public void setUpg_nag_enabled(boolean isNagEnabled) {
-        this.upg_nag_enabled = isNagEnabled;
+    public void setUpdateNagEnabled(boolean isNagEnabled) {
+        this.updateNagEnabled = isNagEnabled;
     }
 
-    public int getProduction_version_number() {
-        return production_version_number;
+    public int getProdVersionNum() {
+        return prodVersionNum;
     }
 
-    public void setProduction_version_number(int production_version_number) {
-        this.production_version_number = production_version_number;
+    public void setProdVersionNum(int prodVersionNum) {
+        this.prodVersionNum = prodVersionNum;
     }
 
-    public int getLow_watermark_version_number() {
-        return low_watermark_version_number;
+    public int getLwmVersionNum() {
+        return lwmVersionNum;
     }
 
-    public void setLow_watermark_version_number(int low_watermark_version_number) {
-        this.low_watermark_version_number = low_watermark_version_number;
+    public void setLwmVersionNum(int lwmVersionNum) {
+        this.lwmVersionNum = lwmVersionNum;
     }
 
-    public String getKill_switch_message_text() {
-        return kill_switch_message_text;
+    public String getKillSwitchMessageText() {
+        return killSwitchMessageText;
     }
 
-    public void setKill_switch_message_text(String kill_switch_message_text) {
-        this.kill_switch_message_text = kill_switch_message_text;
+    public void setKillSwitchMessageText(String killSwitchMessageText) {
+        this.killSwitchMessageText = killSwitchMessageText;
     }
 
-    public String getMandatory_update_message_text() {
-        return mandatory_update_message_text;
+    public String getMandatoryUpdateMessageText() {
+        return mandatoryUpdateMessageText;
     }
 
-    public void setMandatory_update_message_text(String mandatory_update_message_text) {
-        this.mandatory_update_message_text = mandatory_update_message_text;
+    public void setMandatoryUpdateMessageText(String mandatoryUpdateMessageText) {
+        this.mandatoryUpdateMessageText = mandatoryUpdateMessageText;
     }
 
-    public String getMessage_of_the_day_text() {
-        return message_of_the_day_text;
+    public String getMotdMessageText() {
+        return motdMessageText;
     }
 
-    public void setMessage_of_the_day_text(String message_of_the_day_text) {
-        this.message_of_the_day_text = message_of_the_day_text;
+    public void setMotdMessageText(String motdMessageText) {
+        this.motdMessageText = motdMessageText;
     }
 
-    public String getUpdate_nag_message_text() {
-        return update_nag_message_text;
+    public String getTermsOfUseText() {
+        return termsOfUseText;
     }
 
-    public void setUpdate_nag_message_text(String update_nag_message_text) {
-        this.update_nag_message_text = update_nag_message_text;
+    public void setTermsOfUseText(String termsOfUseText) {
+        this.termsOfUseText = termsOfUseText;
     }
 
-    public Long getLast_updated_on() {
-        return last_updated_on;
+    public String getPrivacyPolicyText() {
+        return privacyPolicyText;
     }
 
-    public void setLast_updated_on(Long last_updated_on) {
-        this.last_updated_on = last_updated_on;
+    public void setPrivacyPolicyText(String privacyPolicyText) {
+        this.privacyPolicyText = privacyPolicyText;
     }
 
-    public String getTerms_of_use_text() {
-        return terms_of_use_text;
+    public List<Version> getVersions() {
+        return versions;
     }
 
-    public void setTerms_of_use_text(String terms_of_use_text) {
-        this.terms_of_use_text = terms_of_use_text;
+    public void setVersions(List<Version> versions) {
+        this.versions = versions;
     }
 
-    public String getPrivacy_policy_text() {
-        return privacy_policy_text;
+    public String getMotdTitle() {
+        return motdTitle;
     }
 
-    public void setPrivacy_policy_text(String privacy_policy_text) {
-        this.privacy_policy_text = privacy_policy_text;
+    public void setMotdTitle(String motdTitle) {
+        this.motdTitle = motdTitle;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public long getMotdFrequency() {
+        return motdFrequency;
+    }
+
+    public void setMotdFrequency(long motdFrequency) {
+        this.motdFrequency = motdFrequency;
+    }
+
+    public ForeignCollection<Version> getVersionsCollections() {
+        return versionsCollections;
+    }
+
+    public void setVersionsCollections(ForeignCollection<Version> versionsCollections) {
+        this.versionsCollections = versionsCollections;
+    }
+
+    public String getChangeLog() {
+        StringBuilder changes = new StringBuilder();
+        String delimiter = "";
+        for (Version version : this.getVersionsCollections()) {
+            if (version.getVersionCode() > FoundationApplication.APP_VERSION_CODE) {
+                changes.append(delimiter).append(version.getChanges());
+                delimiter = "<br/>";
+            }
+        }
+        return changes.toString();
     }
 }

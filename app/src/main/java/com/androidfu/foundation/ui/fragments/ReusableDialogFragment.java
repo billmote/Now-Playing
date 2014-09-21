@@ -135,6 +135,13 @@ public class ReusableDialogFragment extends DialogFragment {
         }
     }
 
+    @DebugLog
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        //mHost.handleNeutralResult();
+    }
+
     public interface ReusableDialogListener {
 
         /* what else comes back onActivityResult?  Might be more useful stuff. */

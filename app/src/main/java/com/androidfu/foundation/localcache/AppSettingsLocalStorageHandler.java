@@ -3,6 +3,7 @@ package com.androidfu.foundation.localcache;
 import android.content.Context;
 
 import com.androidfu.foundation.model.ApplicationSettings;
+import com.androidfu.foundation.model.Version;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.table.TableUtils;
 
@@ -43,6 +44,14 @@ public class AppSettingsLocalStorageHandler extends LocalStorageHandler<Applicat
     public void saveCurrentApplicationSettings(ApplicationSettings appset) throws SQLException {
         TableUtils.clearTable(this.getDao().getConnectionSource(), ApplicationSettings.class);
         this.getDao().create(appset);
+        Dao versionDao = DBManager.getHelper(this.context).getVersionDao();
+        TableUtils.clearTable(versionDao.getConnectionSource(), Version.class);
+        for (Version version : appset.getVersions()) {
+            // ApplicationSettings dao does not save Version. Only Version dao does that
+            // ApplicationSettings.getVersionCollections() will make a call to the "version"
+            // db table referencing all Version rows with ApplicationSettings.id
+            version.setApplicationSettings(appset);
+            versionDao.create(version);
+        }
     }
-
 }

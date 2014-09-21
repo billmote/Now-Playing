@@ -14,17 +14,8 @@ import hugo.weaving.DebugLog;
 public class SharedPreferencesHelper {
     public static final String TAG = SharedPreferencesHelper.class.getSimpleName();
 
-    public static final String KEY_PREFS_LAST_FETCHED_TIME_IN_MILLIS = "last_app_settings_fetch_time";
-    public static final String KEY_PREFS_UPDATE_AVAILABLE_FLAG = "update_available";
-    public static final String KEY_PREFS_APP_IS_DISABLED_FLAG = "app_is_disabled_flag";
-    public static final String KEY_PREFS_UPDATE_REQUIRED_FLAG = "update_required_flag";
-    public static final String KEY_PREFS_SHOW_UPDATE_NAG_FLAG = "update_nag_flag";
-    public static final String KEY_PREFS_KILLSWITCH_MESSAGE = "killswitch_message";
-    public static final String KEY_PREFS_MANDATORY_UPDATE_MESSAGE = "mandatory_update_message";
-    public static final String KEY_PREFS_UPDATE_NAG_MESSAGE = "update_nag_message";
-    public static final String KEY_PREFS_MESSAGE_OF_THE_DAY = "message_of_the_day";
     public static final String KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS = "last_seen_motd_time";
-    public static final String KEY_PREFS_MOTD_LAST_UPDATED_TIME_IN_MILLIS = "last_updated_motd_time";
+    public static final String KEY_PREFS_FIRST_RUN = "first_run";
 
     private static SharedPreferencesHelper mInstance;
     private static SharedPreferences sharedPreferences;

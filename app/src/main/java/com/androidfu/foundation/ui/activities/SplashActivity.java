@@ -27,14 +27,37 @@ import com.squareup.otto.Subscribe;
 
 import java.sql.SQLException;
 
+import javax.annotation.Nonnull;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import hugo.weaving.DebugLog;
 
 public class SplashActivity extends Activity implements ReusableDialogFragment.ReusableDialogListener {
 
-    private static final String TAG = SplashActivity.class.getSimpleName();
-    private boolean mAlreadyHandledNeutralResult;
+    public static final String TAG = SplashActivity.class.getSimpleName();
+
+    private static final String KEY_BUNDLE_USER_INTERRUPTED_STATE = "is_user_interrupted";
+    private static final String KEY_BUNDLE_ERROR_MESSAGE = "error_message";
+    private static final String KEY_BUNDLE_CATASTROPHIC_FAILURE = "is_catastrophic_failure";
+
+    /**
+     * Dismissable dialogs call handleNeutralResult() twice.  Once for the actual touch that
+     * dismissed the dialog and once as a result of onDismiss().  Why?  Who knows, but this flag
+     * will keep things square.
+     */
+    private boolean mAlreadyHandledDialogResult;
+
+    /**
+     * Keep track of whether or not we've interrupted the user.  This is important when determining
+     * which state to put the app in in onResume().  We also need to track this flag between
+     * view creations so they cannot bypass a hard-stop dialog like the kill switch or mandatory
+     * update.
+     */
+    private boolean mInterruptedTheUser;
+    private String mErrorMessage = "IDK";
+    private boolean mCatastrophicFailure;
+    private DialogFragment mInterruptTheUserDialog;
 
     @InjectView(R.id.progressBar)
     ProgressBar mProgressBar;
@@ -53,7 +76,8 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         setContentView(R.layout.activity_splash);
         ButterKnife.inject(this);
         if (savedInstanceState == null) {
-            EventBus.post(new GetApplicationSettingsEvent(R.id.call_number_get_application_settings));
+            mInterruptedTheUser = true; // Careful, this is used in onResume()
+            EventBus.post(new GetApplicationSettingsEvent(R.id.api_call_get_application_settings));
             mProgressBar.setVisibility(View.VISIBLE);
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -62,8 +86,13 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
                 }
             }, 3000);
         } else {
-            // App was already running.  Skip any artificial delay.
-            carryOn();
+            try {
+                mInterruptedTheUser = savedInstanceState.getBoolean(KEY_BUNDLE_USER_INTERRUPTED_STATE, true);
+                mErrorMessage = savedInstanceState.getString(KEY_BUNDLE_ERROR_MESSAGE);
+                mCatastrophicFailure = savedInstanceState.getBoolean(KEY_BUNDLE_CATASTROPHIC_FAILURE);
+            } catch (Exception e) {
+                Log.e(TAG, "We failed to reassign our fields from our state bundle.", e);
+            }
         }
     }
 
@@ -72,6 +101,27 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     protected void onResume() {
         super.onResume();
         EventBus.register(this);
+        /**
+         * We're setting a flag to handle a couple of states:
+         *
+         * 1. If the app is not running we
+         * want to go through interruptTheUser() so the flag is set to true in onCreate().  This
+         * is done if our bundle is not null.  We then set it back to false and iterate over our
+         * logic in interruptTheUser().
+         *
+         * 2. If the user is sent to the play store for an update then we need them to go back
+         * through our interruptTheUser() method as the application state may be set to "disabled"
+         * or have the mandatory update flag set.  interruptTheUser() will set the flag to true
+         * as required.
+         *
+         * The only way to get to carryOn() is if the app was already running and we did not
+         * interrupt the user during the original execution of SplashActivity.
+         */
+        if (!mInterruptedTheUser) {
+            carryOn();
+        } else {
+            interruptTheUser(null);
+        }
     }
 
     @DebugLog
@@ -79,6 +129,15 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     protected void onPause() {
         super.onPause();
         EventBus.unregister(this);
+    }
+
+    @DebugLog
+    @Override
+    protected void onSaveInstanceState(@Nonnull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_BUNDLE_USER_INTERRUPTED_STATE, mInterruptedTheUser);
+        outState.putString(KEY_BUNDLE_ERROR_MESSAGE, mErrorMessage);
+        outState.putBoolean(KEY_BUNDLE_CATASTROPHIC_FAILURE, mCatastrophicFailure);
     }
 
     @DebugLog
@@ -101,73 +160,127 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
      * from our PaaS provider.
      */
     @DebugLog
-    public void interruptTheUser() {
-
-        AppSettingsLocalStorageHandler appSettingsDBHandler = new AppSettingsLocalStorageHandler(this);
+    @Subscribe
+    public void interruptTheUser(APIOkEvent event) {
+        if (mInterruptTheUserDialog != null) {
+            /**
+             * If we're already displaying a dialog then don't re-run through this method.
+             */
+            return;
+        }
+        if (event != null && event.getCallNumber() != R.id.api_call_get_application_settings) {
+            /**
+             * We call this method passing in a null argument when we're coming from onResume() or
+             * from an APIErrorEvent.  So, if we have a non-null "event" and the event was the result
+             * of a call made to GetApplicationSettingsEvent then we're good to continue.
+             *
+             * APIOkEvent is a hollow event carrying little more than an int representing the call
+             * for which it is responding "success."
+             */
+            return;
+        } else if ((event == null) && SharedPreferencesHelper.getBoolean(SharedPreferencesHelper.KEY_PREFS_FIRST_RUN, true)) {
+            /**
+             * If we had a null event we know we're coming from onResume() or an APIErrorEvent,
+             * but lets check to see if this is a first run of the application and set a flag.  We
+             * need a database copy of our ApplicationSettings to continue past this point in the
+             * method or we'll throw a catastrophic failure.
+             */
+            SharedPreferencesHelper.putBoolean(SharedPreferencesHelper.KEY_PREFS_FIRST_RUN, false);
+            return;
+        }
 
         DialogFragment dialogFragment;
         ApplicationSettings appSettings = null;
-        boolean interruptedTheUser = false;
-
+        mInterruptedTheUser = false;
+        AppSettingsLocalStorageHandler appSettingsDBHandler = new AppSettingsLocalStorageHandler(this);
         try {
             appSettings = appSettingsDBHandler.getCurrentApplicationSettings();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        mProgressBar.setVisibility(View.GONE);
+
         if (appSettings == null) {
-            // We're in a bad spot.  Need to quit.
-            Toast.makeText(this, "APPLICATION ERROR -- PLEASE TRY AGAIN", Toast.LENGTH_SHORT).show();
-            finish();
+            /* This is a bad spot to be in. */
+            Log.wtf(TAG, "Catastrophic Failure: ApplicationSettings == null");
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_catastrophic_failure), String.format(getString(R.string.dialog_body_catastrophic_failure), mErrorMessage), null, null, getString(R.string.dialog_button_quit), null);
+            displayDialogFragment(dialogFragment, false);
+
+            mCatastrophicFailure = true;
+            mInterruptedTheUser = true;
+
             return;
         }
 
-        if (appSettings.isApp_disabled()) {
-                /* The application has been disabled via the kill-switch */
+        if (appSettings.isAppDisabled()) {
+            /* The application has been disabled via the kill-switch */
             Log.wtf(TAG, "The developer has decided that this application should not be run.");
-            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_temporarily_disabled), appSettings.getKill_switch_message_text(), null, null, getString(R.string.dialog_button_quit), null);
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_temporarily_disabled), appSettings.getKillSwitchMessageText(), null, null, getString(R.string.dialog_button_quit), null);
             displayDialogFragment(dialogFragment, false);
 
-            interruptedTheUser = true;
+            mInterruptedTheUser = true;
         }
 
-        if (!interruptedTheUser && appSettings.getLow_watermark_version_number() > FoundationApplication.APP_VERSION_CODE) {
-                /* The developer has decided that your version should no longer be in use. */
+        if (!mInterruptedTheUser && appSettings.getLwmVersionNum() > FoundationApplication.APP_VERSION_CODE) {
+            /* The developer has decided that your version should no longer be in use. */
             Log.wtf(TAG, "Displaying the mandatory update dialog.");
-            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_required), appSettings.getMandatory_update_message_text(), getString(R.string.dialog_button_update), null, getString(R.string.dialog_button_quit), null);
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_required), appSettings.getMandatoryUpdateMessageText(), getString(R.string.dialog_button_update), null, getString(R.string.dialog_button_quit), null);
             displayDialogFragment(dialogFragment, false);
 
-            interruptedTheUser = true;
+            mInterruptedTheUser = true;
         }
 
-        if (!interruptedTheUser && appSettings.isUpg_nag_enabled() && appSettings.getProduction_version_number() > FoundationApplication.APP_VERSION_CODE) {
-                /* Your version is older than the current version.  Display an update nag screen with a list of new features. */
+        if (!mInterruptedTheUser && appSettings.isUpdateNagEnabled() && appSettings.getProdVersionNum() > FoundationApplication.APP_VERSION_CODE) {
+            /* Your version is older than the current version.  Display an update nag screen with a list of new features. */
             Log.i(TAG, "Displaying the update nag.");
-            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_available), appSettings.getUpdate_nag_message_text(), getString(R.string.dialog_button_update), getString(R.string.dialog_button_not_now), null, null);
-            displayDialogFragment(dialogFragment, true);
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_available), appSettings.getChangeLog(), getString(R.string.dialog_button_update), getString(R.string.dialog_button_not_now), null, null);
+            displayDialogFragment(dialogFragment, false);
+
             // Display update icon on the options menu
             invalidateOptionsMenu();
 
-            interruptedTheUser = true;
+            mInterruptedTheUser = true;
+
         } else {
             // Hide the update icon on the options menu
             invalidateOptionsMenu();
         }
 
-        if (!interruptedTheUser && SharedPreferencesHelper.getLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, 0) < appSettings.getLast_updated_on()) {
-                /* You haven't seen this MOTD */
-            // getBoolean(!KEY_PREFS_MOTD_SEEN_FLAG, false) &&
+        /**
+         * If ...
+         * motdFrequency == 0, Message of the Day is disabled, return false.
+         * motdFrequency == -1, Message of the Day should always be shown, return true.
+         * Otherwise do the math and honor the value returned in ApplicationSettings
+         */
+        long motdFrequency = appSettings.getMotdFrequency();
+        boolean showMotd = (motdFrequency == 0 ? false : motdFrequency == -1 ? true : System.currentTimeMillis() - SharedPreferencesHelper.getLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, 0) > motdFrequency);
+        if (!mInterruptedTheUser && showMotd) {
+            /* Show the MOTD */
             Log.i(TAG, "Displaying the MOTD.");
             SharedPreferencesHelper.putLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, System.currentTimeMillis());
-            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_message_of_the_day), appSettings.getMessage_of_the_day_text(), null, getString(R.string.dialog_button_ok), null, null);
-            displayDialogFragment(dialogFragment, true);
+            dialogFragment = ReusableDialogFragment.newInstance(appSettings.getMotdTitle(), appSettings.getMotdMessageText(), null, getString(R.string.dialog_button_ok), null, null);
+            displayDialogFragment(dialogFragment, false);
 
-            interruptedTheUser = true;
+            mInterruptedTheUser = true;
         }
 
-        if (!interruptedTheUser) {
+        if (!mInterruptedTheUser) {
+            /**
+             * Only carryOn() if we don't have a dialog visible.
+             */
             carryOn();
         }
+    }
+
+    @DebugLog
+    private void carryOn() {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+        }
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -180,8 +293,10 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
      */
     @DebugLog
     private void displayDialogFragment(DialogFragment dialogFragment, boolean isCancelable) {
+        mAlreadyHandledDialogResult = false;
+        mInterruptTheUserDialog = dialogFragment;
         dialogFragment.setCancelable(isCancelable);
-        if (getFragmentManager() != null && getFragmentManager().findFragmentByTag(ReusableDialogFragment.TAG) == null) {
+        if (getFragmentManager().findFragmentByTag(ReusableDialogFragment.TAG) == null) {
             dialogFragment.show(getFragmentManager(), ReusableDialogFragment.TAG);
         }
     }
@@ -189,11 +304,13 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     @DebugLog
     @Override
     public void handlePositiveResult() {
+        mAlreadyHandledDialogResult = true;
+        mInterruptTheUserDialog = null;
         // Positive will only be available as an "update" option
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.google.android.googlequicksearchbox")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_market_url))));
         } catch (ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_http_url))));
         }
     }
 
@@ -202,8 +319,9 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     public void handleNeutralResult() {
         // Because the user can press outside the dialog to dismiss as well as pressing the
         // "OKAY" button we need to make sure we only end up with 1 activity.
-        if (!mAlreadyHandledNeutralResult) {
-            mAlreadyHandledNeutralResult = true;
+        mInterruptTheUserDialog = null;
+        if (!mAlreadyHandledDialogResult) {
+            mAlreadyHandledDialogResult = true;
             carryOn();
         }
     }
@@ -211,56 +329,44 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     @DebugLog
     @Override
     public void handleNegativeResult() {
+        mAlreadyHandledDialogResult = true;
+        mInterruptTheUserDialog = null;
         // Exit our app
-        finish();
-    }
-
-    @DebugLog
-    private void carryOn() {
-        if (mProgressBar.getVisibility() == View.VISIBLE) {
-            mProgressBar.setVisibility(View.GONE);
+        if (mCatastrophicFailure) {
+            SharedPreferencesHelper.clear();
         }
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 
     @DebugLog
     @Subscribe
-    public void apiSuccess(APIOkEvent apiOkEvent) {
-        switch (apiOkEvent.getCallNumber()) {
-            case R.id.call_number_get_application_settings:
-                mProgressBar.setVisibility(View.GONE);
-                interruptTheUser();
-                break;
-            default:
-                // Nothing to see here
-        }
-    }
-
-    @DebugLog
-    @Subscribe
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored") // We're going to die gracefully
     public void onApiErrorEvent(APIErrorEvent error) {
+
         mProgressBar.setVisibility(View.GONE);
+        mErrorMessage = error.getError().getMessage();
+
         if (error.isNetworkError()) {
-            Log.wtf(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
-            interruptTheUser();
+            Log.e(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+            Toast.makeText(this, R.string.error_no_network, Toast.LENGTH_SHORT).show();
+            interruptTheUser(null);
             return;
         }
         switch (error.getHttpStatusCode()) {
             case GetApplicationSettingsEvent.ERROR_NOT_FOUND:
             default:
                 Log.e(TAG, String.format("Failed with HTTP Status code: %1$d", error.getHttpStatusCode()));
+                Toast.makeText(this, R.string.error_server_error, Toast.LENGTH_SHORT).show();
+                interruptTheUser(null);
         }
         switch (error.getCallNumber()) {
-            case R.id.call_number_get_application_settings:
-                Toast.makeText(this, "Failed to get our application settings.", Toast.LENGTH_SHORT).show();
-                interruptTheUser();
-                return;
+            case R.id.api_call_get_application_settings:
+                Toast.makeText(this, R.string.error_application_settings, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, getString(R.string.error_application_settings), error.getError());
+                break;
             default:
                 Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
-                interruptTheUser();
-                return;
         }
+        interruptTheUser(null);
     }
 }
