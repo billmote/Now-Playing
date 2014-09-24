@@ -11,7 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.androidfu.foundation.R;
-import com.androidfu.foundation.model.Movie;
+import com.androidfu.foundation.model.movies.Movie;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

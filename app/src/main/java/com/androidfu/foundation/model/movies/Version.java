@@ -1,5 +1,6 @@
-package com.androidfu.foundation.model;
+package com.androidfu.foundation.model.movies;
 
+import com.androidfu.foundation.model.application.ApplicationSettings;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;

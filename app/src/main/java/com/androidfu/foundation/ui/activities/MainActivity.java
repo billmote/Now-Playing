@@ -3,8 +3,10 @@ package com.androidfu.foundation.ui.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.androidfu.foundation.R;
+import com.androidfu.foundation.model.movies.Movie;
 import com.androidfu.foundation.ui.fragments.MovieListFragment;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
@@ -82,7 +84,7 @@ public class MainActivity extends BaseActivity implements MovieListFragment.OnFr
 
     @DebugLog
     @Override
-    public void onFragmentInteraction() {
-        // Do something fancy here.
+    public void onMovieSelected(Movie movie) {
+        Toast.makeText(this, String.format("You chose: %1$s", movie.getTitle()), Toast.LENGTH_SHORT).show();
     }
 }

@@ -5,11 +5,11 @@ import android.content.Context;
 import com.androidfu.foundation.R;
 import com.androidfu.foundation.events.APIErrorEvent;
 import com.androidfu.foundation.events.APIOkEvent;
-import com.androidfu.foundation.events.GetApplicationSettingsEvent;
-import com.androidfu.foundation.events.GetMoviesEvent;
+import com.androidfu.foundation.events.application.GetApplicationSettingsEvent;
+import com.androidfu.foundation.events.movies.GetMoviesEvent;
 import com.androidfu.foundation.localcache.AppSettingsLocalStorageHandler;
-import com.androidfu.foundation.model.ApplicationSettings;
-import com.androidfu.foundation.model.Movies;
+import com.androidfu.foundation.model.application.ApplicationSettings;
+import com.androidfu.foundation.model.movies.Movies;
 import com.androidfu.foundation.util.EventBus;
 import com.squareup.otto.Subscribe;
 

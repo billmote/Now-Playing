@@ -1,4 +1,4 @@
-package com.androidfu.foundation.events;
+package com.androidfu.foundation.events.network;
 
 import org.parceler.Parcel;
 

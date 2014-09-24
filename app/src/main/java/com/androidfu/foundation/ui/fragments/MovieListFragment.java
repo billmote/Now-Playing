@@ -2,10 +2,12 @@ package com.androidfu.foundation.ui.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -14,13 +16,14 @@ import android.widget.Toast;
 
 import com.androidfu.foundation.R;
 import com.androidfu.foundation.events.APIErrorEvent;
-import com.androidfu.foundation.events.GetMoviesEvent;
-import com.androidfu.foundation.model.Movie;
-import com.androidfu.foundation.model.Movies;
+import com.androidfu.foundation.events.movies.GetMoviesEvent;
+import com.androidfu.foundation.model.movies.Movie;
+import com.androidfu.foundation.model.movies.Movies;
 import com.androidfu.foundation.ui.adapters.MovieAdapter;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.androidfu.foundation.util.Log;
+import com.androidfu.foundation.util.SoundManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.otto.Subscribe;
@@ -37,11 +40,13 @@ import hugo.weaving.DebugLog;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MovieListFragment extends Fragment {
+public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    private int mSoundID;
 
     public interface OnFragmentInteractionListener {
-        //TODO Make something happen when a listview row is clicked.
-        public void onFragmentInteraction();
+        @DebugLog
+        public void onMovieSelected(Movie movie);
     }
 
     public static final String TAG = MovieListFragment.class.getSimpleName();
@@ -61,9 +66,9 @@ public class MovieListFragment extends Fragment {
     @InjectView(android.R.id.list)
     ListView mMovieListView;
     @InjectView(android.R.id.empty)
-    TextView mEmpty;
+    TextView mEmptyTextView;
     @InjectView(R.id.button)
-    Button mButton;
+    Button mFetchMoviesBtn;
 
     @DebugLog
     public static MovieListFragment newInstance() {
@@ -94,12 +99,12 @@ public class MovieListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_placeholder, container, false);
         ButterKnife.inject(this, rootView);
 
-        //TODO Make sure this only gets called once (if required)
         Tracker tracker = GoogleAnalyticsHelper.getInstance().getTracker(GoogleAnalyticsHelper.TrackerName.APP_TRACKER);
         tracker.setPage(TAG);
         tracker.send(new HitBuilders.AppViewBuilder().build());
 
-        mMovieListView.setEmptyView(mEmpty);
+        mMovieListView.setEmptyView(mEmptyTextView);
+        mMovieListView.setOnItemClickListener(this);
 
         return rootView;
     }
@@ -184,9 +189,17 @@ public class MovieListFragment extends Fragment {
     }
 
     @DebugLog
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mListener.onMovieSelected((Movie) parent.getItemAtPosition(position));
+    }
+
+    @DebugLog
     @Subscribe
     public void showMovieList(Movies movies) {
-        mButton.setText(R.string.btn_refresh);
+        mSoundID = SoundManager.playSound(R.raw.success);
+        mProgressBar.setVisibility(View.GONE);
+        mFetchMoviesBtn.setText(R.string.btn_refresh);
         if (movies != null) {
             /**
              * We pass null from onResume() if we already have a list of movies otherwise we
@@ -205,8 +218,15 @@ public class MovieListFragment extends Fragment {
     public void apiErrorEvent(APIErrorEvent error) {
         // Do nothing for now, but maybe we should put an ! icon on the ActionBar?
         mProgressBar.setVisibility(View.GONE);
+        SoundManager.stopSound(mSoundID);
+        mSoundID = SoundManager.playSound(R.raw.fail);
         if (error.isNetworkError()) {
-            Log.wtf(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+            try {
+                // Surrounded with try/catch because too many things can throw an NPE here.
+                Log.wtf(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
+            }
         }
         switch (error.getHttpStatusCode()) {
             default:
@@ -217,8 +237,13 @@ public class MovieListFragment extends Fragment {
                 Toast.makeText(mHost, "Failed to get our list of movies.", Toast.LENGTH_SHORT).show();
                 return;
             default:
-                Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
-                return;
+                try {
+                    // Surrounded with try/catch because too many things can throw an NPE here.
+                    Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                }
         }
     }
+
 }

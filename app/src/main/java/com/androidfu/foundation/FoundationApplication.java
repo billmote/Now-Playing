@@ -11,6 +11,7 @@ import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.GoogleAnalyticsHelper;
 import com.androidfu.foundation.util.Log;
 import com.androidfu.foundation.util.SharedPreferencesHelper;
+import com.androidfu.foundation.util.SoundManager;
 import com.squareup.picasso.Picasso;
 
 import hugo.weaving.DebugLog;
@@ -46,15 +47,25 @@ public class FoundationApplication extends Application {
             Picasso.with(this).setLoggingEnabled(Boolean.valueOf(getString(R.string.picasso_logging_enabled)));
         }
 
-        new StrictModeHelper().setupStrictMode();
-
         APP_VERSION_CODE = getApplicationVersionCode();
         APP_VERSION_NAME = getApplicationVersionName();
 
+        /* Turn on StrictMode for Development */
+        new StrictModeHelper().setupStrictMode();
+
+        /* Initialize GoogleAnalytics */
         GoogleAnalyticsHelper.initialize(this);
+
+        /* Initialize our SharedPreferences Singleton */
         SharedPreferencesHelper.initialize(this);
 
+        /* Initialize our Database Helper */
         DBManager.getHelper(this);
+
+        /* Initialize our SoundManager */
+        SoundManager.initSounds(this);
+        SoundManager.addSound(R.raw.success);
+        SoundManager.addSound(R.raw.fail);
 
         registerHandlersWithEventBus();
     }

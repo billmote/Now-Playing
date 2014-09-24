@@ -3,8 +3,8 @@ package com.androidfu.foundation.localcache;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.androidfu.foundation.model.ApplicationSettings;
-import com.androidfu.foundation.model.Version;
+import com.androidfu.foundation.model.application.ApplicationSettings;
+import com.androidfu.foundation.model.movies.Version;
 import com.androidfu.foundation.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;

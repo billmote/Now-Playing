@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import com.androidfu.foundation.events.NetworkAvailableEvent;
+import com.androidfu.foundation.events.network.NetworkAvailableEvent;
 import com.androidfu.foundation.util.EventBus;
 
 import hugo.weaving.DebugLog;

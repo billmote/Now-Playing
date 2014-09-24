@@ -1,7 +1,7 @@
 package com.androidfu.foundation.api;
 
-import com.androidfu.foundation.model.ApplicationSettings;
-import com.androidfu.foundation.model.Movies;
+import com.androidfu.foundation.model.application.ApplicationSettings;
+import com.androidfu.foundation.model.movies.Movies;
 
 import retrofit.Callback;
 import retrofit.http.GET;
