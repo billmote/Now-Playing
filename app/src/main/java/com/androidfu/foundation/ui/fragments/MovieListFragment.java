@@ -184,6 +184,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     @DebugLog
     @OnClick(R.id.button)
     public void getMovieList(View v) {
+        mScrollPosition = mScrollOffset = 0;
         mProgressBar.setVisibility(View.VISIBLE);
         EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies));
     }
@@ -197,7 +198,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     @DebugLog
     @Subscribe
     public void showMovieList(Movies movies) {
-        mSoundID = SoundManager.playSound(R.raw.success);
         mProgressBar.setVisibility(View.GONE);
         mFetchMoviesBtn.setText(R.string.btn_refresh);
         if (movies != null) {
@@ -206,6 +206,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
              * should be getting a response from our API call and we'll populate the movies
              * here.
              */
+            mSoundID = SoundManager.playSound(R.raw.success);
             mMovies = movies.getMovies();
         }
         final MovieAdapter movieAdapter = new MovieAdapter(mHost, R.layout.listview_movie_row, mMovies);
