@@ -278,6 +278,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         if (mProgressBar != null) {
             mProgressBar.setVisibility(View.GONE);
         }
+
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
