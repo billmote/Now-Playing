@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,14 +41,14 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     private static final String KEY_BUNDLE_USER_INTERRUPTED_STATE = "is_user_interrupted";
     private static final String KEY_BUNDLE_ERROR_MESSAGE = "error_message";
     private static final String KEY_BUNDLE_CATASTROPHIC_FAILURE = "is_catastrophic_failure";
-
+    @InjectView(R.id.progressBar)
+    ProgressBar mProgressBar;
     /**
      * Dismissable dialogs call handleNeutralResult() twice.  Once for the actual touch that
      * dismissed the dialog and once as a result of onDismiss().  Why?  Who knows, but this flag
      * will keep things square.
      */
     private boolean mAlreadyHandledDialogResult;
-
     /**
      * Keep track of whether or not we've interrupted the user.  This is important when determining
      * which state to put the app in in onResume().  We also need to track this flag between
@@ -58,9 +59,8 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     private String mErrorMessage = "IDK";
     private boolean mCatastrophicFailure;
     private DialogFragment mInterruptTheUserDialog;
-
-    @InjectView(R.id.progressBar)
-    ProgressBar mProgressBar;
+    private final Handler mHandler = new Handler();
+    private final Runnable mSplashRunnable = new SplashRunnable();
 
     @DebugLog
     @Override
@@ -79,12 +79,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             mInterruptedTheUser = true; // Careful, this is used in onResume()
             EventBus.post(new GetApplicationSettingsEvent(R.id.api_call_get_application_settings));
             mProgressBar.setVisibility(View.VISIBLE);
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                }
-            }, 3000);
         } else {
             try {
                 mInterruptedTheUser = savedInstanceState.getBoolean(KEY_BUNDLE_USER_INTERRUPTED_STATE, true);
@@ -101,26 +95,38 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     protected void onResume() {
         super.onResume();
         EventBus.register(this);
-        /**
-         * We're setting a flag to handle a couple of states:
-         *
-         * 1. If the app is not running we
-         * want to go through interruptTheUser() so the flag is set to true in onCreate().  This
-         * is done if our bundle is not null.  We then set it back to false and iterate over our
-         * logic in interruptTheUser().
-         *
-         * 2. If the user is sent to the play store for an update then we need them to go back
-         * through our interruptTheUser() method as the application state may be set to "disabled"
-         * or have the mandatory update flag set.  interruptTheUser() will set the flag to true
-         * as required.
-         *
-         * The only way to get to carryOn() is if the app was already running and we did not
-         * interrupt the user during the original execution of SplashActivity.
-         */
-        if (!mInterruptedTheUser) {
-            carryOn();
-        } else {
-            interruptTheUser(null);
+        mHandler.postDelayed(mSplashRunnable, 3000);
+    }
+
+    /**
+     * We're going to display our branding here, but the process can be expedited by our API
+     * response coming back quickly as we'll end up in interruptTheUser() via Otto.
+     */
+    private class SplashRunnable implements Runnable {
+        @DebugLog
+        @Override
+        public void run() {
+            /**
+             * We're setting a flag to handle a couple of states:
+             *
+             * 1. If the app is not running we
+             * want to go through interruptTheUser() so the flag is set to true in onCreate().  This
+             * is done if our bundle is not null.  We then set it back to false and iterate over our
+             * logic in interruptTheUser().
+             *
+             * 2. If the user is sent to the play store for an update then we need them to go back
+             * through our interruptTheUser() method as the application state may be set to "disabled"
+             * or have the mandatory update flag set.  interruptTheUser() will set the flag to true
+             * as required.
+             *
+             * The only way to get to carryOn() is if the app was already running and we did not
+             * interrupt the user during the original execution of SplashActivity.
+             */
+            if (!mInterruptedTheUser) {
+                carryOn();
+            } else {
+                interruptTheUser(null);
+            }
         }
     }
 
@@ -129,6 +135,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     protected void onPause() {
         super.onPause();
         EventBus.unregister(this);
+        mHandler.removeCallbacks(mSplashRunnable);
     }
 
     @DebugLog
@@ -348,7 +355,11 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         mErrorMessage = error.getError().getMessage();
 
         if (error.isNetworkError()) {
-            Log.e(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+            try {
+                Log.e(TAG, String.format("Network Error for call %1$s: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(this, R.string.error_no_network, Toast.LENGTH_SHORT).show();
             interruptTheUser(null);
             return;
@@ -366,7 +377,11 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
                 Log.e(TAG, getString(R.string.error_application_settings), error.getError());
                 break;
             default:
-                Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+                try {
+                    Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                }
         }
         interruptTheUser(null);
     }
