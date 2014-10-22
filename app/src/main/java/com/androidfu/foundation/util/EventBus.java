@@ -38,7 +38,10 @@ public class EventBus {
 
     @DebugLog
     public static void unregister(Object subscriber) {
-        getInstance().mBus.unregister(subscriber);
-    }
+        try {
+            getInstance().mBus.unregister(subscriber);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }    }
 
 }

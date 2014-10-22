@@ -61,6 +61,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     private DialogFragment mInterruptTheUserDialog;
     private final Handler mHandler = new Handler();
     private final Runnable mSplashRunnable = new SplashRunnable();
+    private boolean mHideMotd;
 
     @DebugLog
     @Override
@@ -192,7 +193,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
              * need a database copy of our ApplicationSettings to continue past this point in the
              * method or we'll throw a catastrophic failure.
              */
-            SharedPreferencesHelper.putBoolean(SharedPreferencesHelper.KEY_PREFS_FIRST_RUN, false);
+            mHideMotd = true;
             return;
         }
 
@@ -213,10 +214,9 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             Log.wtf(TAG, "Catastrophic Failure: ApplicationSettings == null");
             dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_catastrophic_failure), String.format(getString(R.string.dialog_body_catastrophic_failure), mErrorMessage), null, null, getString(R.string.dialog_button_quit), null);
             displayDialogFragment(dialogFragment, false);
-
             mCatastrophicFailure = true;
             mInterruptedTheUser = true;
-
+            EventBus.unregister(this);
             return;
         }
 
@@ -262,7 +262,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
          */
         long motdFrequency = appSettings.getMotdFrequency();
         boolean showMotd = (motdFrequency == 0 ? false : motdFrequency == -1 ? true : System.currentTimeMillis() - SharedPreferencesHelper.getLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, 0) > motdFrequency);
-        if (!mInterruptedTheUser && showMotd) {
+        if (!mInterruptedTheUser && showMotd && !mHideMotd) {
             /* Show the MOTD */
             Log.i(TAG, "Displaying the MOTD.");
             SharedPreferencesHelper.putLong(SharedPreferencesHelper.KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS, System.currentTimeMillis());
@@ -285,6 +285,8 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         if (mProgressBar != null) {
             mProgressBar.setVisibility(View.GONE);
         }
+
+        SharedPreferencesHelper.putBoolean(SharedPreferencesHelper.KEY_PREFS_FIRST_RUN, false);
 
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
