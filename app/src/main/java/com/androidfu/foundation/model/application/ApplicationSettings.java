@@ -1,7 +1,6 @@
 package com.androidfu.foundation.model.application;
 
 import com.androidfu.foundation.FoundationApplication;
-import com.androidfu.foundation.model.movies.Version;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.dao.ForeignCollection;

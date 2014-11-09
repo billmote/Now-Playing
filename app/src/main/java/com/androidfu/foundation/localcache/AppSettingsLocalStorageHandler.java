@@ -3,7 +3,7 @@ package com.androidfu.foundation.localcache;
 import android.content.Context;
 
 import com.androidfu.foundation.model.application.ApplicationSettings;
-import com.androidfu.foundation.model.movies.Version;
+import com.androidfu.foundation.model.application.Version;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.table.TableUtils;
 

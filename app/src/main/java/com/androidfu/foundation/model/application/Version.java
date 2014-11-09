@@ -1,4 +1,4 @@
-package com.androidfu.foundation.model.movies;
+package com.androidfu.foundation.model.application;
 
 import com.androidfu.foundation.model.application.ApplicationSettings;
 import com.google.gson.annotations.Expose;
