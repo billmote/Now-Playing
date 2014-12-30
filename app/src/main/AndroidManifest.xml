@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.androidfu.foundation">
+    package="com.androidfu.foundation" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,36 +12,44 @@
         android:xlargeScreens="false" />
 
     <application
-        android:name=".FoundationApplication"
+        android:name="com.androidfu.foundation.FoundationApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.activities.SplashActivity"
+            android:name="com.androidfu.foundation.ui.activities.SplashActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name="com.androidfu.foundation.ui.activities.MainActivity"
             android:label="@string/app_name" />
 
         <activity-alias
-            android:name=".FoundationLauncher"
-            android:targetActivity=".ui.activities.SplashActivity">
+            android:name="com.androidfu.foundation.FoundationLauncher"
+            android:targetActivity="com.androidfu.foundation.ui.activities.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
 
         <receiver
-            android:name=".receivers.NetworkStateReceiver"
+            android:name="com.androidfu.foundation.receivers.NetworkStateReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.androidfu.foundation.receivers.PackageReplacedReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
     </application>
