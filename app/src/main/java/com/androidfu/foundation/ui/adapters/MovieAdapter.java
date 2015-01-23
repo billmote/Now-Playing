@@ -26,12 +26,10 @@ import butterknife.InjectView;
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
     Context mContext;
-    List<Movie> mMovies;
 
     public MovieAdapter(Context context, int resource, List<Movie> movies) {
         super(context, resource, movies);
         this.mContext = context;
-        this.mMovies = movies;
     }
 
     @Override

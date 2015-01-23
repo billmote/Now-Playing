@@ -1,6 +1,7 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'hugo'
+apply plugin: 'findbugs'
 
 android {
     compileSdkVersion 20
@@ -106,5 +107,17 @@ afterEvaluate { project ->
 
     project.tasks.findAll { it.name.startsWith('prepare') && it.name.endsWith('Dependencies') }.each { Task task ->
         task.dependsOn stripPlayServices
+    }
+}
+
+task findbugs(type: FindBugs, dependsOn: assembleDebug) {
+    excludeFilter file("${project.rootDir}/config/findbugs/exclude.xml")
+    classes = fileTree('build/intermediates/classes/debug/')  // Varies based on your app build configs and flavors...
+    source = fileTree('src/main/java/')
+    classpath = files()
+    effort = 'max'
+    reports {
+        xml.enabled = false
+        html.enabled = true
     }
 }

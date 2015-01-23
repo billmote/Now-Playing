@@ -20,7 +20,7 @@ public class Log {
      * numbers and least info and VERBOSE (2) and DEBUG (3) being the lowest
      * numbers and most info. Defaults to Verbose, the most information.
      */
-    public static int logLevel = android.util.Log.VERBOSE;
+    private static int logLevel = android.util.Log.VERBOSE;
 
     /**
      * Gives ability to turn logging on or off at a global level. Defaults to be
