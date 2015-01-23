@@ -25,11 +25,8 @@ import butterknife.InjectView;
  */
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
-    Context mContext;
-
     public MovieAdapter(Context context, int resource, List<Movie> movies) {
         super(context, resource, movies);
-        this.mContext = context;
     }
 
     @Override
@@ -39,7 +36,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         ViewHolder holder;
 
         if (convertView == null) {
-            LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             convertView = layoutInflater.inflate(R.layout.listview_movie_row, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
@@ -51,7 +48,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         holder.mTvTitle.setText(movie.getTitle());
         holder.mTvUserRating.setRating((float) movie.getRatings().getAudienceScore() / 20);
         holder.mTvMpaaRating.setText(movie.getMpaaRating());
-        Picasso.with(mContext)
+        Picasso.with(getContext())
                 .load(movie.getPosters().getThumbnail())
                 .placeholder(R.drawable.admit_one)
                 .error(R.drawable.emoticon_sad)
