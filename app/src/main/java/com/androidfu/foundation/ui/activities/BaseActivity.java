@@ -8,6 +8,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.androidfu.foundation.BuildConfig;
+import com.androidfu.foundation.DebugUtils;
 import com.androidfu.foundation.R;
 import com.androidfu.foundation.util.Log;
 import com.androidfu.foundation.util.SharedPreferencesHelper;
@@ -17,6 +18,17 @@ import hugo.weaving.DebugLog;
 public class BaseActivity extends Activity {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
+
+    @DebugLog
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Wake the device and show our activity
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "Wakeup!");
+            DebugUtils.riseAndShine(this);
+        }
+    }
 
     @DebugLog
     @Override

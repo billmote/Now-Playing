@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.androidfu.foundation.BuildConfig;
 import com.androidfu.foundation.FoundationApplication;
 import com.androidfu.foundation.R;
 import com.androidfu.foundation.events.APIErrorEvent;
@@ -19,6 +20,7 @@ import com.androidfu.foundation.events.APIOkEvent;
 import com.androidfu.foundation.events.application.GetApplicationSettingsEvent;
 import com.androidfu.foundation.localcache.AppSettingsLocalStorageHandler;
 import com.androidfu.foundation.model.application.ApplicationSettings;
+import com.androidfu.foundation.DebugUtils;
 import com.androidfu.foundation.ui.fragments.ReusableDialogFragment;
 import com.androidfu.foundation.util.EventBus;
 import com.androidfu.foundation.util.Log;
@@ -68,6 +70,11 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     protected void onStart() {
         super.onStart();
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        // Wake the device and show our activity
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "Wakeup!");
+            DebugUtils.riseAndShine(this);
+        }
     }
 
     @DebugLog
