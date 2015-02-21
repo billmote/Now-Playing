@@ -22,5 +22,5 @@ public interface APIRequests {
 
     // QUOTE OF THE DAY
     @GET(MOVIES)
-    void getMovies(@Query("apikey") String key, @Query("page") int page, Callback<Movies> cb);
+    void getMovies(@Query("apikey") String key, @Query("page") int page, @Query("page_limit") int page_limit, Callback<Movies> cb);
 }

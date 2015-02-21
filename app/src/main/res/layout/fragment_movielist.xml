@@ -10,14 +10,6 @@
         android:layout_alignParentTop="true"
         android:text="@string/btn_fetch" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
@@ -33,6 +25,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/listview_empty_tv_fetching_movies"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:visibility="gone" />
 
 </RelativeLayout>

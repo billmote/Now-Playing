@@ -9,11 +9,13 @@ import hugo.weaving.DebugLog;
  */
 @DebugLog
 public class GetMoviesEvent extends BaseEvent {
+    private int pageLimit;
     private int pageNumber;
 
-    public GetMoviesEvent(int callNumber, int pageNumber) {
+    public GetMoviesEvent(int callNumber, int pageNumber, int pageLimit) {
         super(callNumber);
         this.pageNumber = pageNumber;
+        this.pageLimit = pageLimit;
     }
 
     public int getPageNumber() {
@@ -22,5 +24,13 @@ public class GetMoviesEvent extends BaseEvent {
 
     public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    public int getPageLimit() {
+        return pageLimit;
+    }
+
+    public void setPageLimit(int pageLimit) {
+        this.pageLimit = pageLimit;
     }
 }

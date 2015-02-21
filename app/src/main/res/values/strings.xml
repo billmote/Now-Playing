@@ -33,6 +33,8 @@
     <string name="btn_refresh">REFRESH</string>
 
     <string name="listview_empty_tv_fetching_movies">Waiting on our list of movies.  Try fetching some!</string>
+    <string name="footer_end_of_list">End of List</string>
+    <string name="footer_fetching_more">Fetching More Movies, Please Wait …</string>
     <!-- Unsorted string resources will get added below this comment by default -->
 
 </resources>

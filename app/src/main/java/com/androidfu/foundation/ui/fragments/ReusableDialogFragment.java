@@ -73,7 +73,7 @@ public class ReusableDialogFragment extends DialogFragment {
         }
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setIcon(R.drawable.ic_launcher);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
         alertDialogBuilder.setTitle(dialogTitle);
         alertDialogBuilder.setMessage(Html.fromHtml(dialogBodyText, new ImageGetter(), new TagHandler()));
 
@@ -121,7 +121,7 @@ public class ReusableDialogFragment extends DialogFragment {
         public Drawable getDrawable(String source) {
             int id;
             if (source.equals("hughjackman.jpg")) {
-                id = R.drawable.ic_launcher;
+                id = R.mipmap.ic_launcher;
             } else {
                 return null;
             }

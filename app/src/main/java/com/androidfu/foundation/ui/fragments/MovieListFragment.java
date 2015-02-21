@@ -31,6 +31,7 @@ import com.squareup.otto.Subscribe;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -39,47 +40,20 @@ import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Display a list of Box Office Movies from Rotten Tomatoes
  */
 @DebugLog
 public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
-    private int mSoundID;
-    private int mPageNumber = 1;
-    private int mTotalMovies = 0;
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        boolean loadMore = firstVisibleItem + visibleItemCount >= totalItemCount;
-
-        if (loadMore && mProgressBar.getVisibility() != View.VISIBLE && totalItemCount < mTotalMovies) {
-            mProgressBar.setVisibility(View.VISIBLE);
-            EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies, mPageNumber));
-        }
-    }
-
-    @DebugLog
-    public interface OnFragmentInteractionListener {
-        public void onMovieSelected(Movie movie);
-    }
-
     public static final String TAG = MovieListFragment.class.getSimpleName();
 
+    private static final int DEFAULT_PAGE_SIZE = 16;
+    private static final int MAX_PAGE_SIZE = 50;
+    private static final String KEY_BUNDLE_PAGE_NUMBER = "page_number";
     private static final String KEY_BUNDLE_MOVIES = "movies";
     private static final String KEY_BUNDLE_FIRST_VISIBLE_ITEM = "first_visible_movie";
     private static final String KEY_BUNDLE_SCROLL_OFFSET = "scroll_offset";
-
-    private int mScrollPosition = 0;
-    private int mScrollOffset = 0;
-    private List<Movie> mMovies;
-    private MovieAdapter mMovieAdapter;
-    private OnFragmentInteractionListener mListener;
-    private Activity mHost;
+    private static final String KEY_BUNDLE_TOTAL_MOVIES = "total_num_movies";
 
     @InjectView(R.id.progressBar)
     ProgressBar mProgressBar;
@@ -90,12 +64,29 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     @InjectView(R.id.button)
     Button mFetchMoviesBtn;
 
-    public static MovieListFragment newInstance() {
-        return new MovieListFragment();
+    private TextView mFooterTextView;
+    private int mSoundID;
+    private int mPageNumber = 1;
+    private int mTotalMovies = 0;
+    private int mScrollPosition = 0;
+    private int mScrollOffset = 0;
+    private List<Movie> mMovies = new ArrayList<>();
+    private MovieAdapter mMovieAdapter;
+    private OnFragmentInteractionListener mListener;
+    private Activity mHost;
+    private boolean mEndOfList = false;
+
+    @DebugLog
+    public interface OnFragmentInteractionListener {
+        public void onMovieSelected(Movie movie);
     }
 
     public MovieListFragment() {
         // Required empty constructor
+    }
+
+    public static MovieListFragment newInstance() {
+        return new MovieListFragment();
     }
 
     @Override
@@ -112,7 +103,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_placeholder, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_movielist, container, false);
         ButterKnife.inject(this, rootView);
 
         Tracker tracker = GoogleAnalyticsHelper.getInstance().getTracker(GoogleAnalyticsHelper.TrackerName.APP_TRACKER);
@@ -122,6 +113,11 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mMovieListView.setEmptyView(mEmptyTextView);
         mMovieListView.setOnItemClickListener(this);
         mMovieListView.setOnScrollListener(this);
+
+        View mListFooterView = inflater.inflate(R.layout.footer_layout, mMovieListView, false);
+        mFooterTextView = (TextView) mListFooterView.findViewById(R.id.tv_footer_text);
+        setFooterText();
+        mMovieListView.addFooterView(mListFooterView);
 
         return rootView;
     }
@@ -137,6 +133,12 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
                 mScrollPosition = savedInstanceState.getInt(KEY_BUNDLE_FIRST_VISIBLE_ITEM, 0);
                 mScrollOffset = savedInstanceState.getInt(KEY_BUNDLE_SCROLL_OFFSET, 0);
             }
+            if (savedInstanceState.containsKey(KEY_BUNDLE_PAGE_NUMBER)) {
+                mPageNumber = savedInstanceState.getInt(KEY_BUNDLE_PAGE_NUMBER, 1);
+            }
+            if (savedInstanceState.containsKey(KEY_BUNDLE_TOTAL_MOVIES)) {
+                mTotalMovies = savedInstanceState.getInt(KEY_BUNDLE_TOTAL_MOVIES, 0);
+            }
         }
     }
 
@@ -144,7 +146,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     public void onResume() {
         super.onResume();
         EventBus.register(this);
-        if (mMovies != null && !mMovies.isEmpty()) {
+        if (!mMovies.isEmpty()) {
             /**
              * If we have a movie list use it rather than making the user re-fetch
              * it from our API.
@@ -157,13 +159,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     public void onPause() {
         super.onPause();
         EventBus.unregister(this);
-        /**
-         * In addition to grabbing the top visible item also store the view offset
-         * so we can truly keep our view exactly where it was.
-         */
-        mScrollPosition = mMovieListView.getFirstVisiblePosition();
-        View view = mMovieListView.getChildAt(0);
-        mScrollOffset = (view == null) ? 0 : view.getTop();
+        recordScrollPosition();
     }
 
     @Override
@@ -177,6 +173,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         outState.putParcelable(KEY_BUNDLE_MOVIES, Parcels.wrap(mMovies));
         outState.putInt(KEY_BUNDLE_FIRST_VISIBLE_ITEM, mScrollPosition);
         outState.putInt(KEY_BUNDLE_SCROLL_OFFSET, mScrollOffset);
+        outState.putInt(KEY_BUNDLE_PAGE_NUMBER, mPageNumber);
+        outState.putInt(KEY_BUNDLE_TOTAL_MOVIES, mTotalMovies);
     }
 
     @Override
@@ -194,14 +192,47 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     @OnClick(R.id.button)
     public void getMovieList(View v) {
-        mScrollPosition = mScrollOffset = 0;
-        mProgressBar.setVisibility(View.VISIBLE);
-        EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies, mPageNumber));
+        int pageLimit = DEFAULT_PAGE_SIZE;
+        if (!mMovies.isEmpty()) {
+            if (--mPageNumber > 0) {
+                pageLimit = mPageNumber * DEFAULT_PAGE_SIZE;
+            } else {
+                pageLimit = DEFAULT_PAGE_SIZE;
+            }
+            if (mTotalMovies > 0 && pageLimit > mTotalMovies) {
+                pageLimit = mTotalMovies;
+            }
+            if (pageLimit > MAX_PAGE_SIZE) {
+                pageLimit = (MAX_PAGE_SIZE / DEFAULT_PAGE_SIZE) * DEFAULT_PAGE_SIZE;
+                Toast.makeText(mHost, String.format("Refresh Exceeds Maximum Page Size. Fetching %1$d %2$s", pageLimit, getActivity().getResources().getQuantityString(R.plurals.movies, pageLimit)), Toast.LENGTH_SHORT).show();
+                mEndOfList = false;
+            }
+            mMovies.clear();
+            mMovieAdapter = null;
+            mPageNumber = 1;
+        }
+        fetchMoreMovies(pageLimit);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mListener.onMovieSelected((Movie) parent.getItemAtPosition(position));
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        boolean shouldFetchMoreMovies = firstVisibleItem + visibleItemCount >= totalItemCount && visibleItemCount > 0; /* visibleItemCount == 0 when the device is rotated and the view is recreated. */
+        //Log.d(TAG, String.format("%1$d + %2$d >= %3$d ? %4$s", firstVisibleItem, visibleItemCount, totalItemCount, String.valueOf(shouldFetchMoreMovies)));
+        if (shouldFetchMoreMovies && /* Already fetching movies? */ mProgressBar.getVisibility() != View.VISIBLE && /* End of our result list? */ totalItemCount < mTotalMovies) {
+            //Log.d(TAG, String.format("%1$d < %2$d", totalItemCount, mTotalMovies));
+            fetchMoreMovies(DEFAULT_PAGE_SIZE);
+        }
+    }
+
+    private void fetchMoreMovies(int pageLimit) {
+        recordScrollPosition();
+        mProgressBar.setVisibility(View.VISIBLE);
+        EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies, mPageNumber, pageLimit));
     }
 
     @Subscribe
@@ -215,18 +246,51 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
              * here.
              */
             mSoundID = SoundManager.playSound(R.raw.success);
-            mMovies = movies.getMovies();
+            mMovies.addAll(movies.getMovies());
             mTotalMovies = movies.getTotal();
+            int movieCount = movies.getMovies().size();
+            if (movieCount > DEFAULT_PAGE_SIZE) {
+                mPageNumber = movieCount / DEFAULT_PAGE_SIZE;
+            }
         }
         if (mMovieAdapter == null) {
             mMovieAdapter = new MovieAdapter(mHost, R.layout.listview_movie_row, mMovies);
             mMovieListView.setAdapter(mMovieAdapter);
         } else if (movies != null) {
-            mMovieAdapter.addAll(movies.getMovies());
             mMovieAdapter.notifyDataSetChanged();
         }
-        //mMovieListView.setSelectionFromTop(mScrollPosition, mScrollOffset);
+        mMovieListView.setSelectionFromTop(mScrollPosition, mScrollOffset);
+        if (mPageNumber * DEFAULT_PAGE_SIZE >= mTotalMovies) {
+            mEndOfList = true;
+        }
+        setFooterText();
         mPageNumber++;
+    }
+
+    private void setFooterText() {
+        if (mEndOfList) {
+            mFooterTextView.setText(getString(R.string.footer_end_of_list));
+        } else {
+            mFooterTextView.setText(getString(R.string.footer_fetching_more));
+        }
+    }
+
+    /**
+     * Record where we're at in the list so we can put the user back in the same spot when they
+     * return to the list.
+     */
+    private void recordScrollPosition() {
+        /**
+         * In addition to grabbing the top visible item also store the view offset
+         * so we can truly keep our view exactly where it was.
+         */
+        mScrollPosition = mMovieListView.getFirstVisiblePosition();
+        View view = mMovieListView.getChildAt(0);
+        mScrollOffset = (view == null) ? 0 : view.getTop();
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
     }
 
     @Subscribe
