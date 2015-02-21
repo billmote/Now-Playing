@@ -73,6 +73,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         // Wake the device and show our activity
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Wakeup!");
+            // Calling this from your launcher activity is enough, but I needed a good example spot ;)
             DebugUtils.riseAndShine(this);
         }
     }
