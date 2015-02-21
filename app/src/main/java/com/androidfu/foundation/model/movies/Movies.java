@@ -1,4 +1,3 @@
-
 package com.androidfu.foundation.model.movies;
 
 import com.google.gson.annotations.Expose;
@@ -16,12 +15,22 @@ import hugo.weaving.DebugLog;
 public class Movies {
 
     @Expose
+    private int total;
+    @Expose
     private List<Movie> movies = new ArrayList<Movie>();
     @Expose
     private Links_ links;
     @SerializedName("link_template")
     @Expose
     private String linkTemplate;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public List<Movie> getMovies() {
         return movies;

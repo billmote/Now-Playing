@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -41,9 +42,26 @@ import hugo.weaving.DebugLog;
  * A placeholder fragment containing a simple view.
  */
 @DebugLog
-public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
     private int mSoundID;
+    private int mPageNumber = 1;
+    private int mTotalMovies = 0;
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        boolean loadMore = firstVisibleItem + visibleItemCount >= totalItemCount;
+
+        if (loadMore && mProgressBar.getVisibility() != View.VISIBLE && totalItemCount < mTotalMovies) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies, mPageNumber));
+        }
+    }
 
     @DebugLog
     public interface OnFragmentInteractionListener {
@@ -59,6 +77,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     private int mScrollPosition = 0;
     private int mScrollOffset = 0;
     private List<Movie> mMovies;
+    private MovieAdapter mMovieAdapter;
     private OnFragmentInteractionListener mListener;
     private Activity mHost;
 
@@ -102,6 +121,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
         mMovieListView.setEmptyView(mEmptyTextView);
         mMovieListView.setOnItemClickListener(this);
+        mMovieListView.setOnScrollListener(this);
 
         return rootView;
     }
@@ -176,7 +196,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     public void getMovieList(View v) {
         mScrollPosition = mScrollOffset = 0;
         mProgressBar.setVisibility(View.VISIBLE);
-        EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies));
+        EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies, mPageNumber));
     }
 
     @Override
@@ -196,10 +216,17 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
              */
             mSoundID = SoundManager.playSound(R.raw.success);
             mMovies = movies.getMovies();
+            mTotalMovies = movies.getTotal();
         }
-        final MovieAdapter movieAdapter = new MovieAdapter(mHost, R.layout.listview_movie_row, mMovies);
-        mMovieListView.setAdapter(movieAdapter);
-        mMovieListView.setSelectionFromTop(mScrollPosition, mScrollOffset);
+        if (mMovieAdapter == null) {
+            mMovieAdapter = new MovieAdapter(mHost, R.layout.listview_movie_row, mMovies);
+            mMovieListView.setAdapter(mMovieAdapter);
+        } else if (movies != null) {
+            mMovieAdapter.addAll(movies.getMovies());
+            mMovieAdapter.notifyDataSetChanged();
+        }
+        //mMovieListView.setSelectionFromTop(mScrollPosition, mScrollOffset);
+        mPageNumber++;
     }
 
     @Subscribe

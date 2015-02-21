@@ -14,7 +14,7 @@ import retrofit.http.Query;
 @DebugLog
 public interface APIRequests {
     final static String APPSETTINGS = "/application_settings.json";
-    final static String MOVIES = "/box_office.json";
+    final static String MOVIES = "/in_theaters.json";
 
     // APPLICATION SETTINGS
     @GET(APPSETTINGS)
@@ -22,5 +22,5 @@ public interface APIRequests {
 
     // QUOTE OF THE DAY
     @GET(MOVIES)
-    void getMovies(@Query("apikey") String key, Callback<Movies> cb);
+    void getMovies(@Query("apikey") String key, @Query("page") int page, Callback<Movies> cb);
 }
