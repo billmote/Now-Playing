@@ -5,6 +5,7 @@ import hugo.weaving.DebugLog;
 /**
  * Created by billmote on 9/7/14.
  */
+@DebugLog
 public class BaseEvent {
     public static final int ERROR_CLIENT = 400;
     public static final int ERROR_NEEDS_AUTHENTICATION = 401;
@@ -14,17 +15,14 @@ public class BaseEvent {
 
     private int callNumber;
 
-    @DebugLog
     public BaseEvent(int callNumber){
         this.callNumber = callNumber;
     }
 
-    @DebugLog
     public int getCallNumber() {
         return callNumber;
     }
 
-    @DebugLog
     public void setCallNumber(int callNumber) {
         this.callNumber = callNumber;
     }}

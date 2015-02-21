@@ -10,21 +10,19 @@ import retrofit.RetrofitError;
 /**
  * Created by billmote on 9/7/14.
  */
+@DebugLog
 public abstract class APIHandler<T> implements Callback<T> {
     private int callNumber;
 
-    @DebugLog
     public APIHandler(int callNumber) {
         this.callNumber = callNumber;
     }
 
-    @DebugLog
     @Override
     public void failure(RetrofitError error) {
         EventBus.post(new APIErrorEvent(error, this.callNumber));
     }
 
-    @DebugLog
     public int getCallNumber() {
         return callNumber;
     }

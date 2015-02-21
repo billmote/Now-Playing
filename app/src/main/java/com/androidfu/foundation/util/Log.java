@@ -2,6 +2,8 @@ package com.androidfu.foundation.util;
 
 import android.os.Build;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Log -- An overridden version of android.util.Log that handles turning logging on/off as well as
  * setting the logging level.  The values for these fields can be found in res/values/build_properties.xml
@@ -35,6 +37,7 @@ public class Log {
     /**
      * @return if logging is on.
      */
+    @DebugLog
     public static boolean isLogging() {
         return isLogging;
     }
@@ -44,6 +47,7 @@ public class Log {
      *
      * @param isLogging true if logging is on, false if logging is off
      */
+    @DebugLog
     public static void setLogging(boolean isLogging) {
         Log.isLogging = isLogging;
     }
@@ -53,6 +57,7 @@ public class Log {
      * the highest numbers and least info and VERBOSE (2) and DEBUG (3)
      * being the lowest numbers and most info.
      */
+    @DebugLog
     public static int getLogLevel() {
         return logLevel;
     }
@@ -62,6 +67,7 @@ public class Log {
      *                 being the highest numbers and least info and VERBOSE (2) and
      *                 DEBUG (3) being the lowest numbers and most info.
      */
+    @DebugLog
     public static void setLogLevel(int logLevel) {
         Log.logLevel = logLevel;
     }

@@ -20,6 +20,7 @@ import hugo.weaving.DebugLog;
 /**
  * Created by bill.mote on 6/28/14.
  */
+@DebugLog
 public class ReusableDialogFragment extends DialogFragment {
 
     public static final String TAG = ReusableDialogFragment.class.getSimpleName();
@@ -33,7 +34,6 @@ public class ReusableDialogFragment extends DialogFragment {
 
     private ReusableDialogListener mHost;
 
-    @DebugLog
     public static ReusableDialogFragment newInstance(String dialogTitle, String dialogBodyText, String positiveButtonLabel, String neutralButtonLabel, String negativeButtonLabel, String iconFilePath) {
         Log.v(TAG, "newInstance()");
         ReusableDialogFragment reusableDialogFragment = new ReusableDialogFragment();
@@ -48,14 +48,12 @@ public class ReusableDialogFragment extends DialogFragment {
         return reusableDialogFragment;
     }
 
-    @DebugLog
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mHost = (ReusableDialogListener) activity;
     }
 
-    @DebugLog
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
@@ -111,16 +109,15 @@ public class ReusableDialogFragment extends DialogFragment {
 
     private class TagHandler implements Html.TagHandler {
 
-        @DebugLog
         @Override
         public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
             // Do something fancy?
         }
     }
 
+    @DebugLog
     private class ImageGetter implements Html.ImageGetter {
 
-        @DebugLog
         public Drawable getDrawable(String source) {
             int id;
             if (source.equals("hughjackman.jpg")) {
@@ -135,24 +132,21 @@ public class ReusableDialogFragment extends DialogFragment {
         }
     }
 
-    @DebugLog
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         //mHost.handleNeutralResult();
     }
 
+    @DebugLog
     public interface ReusableDialogListener {
 
         /* what else comes back onActivityResult?  Might be more useful stuff. */
 
-        @DebugLog
         void handlePositiveResult();
 
-        @DebugLog
         void handleNeutralResult();
 
-        @DebugLog
         void handleNegativeResult();
 
     }

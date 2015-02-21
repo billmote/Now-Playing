@@ -17,11 +17,11 @@ import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 
 
+@DebugLog
 public class MainActivity extends BaseActivity implements MovieListFragment.OnFragmentInteractionListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,28 +45,24 @@ public class MainActivity extends BaseActivity implements MovieListFragment.OnFr
         }
     }
 
-    @DebugLog
     @Override
     protected void onResume() {
         super.onResume();
         EventBus.register(this);
     }
 
-    @DebugLog
     @Override
     protected void onPause() {
         super.onPause();
         EventBus.unregister(this);
     }
 
-    @DebugLog
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
-    @DebugLog
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -75,14 +71,12 @@ public class MainActivity extends BaseActivity implements MovieListFragment.OnFr
         return super.onOptionsItemSelected(item);
     }
 
-    @DebugLog
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.reset(this);
     }
 
-    @DebugLog
     @Override
     public void onMovieSelected(Movie movie) {
         Toast.makeText(this, String.format("You chose: %1$s", movie.getTitle()), Toast.LENGTH_SHORT).show();

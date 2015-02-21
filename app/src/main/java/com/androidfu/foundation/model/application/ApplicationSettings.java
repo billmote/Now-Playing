@@ -11,7 +11,10 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.ArrayList;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 @DatabaseTable(tableName = "applicationsettings")
+@DebugLog
 public class ApplicationSettings {
 
     @DatabaseField(generatedId = true)

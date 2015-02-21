@@ -9,7 +9,10 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 @Parcel
+@DebugLog
 public class Movies {
 
     @Expose

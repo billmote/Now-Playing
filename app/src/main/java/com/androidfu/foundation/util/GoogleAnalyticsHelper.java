@@ -15,6 +15,7 @@ import hugo.weaving.DebugLog;
 /**
  * Created by billmote on 9/6/14.
  */
+@DebugLog
 public class GoogleAnalyticsHelper {
 
     private static final HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
@@ -23,7 +24,6 @@ public class GoogleAnalyticsHelper {
     private static GoogleAnalytics mGoogleAnalytics;
     private static Application mContext;
 
-    @DebugLog
     public static void initialize(Application context) {
         mContext = context;
         if (mInstance == null) {
@@ -45,7 +45,6 @@ public class GoogleAnalyticsHelper {
         mGoogleAnalytics.setDryRun(BuildConfig.DEBUG);
     }
 
-    @DebugLog
     public synchronized Tracker getTracker(TrackerName trackerId) {
         if (!mTrackers.containsKey(trackerId)) {
             Tracker tracker = (trackerId == TrackerName.APP_TRACKER) ? mGoogleAnalytics.newTracker(R.xml.application_tracker)

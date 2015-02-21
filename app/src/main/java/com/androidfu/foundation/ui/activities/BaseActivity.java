@@ -15,11 +15,11 @@ import com.androidfu.foundation.util.SharedPreferencesHelper;
 
 import hugo.weaving.DebugLog;
 
+@DebugLog
 public class BaseActivity extends Activity {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
 
-    @DebugLog
     @Override
     protected void onStart() {
         super.onStart();
@@ -30,14 +30,12 @@ public class BaseActivity extends Activity {
         }
     }
 
-    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
     }
 
-    @DebugLog
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (BuildConfig.DEBUG && menu.findItem(R.id.force_crash) == null) {
@@ -48,7 +46,6 @@ public class BaseActivity extends Activity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    @DebugLog
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

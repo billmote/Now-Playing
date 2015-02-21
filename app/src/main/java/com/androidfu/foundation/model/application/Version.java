@@ -1,15 +1,17 @@
 package com.androidfu.foundation.model.application;
 
-import com.androidfu.foundation.model.application.ApplicationSettings;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Created by Bill on 9/11/14.
  */
 @DatabaseTable(tableName = "version")
+@DebugLog
 public class Version {
 
     @DatabaseField(generatedId = true)

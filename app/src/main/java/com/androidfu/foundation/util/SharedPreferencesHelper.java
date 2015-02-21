@@ -11,6 +11,7 @@ import hugo.weaving.DebugLog;
 /**
  * Created by Bill on 8/4/14.
  */
+@DebugLog
 public class SharedPreferencesHelper {
     public static final String TAG = SharedPreferencesHelper.class.getSimpleName();
 
@@ -22,12 +23,8 @@ public class SharedPreferencesHelper {
     private static SharedPreferences.Editor sharedPreferencesEditor;
     private static Application mContext;
 
-    @DebugLog
-    private SharedPreferencesHelper() {
+    private SharedPreferencesHelper() {}
 
-    }
-
-    @DebugLog
     public static void initialize(Application context) {
         if (mInstance == null) {
             mInstance = new SharedPreferencesHelper();
@@ -37,7 +34,6 @@ public class SharedPreferencesHelper {
         mContext = context;
     }
 
-    @DebugLog
     private static SharedPreferencesHelper getInstance() {
         if (mInstance == null) {
             throw new IllegalStateException(mContext.getString(R.string.error_preferences_illegal_state));
@@ -45,38 +41,30 @@ public class SharedPreferencesHelper {
         return mInstance;
     }
 
-    @DebugLog
     public static void clear() {
         getInstance().sharedPreferencesEditor.clear().commit();
     }
 
-    @DebugLog
     public static void putBoolean(String key, boolean b) {
         getInstance().sharedPreferencesEditor.putBoolean(key, b).commit();
     }
-
-    @DebugLog
 
     public static boolean getBoolean(String key, boolean defaultValue) {
         return getInstance().sharedPreferences.getBoolean(key, defaultValue);
     }
 
-    @DebugLog
     public static void putStringPreference(String key, String s) {
         getInstance().sharedPreferencesEditor.putString(key, s).commit();
     }
 
-    @DebugLog
     public static String getStringPreference(String key, String defaultValue) {
         return getInstance().sharedPreferences.getString(key, defaultValue);
     }
 
-    @DebugLog
     public static void putLong(String key, long l) {
         getInstance().sharedPreferencesEditor.putLong(key, l).commit();
     }
 
-    @DebugLog
     public static long getLong(String key, long defaultValue) {
         return getInstance().sharedPreferences.getLong(key, defaultValue);
     }

@@ -6,11 +6,11 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import hugo.weaving.DebugLog;
 
+@DebugLog
 public class DBManager{
 
     private static DBHelper dbHelper = null;
 
-    @DebugLog
     public static DBHelper getHelper(Context context){
         if (dbHelper == null) {
             dbHelper = OpenHelperManager.getHelper(context, DBHelper.class);
@@ -18,7 +18,6 @@ public class DBManager{
         return dbHelper;
     }
 
-    @DebugLog
     public static void releaseHelper(){
         if (dbHelper != null) {
             OpenHelperManager.releaseHelper();

@@ -40,12 +40,13 @@ import hugo.weaving.DebugLog;
 /**
  * A placeholder fragment containing a simple view.
  */
+@DebugLog
 public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private int mSoundID;
 
+    @DebugLog
     public interface OnFragmentInteractionListener {
-        @DebugLog
         public void onMovieSelected(Movie movie);
     }
 
@@ -70,17 +71,14 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     @InjectView(R.id.button)
     Button mFetchMoviesBtn;
 
-    @DebugLog
     public static MovieListFragment newInstance() {
         return new MovieListFragment();
     }
 
-    @DebugLog
     public MovieListFragment() {
         // Required empty constructor
     }
 
-    @DebugLog
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -93,7 +91,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mHost = activity;
     }
 
-    @DebugLog
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_placeholder, container, false);
@@ -109,7 +106,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         return rootView;
     }
 
-    @DebugLog
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +120,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         }
     }
 
-    @DebugLog
     @Override
     public void onResume() {
         super.onResume();
@@ -138,7 +133,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         }
     }
 
-    @DebugLog
     @Override
     public void onPause() {
         super.onPause();
@@ -152,7 +146,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mScrollOffset = (view == null) ? 0 : view.getTop();
     }
 
-    @DebugLog
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -166,7 +159,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         outState.putInt(KEY_BUNDLE_SCROLL_OFFSET, mScrollOffset);
     }
 
-    @DebugLog
     @Override
     public void onDetach() {
         super.onDetach();
@@ -174,14 +166,12 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mListener = null;
     }
 
-    @DebugLog
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
     }
 
-    @DebugLog
     @OnClick(R.id.button)
     public void getMovieList(View v) {
         mScrollPosition = mScrollOffset = 0;
@@ -189,13 +179,11 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies));
     }
 
-    @DebugLog
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mListener.onMovieSelected((Movie) parent.getItemAtPosition(position));
     }
 
-    @DebugLog
     @Subscribe
     public void showMovieList(Movies movies) {
         mProgressBar.setVisibility(View.GONE);
@@ -214,7 +202,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mMovieListView.setSelectionFromTop(mScrollPosition, mScrollOffset);
     }
 
-    @DebugLog
     @Subscribe
     public void apiErrorEvent(APIErrorEvent error) {
         // Do nothing for now, but maybe we should put an ! icon on the ActionBar?

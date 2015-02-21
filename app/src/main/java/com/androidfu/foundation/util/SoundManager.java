@@ -5,9 +5,12 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.SparseIntArray;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Created by Martin Andersson on 9/23/14.
  */
+@DebugLog
 public class SoundManager {
 
     private static SoundPool mSoundPool;

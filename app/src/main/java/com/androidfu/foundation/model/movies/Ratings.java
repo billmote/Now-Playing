@@ -6,7 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import hugo.weaving.DebugLog;
+
 @Parcel
+@DebugLog
 public class Ratings {
 
     @SerializedName("critics_rating")

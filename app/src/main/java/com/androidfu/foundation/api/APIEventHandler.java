@@ -24,12 +24,12 @@ import retrofit.client.Response;
 /**
  * Created by billmote on 9/7/14.
  */
+@DebugLog
 public class APIEventHandler {
     //private APIRequests mAPIRequests;
     private final AppSettingsLocalStorageHandler mApplicationSettingsLocalStorageHandler;
     private final Context mContext;
 
-    @DebugLog
     public APIEventHandler(Context context) {
         mApplicationSettingsLocalStorageHandler = new AppSettingsLocalStorageHandler(context);
         //mAPIRequests = APIBuilder.createApiInstance(context);
@@ -39,7 +39,6 @@ public class APIEventHandler {
     /**
      * APPLICATION SETTINGS
      */
-    @DebugLog
     @Subscribe
     public void getApplicationSettings(final GetApplicationSettingsEvent event) {
         APIBuilder.createApiInstance(mContext, mContext.getString(R.string.application_settings_url)).getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
@@ -58,7 +57,6 @@ public class APIEventHandler {
     /**
      * QUOTE OF THE DAY
      */
-    @DebugLog
     @Subscribe
     public void getMovies(final GetMoviesEvent event) {
         /**

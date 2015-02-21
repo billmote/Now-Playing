@@ -6,13 +6,12 @@ import android.content.Intent;
 
 import hugo.weaving.DebugLog;
 
+@DebugLog
 public class PackageReplacedReceiver extends BroadcastReceiver {
 
-    @DebugLog
     public PackageReplacedReceiver() {
     }
 
-    @DebugLog
     @Override
     public void onReceive(Context context, Intent intent) {
         /*

@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 import hugo.weaving.DebugLog;
 
+@DebugLog
 public class DBHelper extends OrmLiteSqliteOpenHelper{
     private static final String DATABASE_NAME = "foundation.db";
     private static final int DATABASE_VERSION = 1;
@@ -22,12 +23,10 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
     private Dao<ApplicationSettings, Integer> applicationSettingsDao;
     private Dao<Version, Integer> versionDao;
 
-    @DebugLog
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    @DebugLog
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 
@@ -41,7 +40,6 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         }
     }
 
-    @DebugLog
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
@@ -55,7 +53,6 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         }
     }
 
-    @DebugLog
     public Dao<ApplicationSettings, Integer> getApplicationSettingsDao() {
         if (this.applicationSettingsDao == null) {
             try {
@@ -68,7 +65,6 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
     }
 
     // Need to create a version dao that we can access in our "wrappers"
-    @DebugLog
     public Dao<Version, Integer> getVersionDao() {
         if (this.versionDao == null) {
             try {
@@ -80,7 +76,6 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         return this.versionDao;
     }
 
-    @DebugLog
     @Override
     public void close() {
         super.close();

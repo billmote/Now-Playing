@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.os.PowerManager;
 
+import hugo.weaving.DebugLog;
+
 import static android.content.Context.KEYGUARD_SERVICE;
 import static android.content.Context.POWER_SERVICE;
 import static android.os.PowerManager.ACQUIRE_CAUSES_WAKEUP;
@@ -14,6 +16,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 /**
  * Add this to your application's src/debug/... sources
  */
+@DebugLog
 public class DebugUtils {
 
     /**

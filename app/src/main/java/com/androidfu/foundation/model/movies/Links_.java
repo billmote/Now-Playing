@@ -5,7 +5,10 @@ import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
 
+import hugo.weaving.DebugLog;
+
 @Parcel
+@DebugLog
 public class Links_ {
 
     @Expose

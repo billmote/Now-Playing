@@ -16,18 +16,17 @@ import hugo.weaving.DebugLog;
 /**
  * Created by billmote on 9/7/14.
  */
+@DebugLog
 public abstract class LocalStorageHandler<T> {
 
     protected abstract Dao<T, Integer> getDao();
 
-    @DebugLog
     public Cursor getCursorForAll() throws SQLException {
         QueryBuilder<T, Integer> qb = this.getDao().queryBuilder();
         qb.where().eq("deleted", false);
         return this.getCursor(qb);
     }
 
-    @DebugLog
     public Cursor getCursor(QueryBuilder<T, Integer> qb) throws SQLException {
         CloseableIterator<T> iterator = this.getDao().iterator(qb.prepare());
         try {
@@ -38,19 +37,16 @@ public abstract class LocalStorageHandler<T> {
         }
     }
 
-    @DebugLog
     public List<T> getAll() throws SQLException {
         return this.getDao().queryForEq("deleted", false);
     }
 
     /* Save */
-    @DebugLog
     public T save(T object) throws SQLException {
         this.getDao().createOrUpdate(object);
         return object;
     }
 
-    @DebugLog
     public List<T> save(List<T> objects) throws SQLException {
         ArrayList<T> result = new ArrayList<T>();
         for (T o : objects) {
@@ -60,12 +56,10 @@ public abstract class LocalStorageHandler<T> {
     }
 
     /* Delete */
-    @DebugLog
     public void delete(T object) throws SQLException {
         this.getDao().delete(object);
     }
 
-    @DebugLog
     public void delete(List<T> objects) throws SQLException {
         for (T o : objects) {
             this.delete(o);

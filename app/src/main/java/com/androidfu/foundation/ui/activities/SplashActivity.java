@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import hugo.weaving.DebugLog;
 
+@DebugLog
 public class SplashActivity extends Activity implements ReusableDialogFragment.ReusableDialogListener {
 
     public static final String TAG = SplashActivity.class.getSimpleName();
@@ -65,7 +66,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     private final Runnable mSplashRunnable = new SplashRunnable();
     private boolean mHideMotd;
 
-    @DebugLog
     @Override
     protected void onStart() {
         super.onStart();
@@ -78,7 +78,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         }
     }
 
-    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +98,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         }
     }
 
-    @DebugLog
     @Override
     protected void onResume() {
         super.onResume();
@@ -111,8 +109,8 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
      * We're going to display our branding here, but the process can be expedited by our API
      * response coming back quickly as we'll end up in interruptTheUser() via Otto.
      */
+    @DebugLog
     private class SplashRunnable implements Runnable {
-        @DebugLog
         @Override
         public void run() {
             /**
@@ -139,7 +137,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         }
     }
 
-    @DebugLog
     @Override
     protected void onPause() {
         super.onPause();
@@ -147,7 +144,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         mHandler.removeCallbacks(mSplashRunnable);
     }
 
-    @DebugLog
     @Override
     protected void onSaveInstanceState(@Nonnull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -156,14 +152,12 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         outState.putBoolean(KEY_BUNDLE_CATASTROPHIC_FAILURE, mCatastrophicFailure);
     }
 
-    @DebugLog
     @Override
     protected void onStop() {
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
-    @DebugLog
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -175,7 +169,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
      * execution of the application based on the result of the data collected in ApplicationSettings
      * from our PaaS provider.
      */
-    @DebugLog
     @Subscribe
     public void interruptTheUser(APIOkEvent event) {
         if (mInterruptTheUserDialog != null) {
@@ -288,7 +281,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         }
     }
 
-    @DebugLog
     private void carryOn() {
         if (mProgressBar != null) {
             mProgressBar.setVisibility(View.GONE);
@@ -309,7 +301,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
      * @param isCancelable   whether or not the user should be able to cancel the dialog without selecting an
      *                       option.
      */
-    @DebugLog
     private void displayDialogFragment(DialogFragment dialogFragment, boolean isCancelable) {
         mAlreadyHandledDialogResult = false;
         mInterruptTheUserDialog = dialogFragment;
@@ -319,7 +310,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         }
     }
 
-    @DebugLog
     @Override
     public void handlePositiveResult() {
         mAlreadyHandledDialogResult = true;
@@ -332,7 +322,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         }
     }
 
-    @DebugLog
     @Override
     public void handleNeutralResult() {
         // Because the user can press outside the dialog to dismiss as well as pressing the
@@ -344,7 +333,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         }
     }
 
-    @DebugLog
     @Override
     public void handleNegativeResult() {
         mAlreadyHandledDialogResult = true;
@@ -356,7 +344,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         finish();
     }
 
-    @DebugLog
     @Subscribe
     @SuppressWarnings("ThrowableResultOfMethodCallIgnored") // We're going to die gracefully
     public void onApiErrorEvent(APIErrorEvent error) {

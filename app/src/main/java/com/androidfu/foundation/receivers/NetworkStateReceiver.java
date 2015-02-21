@@ -10,13 +10,12 @@ import com.androidfu.foundation.util.EventBus;
 
 import hugo.weaving.DebugLog;
 
+@DebugLog
 public class NetworkStateReceiver extends BroadcastReceiver {
 
-    @DebugLog
     public NetworkStateReceiver() {
     }
 
-    @DebugLog
     @Override
     public void onReceive(Context context, Intent intent) {
         final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

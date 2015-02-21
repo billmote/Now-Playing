@@ -7,8 +7,8 @@ import hugo.weaving.DebugLog;
 /**
  * Created by billmote on 9/7/14.
  */
+@DebugLog
 public class GetMoviesEvent extends BaseEvent {
-    @DebugLog
     public GetMoviesEvent(int callNumber) {
         super(callNumber);
     }

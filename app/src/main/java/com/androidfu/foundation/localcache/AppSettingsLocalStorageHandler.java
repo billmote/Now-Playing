@@ -15,22 +15,20 @@ import hugo.weaving.DebugLog;
 /**
  * Created by billmote on 9/7/14.
  */
+@DebugLog
 public class AppSettingsLocalStorageHandler extends LocalStorageHandler<ApplicationSettings> {
 
     private final Context context;
 
-    @DebugLog
     public AppSettingsLocalStorageHandler(Context ctx){
         this.context = ctx;
     }
 
-    @DebugLog
     @Override
     protected Dao getDao() {
         return DBManager.getHelper(this.context).getApplicationSettingsDao();
     }
 
-    @DebugLog
     public ApplicationSettings getCurrentApplicationSettings() throws SQLException {
         List<ApplicationSettings> appset = this.getDao().queryForAll();
         if (appset!=null && appset.size()>0){
@@ -40,7 +38,6 @@ public class AppSettingsLocalStorageHandler extends LocalStorageHandler<Applicat
         }
     }
 
-    @DebugLog
     public void saveCurrentApplicationSettings(ApplicationSettings appset) throws SQLException {
         TableUtils.clearTable(this.getDao().getConnectionSource(), ApplicationSettings.class);
         this.getDao().create(appset);

@@ -19,6 +19,7 @@ import hugo.weaving.DebugLog;
 /**
  * Created by Bill on 8/1/14.
  */
+@DebugLog
 public class FoundationApplication extends Application {
 
     private static final String TAG = FoundationApplication.class.getSimpleName();
@@ -26,7 +27,6 @@ public class FoundationApplication extends Application {
     public static int APP_VERSION_CODE;
     public static String APP_VERSION_NAME;
 
-    @DebugLog
     @Override
     public void onCreate() {
         super.onCreate();
@@ -73,7 +73,6 @@ public class FoundationApplication extends Application {
     /**
      * Register all the Handlers with the EventBus singleton.
      */
-    @DebugLog
     private void registerHandlersWithEventBus() {
         // Register all our Handlers on the EventBus.
         EventBus.register(new APIEventHandler(this));
@@ -84,7 +83,6 @@ public class FoundationApplication extends Application {
      *
      * @return the application version code as an int.
      */
-    @DebugLog
     private int getApplicationVersionCode() {
         try {
             return this.getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
@@ -98,7 +96,6 @@ public class FoundationApplication extends Application {
      *
      * @return the application version name as a String.
      */
-    @DebugLog
     private String getApplicationVersionName() {
         String devBuild = BuildConfig.DEBUG ? "d" : "";
         try {
@@ -108,11 +105,11 @@ public class FoundationApplication extends Application {
         }
     }
 
+    @DebugLog
     public class StrictModeHelper {
 
         public final String TAG = StrictModeHelper.class.getSimpleName();
 
-        @DebugLog
         public void setupStrictMode() {
             if (shouldEnableStrictMode()) {
                 Log.wtf(TAG, "*** Strict Mode Enforced ***");
@@ -122,12 +119,10 @@ public class FoundationApplication extends Application {
             }
         }
 
-        @DebugLog
         private boolean shouldEnableStrictMode() {
             return BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
         }
 
-        @DebugLog
         private void enableStrictMode() {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectAll()

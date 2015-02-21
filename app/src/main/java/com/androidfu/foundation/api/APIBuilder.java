@@ -16,6 +16,7 @@ import retrofit.converter.GsonConverter;
 /**
  * Created by billmote on 9/7/14.
  */
+@DebugLog
 public class APIBuilder {
     public static final String AUTH_TOKEN_HEADER = "Auth-Token";
     public static final String ANDROIDID_HEADER = "Device-ID";
@@ -25,17 +26,14 @@ public class APIBuilder {
 
     private static APIRequests api;
 
-    @DebugLog
     public static APIRequests getApiInstance() {
         return api;
     }
 
-    @DebugLog
     public static APIRequests createApiInstance(Context context, String endpoint) {
         return createApiInstance(context, "", endpoint);
     }
 
-    @DebugLog
     public static APIRequests createApiInstance(Context context, final String token, String endpoint) {
         final String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
@@ -61,7 +59,6 @@ public class APIBuilder {
         return getApiInstance();
     }
 
-    @DebugLog
     public static Gson buildJsonParser() {
         GsonBuilder jsonParserBuilder = new GsonBuilder();
         jsonParserBuilder.setPrettyPrinting();
