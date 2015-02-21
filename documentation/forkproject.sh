@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # chmod +x ./forkproject.sh # make this file executable
-# Search and replace {NewRepoName}, {newappname} and {NewAppName}
+# Search and replace nowplaying, nowplaying and NowPlaying
 # NOTE: this will mess up 1 URL in res/values/build_properties.xml, but you'll want your own API endpoint anyway ;)
 
-cd ~/git/{NewRepoName}/app
+cd ~/git/nowplaying/app
 
-mv ~/git/{NewRepoName}/app/src/main/java/com/androidfu/foundation ~/git/{NewRepoName}/app/src/main/java/com/androidfu/{newappname}
+mv ~/git/nowplaying/app/src/main/java/com/androidfu/foundation ~/git/nowplaying/app/src/main/java/com/androidfu/nowplaying
 
-grep -IRlr com\.androidfu\.foundation . | xargs sed -i "" -e 's/com\.androidfu\.foundation/com\.androidfu\.{newappname}/g'
+grep -IRlr com\.androidfu\.foundation . | xargs sed -i "" -e 's/com\.androidfu\.foundation/com\.androidfu\.nowplaying/g'
 
-grep -IRlr foundation . | xargs sed -i "" -e 's/foundation/{newappname}/g'
+grep -IRlr foundation . | xargs sed -i "" -e 's/foundation/nowplaying/g'
 
-grep -IRlr Foundation . | xargs sed -i "" -e 's/Foundation/{NewAppName}/g'
+grep -IRlr Foundation . | xargs sed -i "" -e 's/Foundation/NowPlaying/g'
 
-mv ~/git/{NewRepoName}/app/src/main/java/com/androidfu/{newappname}/FoundationApplication.java ~/git/{NewRepoName}/app/src/main/java/com/androidfu/{newappname}/{NewAppName}Application.java
-mv ~/git/{NewRepoName}/Foundation.iml ~/git/{NewRepoName}/{NewAppName}.iml
+mv ~/git/nowplaying/app/src/main/java/com/androidfu/nowplaying/FoundationApplication.java ~/git/nowplaying/app/src/main/java/com/androidfu/nowplaying/NowPlayingApplication.java
+mv ~/git/nowplaying/Foundation.iml ~/git/nowplaying/NowPlaying.iml

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.androidfu.foundation" >
+    package="com.androidfu.nowplaying" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,22 +12,22 @@
         android:xlargeScreens="false" />
 
     <application
-        android:name="com.androidfu.foundation.FoundationApplication"
+        android:name="com.androidfu.nowplaying.NowPlayingApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.androidfu.foundation.ui.activities.SplashActivity"
+            android:name="com.androidfu.nowplaying.ui.activities.SplashActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name="com.androidfu.foundation.ui.activities.MainActivity"
+            android:name="com.androidfu.nowplaying.ui.activities.MainActivity"
             android:label="@string/app_name" />
 
         <activity-alias
-            android:name="com.androidfu.foundation.FoundationLauncher"
-            android:targetActivity="com.androidfu.foundation.ui.activities.SplashActivity" >
+            android:name="com.androidfu.nowplaying.NowPlayingLauncher"
+            android:targetActivity="com.androidfu.nowplaying.ui.activities.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +36,7 @@
         </activity-alias>
 
         <receiver
-            android:name="com.androidfu.foundation.receivers.NetworkStateReceiver"
+            android:name="com.androidfu.nowplaying.receivers.NetworkStateReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
@@ -44,7 +44,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.androidfu.foundation.receivers.PackageReplacedReceiver"
+            android:name="com.androidfu.nowplaying.receivers.PackageReplacedReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
