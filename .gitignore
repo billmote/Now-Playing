@@ -25,4 +25,4 @@ build
 *.class
 
 # API Keys, etc.
-secret.xml
+#secret.xml

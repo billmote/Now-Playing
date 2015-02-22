@@ -1,6 +1,7 @@
 package com.androidfu.nowplaying.api;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.androidfu.nowplaying.R;
 import com.androidfu.nowplaying.events.APIErrorEvent;
@@ -22,6 +23,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
+ * This class is registered with our EventBus in NowPlayingApplication class and will be responsible
+ * for responding to all events for which we wish to fetch information from the internet.
+ *
  * Created by billmote on 9/7/14.
  */
 @DebugLog
@@ -39,6 +43,9 @@ public class ServiceEventHandler {
         appSettingsUrl = context.getString(R.string.application_settings_url);
         rottenTomatoesUrl = context.getString(R.string.movies_url);
         rottenTomatoesApiKey = context.getString(R.string.rotten_tomatoes_api_key); /* Look in res/values/secret.xml */
+        if (rottenTomatoesApiKey.equals("REPLACE WITH YOUR KEY")) {
+            Toast.makeText(context, context.getString(R.string.error_replace_api_key), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -61,7 +68,7 @@ public class ServiceEventHandler {
     }
 
     /**
-     * QUOTE OF THE DAY
+     * 'IN THEATER' MOVIES
      */
     @Subscribe
     public void getMovies(final GetMoviesEvent event) {
