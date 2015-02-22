@@ -2,6 +2,8 @@
 
 Now playing is an example consumption of Rotten Tomatoes' 'in_theaters.json' REST endpoint.  Now Playing is not intended to be a fully functional, feature rich application.
 
+Get it on [Google Play](https://play.google.com/store/apps/details?id=com.androidfu.nowplaying)
+
 ### What is this repository for? ###
 
 * Now Playing is built off of Bill Mote's (aka Android Fu) bootstrap application.  The bootstrap application is intended to provide a baseline of functionality and a flexible, maintainable architecture to build on.
