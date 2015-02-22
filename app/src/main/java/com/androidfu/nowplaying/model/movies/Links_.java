@@ -12,9 +12,9 @@ import hugo.weaving.DebugLog;
 public class Links_ {
 
     @Expose
-    private String self;
+    public String self;
     @Expose
-    private String alternate;
+    public String alternate;
 
     public String getSelf() {
         return self;

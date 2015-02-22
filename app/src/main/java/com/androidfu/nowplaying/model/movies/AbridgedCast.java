@@ -15,11 +15,11 @@ import hugo.weaving.DebugLog;
 public class AbridgedCast {
 
     @Expose
-    private String name;
+    public String name;
     @Expose
-    private String id;
+    public String id;
     @Expose
-    private List<String> characters = new ArrayList<String>();
+    public List<String> characters = new ArrayList<String>();
 
     public String getName() {
         return name;

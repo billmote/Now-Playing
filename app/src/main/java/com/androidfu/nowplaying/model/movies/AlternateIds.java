@@ -12,7 +12,7 @@ import hugo.weaving.DebugLog;
 public class AlternateIds {
 
     @Expose
-    private String imdb;
+    public String imdb;
 
     public String getImdb() {
         return imdb;

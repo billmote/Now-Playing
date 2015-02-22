@@ -15,14 +15,14 @@ import hugo.weaving.DebugLog;
 public class Movies {
 
     @Expose
-    private int total;
+    public int total;
     @Expose
-    private List<Movie> movies = new ArrayList<Movie>();
+    public List<Movie> movies = new ArrayList<>();
     @Expose
-    private Links_ links;
+    public Links_ links;
     @SerializedName("link_template")
     @Expose
-    private String linkTemplate;
+    public String linkTemplate;
 
     public int getTotal() {
         return total;

@@ -1,4 +1,4 @@
-package com.androidfu.nowplaying;
+package com.androidfu.nowplaying.util;
 
 import android.app.Activity;
 import android.app.KeyguardManager;

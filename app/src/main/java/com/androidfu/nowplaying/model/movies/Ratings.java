@@ -14,16 +14,16 @@ public class Ratings {
 
     @SerializedName("critics_rating")
     @Expose
-    private String criticsRating;
+    public String criticsRating;
     @SerializedName("critics_score")
     @Expose
-    private Integer criticsScore;
+    public Integer criticsScore;
     @SerializedName("audience_rating")
     @Expose
-    private String audienceRating;
+    public String audienceRating;
     @SerializedName("audience_score")
     @Expose
-    private Integer audienceScore;
+    public Integer audienceScore;
 
     public String getCriticsRating() {
         return criticsRating;

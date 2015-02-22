@@ -12,13 +12,13 @@ import hugo.weaving.DebugLog;
 public class Posters {
 
     @Expose
-    private String thumbnail;
+    public String thumbnail;
     @Expose
-    private String profile;
+    public String profile;
     @Expose
-    private String detailed;
+    public String detailed;
     @Expose
-    private String original;
+    public String original;
 
     public String getThumbnail() {
         return thumbnail;

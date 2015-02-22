@@ -314,6 +314,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         switch (error.getCallNumber()) {
             case R.id.api_call_get_movies:
                 Toast.makeText(mHost, "Failed to get our list of movies.", Toast.LENGTH_SHORT).show();
+                mEmptyTextView.setText(String.format("URL: '%1$s'\nHTTP Status Code: '%2$d'\nError: '%3$s'", error.getError().getUrl(), error.getHttpStatusCode(), error.getError().getMessage()));
                 return;
             default:
                 try {

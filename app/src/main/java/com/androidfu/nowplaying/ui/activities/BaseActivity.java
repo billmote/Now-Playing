@@ -8,7 +8,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.androidfu.nowplaying.BuildConfig;
-import com.androidfu.nowplaying.DebugUtils;
+import com.androidfu.nowplaying.util.DebugUtils;
 import com.androidfu.nowplaying.R;
 import com.androidfu.nowplaying.util.Log;
 import com.androidfu.nowplaying.util.SharedPreferencesHelper;

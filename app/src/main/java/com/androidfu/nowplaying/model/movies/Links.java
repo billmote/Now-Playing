@@ -11,15 +11,15 @@ import hugo.weaving.DebugLog;
 public class Links {
 
     @Expose
-    private String self;
+    public String self;
     @Expose
-    private String alternate;
+    public String alternate;
     @Expose
-    private String cast;
+    public String cast;
     @Expose
-    private String reviews;
+    public String reviews;
     @Expose
-    private String similar;
+    public String similar;
 
     public String getSelf() {
         return self;

@@ -16,36 +16,36 @@ import hugo.weaving.DebugLog;
 public class Movie {
 
     @Expose
-    private String id;
+    public String id;
     @Expose
-    private String title;
+    public String title;
     @Expose
-    private Integer year;
+    public Integer year;
     @SerializedName("mpaa_rating")
     @Expose
-    private String mpaaRating;
+    public String mpaaRating;
     @Expose
-    private Integer runtime;
+    public Integer runtime;
     @SerializedName("critics_consensus")
     @Expose
-    private String criticsConsensus;
+    public String criticsConsensus;
     @SerializedName("release_dates")
     @Expose
-    private ReleaseDates releaseDates;
+    public ReleaseDates releaseDates;
     @Expose
-    private Ratings ratings;
+    public Ratings ratings;
     @Expose
-    private String synopsis;
+    public String synopsis;
     @Expose
-    private Posters posters;
+    public Posters posters;
     @SerializedName("abridged_cast")
     @Expose
-    private List<AbridgedCast> abridgedCast = new ArrayList<AbridgedCast>();
+    public List<AbridgedCast> abridgedCast = new ArrayList<AbridgedCast>();
     @SerializedName("alternate_ids")
     @Expose
-    private AlternateIds alternateIds;
+    public AlternateIds alternateIds;
     @Expose
-    private Links links;
+    public Links links;
 
     public String getId() {
         return id;

@@ -1,13 +1,10 @@
 package com.androidfu.nowplaying.events.network;
 
-import org.parceler.Parcel;
-
 import hugo.weaving.DebugLog;
 
 /**
  * Created by Bill on 8/4/14.
  */
-@Parcel
 @DebugLog
 public class NetworkAvailableEvent {
 

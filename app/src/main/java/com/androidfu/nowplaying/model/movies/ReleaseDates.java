@@ -12,7 +12,7 @@ import hugo.weaving.DebugLog;
 public class ReleaseDates {
 
     @Expose
-    private String theater;
+    public String theater;
 
     public String getTheater() {
         return theater;

@@ -20,8 +20,8 @@ import com.androidfu.nowplaying.events.APIOkEvent;
 import com.androidfu.nowplaying.events.application.GetApplicationSettingsEvent;
 import com.androidfu.nowplaying.localcache.AppSettingsLocalStorageHandler;
 import com.androidfu.nowplaying.model.application.ApplicationSettings;
-import com.androidfu.nowplaying.DebugUtils;
 import com.androidfu.nowplaying.ui.fragments.ReusableDialogFragment;
+import com.androidfu.nowplaying.util.DebugUtils;
 import com.androidfu.nowplaying.util.EventBus;
 import com.androidfu.nowplaying.util.Log;
 import com.androidfu.nowplaying.util.SharedPreferencesHelper;
@@ -29,8 +29,6 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.squareup.otto.Subscribe;
 
 import java.sql.SQLException;
-
-import javax.annotation.Nonnull;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -44,6 +42,8 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     private static final String KEY_BUNDLE_USER_INTERRUPTED_STATE = "is_user_interrupted";
     private static final String KEY_BUNDLE_ERROR_MESSAGE = "error_message";
     private static final String KEY_BUNDLE_CATASTROPHIC_FAILURE = "is_catastrophic_failure";
+    private final Handler mHandler = new Handler();
+    private final Runnable mSplashRunnable = new SplashRunnable();
     @InjectView(R.id.progressBar)
     ProgressBar mProgressBar;
     /**
@@ -62,8 +62,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     private String mErrorMessage = "IDK";
     private boolean mCatastrophicFailure;
     private DialogFragment mInterruptTheUserDialog;
-    private final Handler mHandler = new Handler();
-    private final Runnable mSplashRunnable = new SplashRunnable();
     private boolean mHideMotd;
 
     @Override
@@ -86,7 +84,6 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         if (savedInstanceState == null) {
             mInterruptedTheUser = true; // Careful, this is used in onResume()
             EventBus.post(new GetApplicationSettingsEvent(R.id.api_call_get_application_settings));
-            mProgressBar.setVisibility(View.VISIBLE);
         } else {
             try {
                 mInterruptedTheUser = savedInstanceState.getBoolean(KEY_BUNDLE_USER_INTERRUPTED_STATE, true);
@@ -102,50 +99,19 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     protected void onResume() {
         super.onResume();
         EventBus.register(this);
+        mProgressBar.setVisibility(View.VISIBLE);
         mHandler.postDelayed(mSplashRunnable, 3000);
-    }
-
-    /**
-     * We're going to display our branding here, but the process can be expedited by our API
-     * response coming back quickly as we'll end up in interruptTheUser() via Otto.
-     */
-    @DebugLog
-    private class SplashRunnable implements Runnable {
-        @Override
-        public void run() {
-            /**
-             * We're setting a flag to handle a couple of states:
-             *
-             * 1. If the app is not running we
-             * want to go through interruptTheUser() so the flag is set to true in onCreate().  This
-             * is done if our bundle is not null.  We then set it back to false and iterate over our
-             * logic in interruptTheUser().
-             *
-             * 2. If the user is sent to the play store for an update then we need them to go back
-             * through our interruptTheUser() method as the application state may be set to "disabled"
-             * or have the mandatory update flag set.  interruptTheUser() will set the flag to true
-             * as required.
-             *
-             * The only way to get to carryOn() is if the app was already running and we did not
-             * interrupt the user during the original execution of SplashActivity.
-             */
-            if (!mInterruptedTheUser) {
-                carryOn();
-            } else {
-                interruptTheUser(null);
-            }
-        }
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         EventBus.unregister(this);
         mHandler.removeCallbacks(mSplashRunnable);
+        super.onPause();
     }
 
     @Override
-    protected void onSaveInstanceState(@Nonnull Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_BUNDLE_USER_INTERRUPTED_STATE, mInterruptedTheUser);
         outState.putString(KEY_BUNDLE_ERROR_MESSAGE, mErrorMessage);
@@ -154,14 +120,14 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
     @Override
     protected void onStop() {
-        super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ButterKnife.reset(this);
+        super.onDestroy();
     }
 
     /**
@@ -196,6 +162,9 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
              */
             mHideMotd = true;
             return;
+            // TODO There's a bug here.  If a user has an installed version, but launches after an
+            // upgrade is available then they can get stuck on a progress spinner if they click
+            // update and then abandon the update coming back to the app.
         }
 
         DialogFragment dialogFragment;
@@ -381,5 +350,37 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
                 }
         }
         interruptTheUser(null);
+    }
+
+    /**
+     * We're going to display our branding here, but the process can be expedited by our API
+     * response coming back quickly as we'll end up in interruptTheUser() via Otto.
+     */
+    @DebugLog
+    private class SplashRunnable implements Runnable {
+        @Override
+        public void run() {
+            /**
+             * We're setting a flag to handle a couple of states:
+             *
+             * 1. If the app is not running we
+             * want to go through interruptTheUser() so the flag is set to true in onCreate().  This
+             * is done if our bundle is not null.  We then set it back to false and iterate over our
+             * logic in interruptTheUser().
+             *
+             * 2. If the user is sent to the play store for an update then we need them to go back
+             * through our interruptTheUser() method as the application state may be set to "disabled"
+             * or have the mandatory update flag set.  interruptTheUser() will set the flag to true
+             * as required.
+             *
+             * The only way to get to carryOn() is if the app was already running and we did not
+             * interrupt the user during the original execution of SplashActivity.
+             */
+            if (!mInterruptedTheUser) {
+                carryOn();
+            } else {
+                interruptTheUser(null);
+            }
+        }
     }
 }
