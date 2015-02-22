@@ -12,7 +12,7 @@ import retrofit.http.Query;
  * Created by billmote on 9/7/14.
  */
 @DebugLog
-public interface APIRequests {
+public interface ApiService {
     final static String APPSETTINGS = "/application_settings.json";
     final static String MOVIES = "/in_theaters.json";
 

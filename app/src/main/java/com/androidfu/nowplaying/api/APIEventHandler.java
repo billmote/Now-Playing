@@ -39,7 +39,8 @@ public class APIEventHandler {
      */
     @Subscribe
     public void getApplicationSettings(final GetApplicationSettingsEvent event) {
-        APIBuilder.createApiInstance(mContext, mContext.getString(R.string.application_settings_url)).getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
+        ApiService apiService = new RestClient(mContext, mContext.getString(R.string.application_settings_url)).getApiService();
+        apiService.getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
             @Override
             public void success(ApplicationSettings applicationSettings, Response response) {
                 try {
@@ -65,7 +66,8 @@ public class APIEventHandler {
          * simply create your own res/values/secret.xml file with your own Rotten Tomatoes API
          * key and the app will run as expected.
          */
-        APIBuilder.createApiInstance(mContext, mContext.getString(R.string.movies_url)).getMovies(mContext.getString(R.string.rotten_tomatoes_api_key /* Look in res/values/secret.xml */), event.getPageNumber(), event.getPageLimit(), new APIHandler<Movies>(event.getCallNumber()) {
+        ApiService apiService = new RestClient(mContext, mContext.getString(R.string.movies_url)).getApiService();
+        apiService.getMovies(mContext.getString(R.string.rotten_tomatoes_api_key /* Look in res/values/secret.xml */), event.getPageNumber(), event.getPageLimit(), new APIHandler<Movies>(event.getCallNumber()) {
             @Override
             public void success(Movies movies, Response response) {
                 if (response.getBody().length() > 0) {
