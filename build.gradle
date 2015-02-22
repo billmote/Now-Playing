@@ -18,4 +18,16 @@ allprojects {
     repositories {
         jcenter()
     }
+
+    // Prevent wildcard dependencies from being included
+    afterEvaluate { project ->
+        project.configurations.all {
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.version.contains('+')) {
+                    throw new GradleException("Wildcard dependency forbidden: ${requested.group}:${requested.name}:${requested.version}")
+                }
+            }
+        }
+    }
 }
