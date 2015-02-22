@@ -1,11 +1,11 @@
-# README #
+# Now Playing #
 
-Clone the project and import into Android Studio.  There are no other requirements.
+Now playing is an example consumption of Rotten Tomatoes' 'in_theaters.json' REST endpoint.  Now Playing is not intended to be a fully functional, feature rich application.
 
 ### What is this repository for? ###
 
-* This "Foundation" project is intended to be the baseline on which I begin other projects.
-* v1.0
+* Now Playing is built off of Bill Mote's (aka Android Fu) bootstrap application.  The bootstrap application is intended to provide a baseline of functionality and a flexible, maintainable architecture to build on.
+* Now Playing is also to demonstrate Bill's coding style and ability.
 
 ### This project includes: ###
 
@@ -20,13 +20,28 @@ Clone the project and import into Android Studio.  There are no other requiremen
 * [OrmLite](http://ormlite.com)
 * Google Analytics
 * Overridden Logging (configurable in build_properties.xml)
-* Ready for Crash Reporting & Distribution
+* Crash Reporting & Alpha/Beta Distribution
 * StrictMode enabled for development
 * Message of the Day
 * Kill Switch
 * Low Water Mark
 * Upgrade Nag
 
+### How good is this code? ###
+
+Well, that's really up to you to decide ;)  One of the reasons I put this application into open source was to encourage comment, scrutiny and debate.  I can tell you that _findbugs_ only reports 1 warning and I've refused to remove it because 1) it's not a _bad_ bug and 2) I like it the way it is ;)
+
+### How do I use this code? ###
+
+1. Clone it
+2. Put in your own Rotten Tomatoes API Key
+3. Build/Run
+4. See [LICENSE](/LICENSE.txt)
+
 ### Who do I talk to? ###
 
 * Repo owner or admin
+
+### Screen Shots ###
+
+![Alt Movie List](/2015-02-21%2020.04.52.png?raw=true "Movie List")
