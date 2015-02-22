@@ -26,13 +26,11 @@ import retrofit.client.Response;
  */
 @DebugLog
 public class APIEventHandler {
-    //private APIRequests mAPIRequests;
     private final AppSettingsLocalStorageHandler mApplicationSettingsLocalStorageHandler;
     private final Context mContext;
 
     public APIEventHandler(Context context) {
         mApplicationSettingsLocalStorageHandler = new AppSettingsLocalStorageHandler(context);
-        //mAPIRequests = APIBuilder.createApiInstance(context);
         mContext = context;
     }
 
@@ -73,7 +71,7 @@ public class APIEventHandler {
                 if (response.getBody().length() > 0) {
                     EventBus.post(movies);
                 } else {
-                    EventBus.post(new APIErrorEvent(RetrofitError.unexpectedError(mContext.getString(R.string.movies_url), new HttpException("Empty Body")), event.getCallNumber()));
+                    EventBus.post(new APIErrorEvent(RetrofitError.unexpectedError(response.getUrl(), new HttpException("Empty Body")), event.getCallNumber()));
                 }
             }
         });

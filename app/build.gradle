@@ -28,42 +28,51 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),  \
-                     'proguard-rules.pro',  \
-                     'proguard-square-otto.pro',  \
-                     'proguard-square-okhttp.pro',  \
-                     'proguard-crashlytics.pro',  \
-                     'proguard-butterknife.pro',  \
-                     'proguard-google-analytics.pro',  \
-                     'proguard-gson.pro',  \
-                     'proguard-picasso.pro',  \
-                     'proguard-retrofit.pro',  \
-                     'proguard-ormlite.pro',  \
-                     'proguard-nowplaying.pro',  \
-                     'proguard-parceler.pro', \
-                     'proguard-google-play-services.pro'  \
+                    getDefaultProguardFile('proguard-android.txt'),   \
+                      'proguard-rules.pro',   \
+                      'proguard-otto.pro',   \
+                      'proguard-okhttp.pro',   \
+                      'proguard-crashlytics.pro',   \
+                      'proguard-butterknife.pro',   \
+                      'proguard-google-analytics.pro',   \
+                      'proguard-gson.pro',   \
+                      'proguard-picasso.pro',   \
+                      'proguard-retrofit.pro',   \
+                      'proguard-ormlite.pro',   \
+                      'proguard-nowplaying.pro',   \
+                      'proguard-parceler.pro',  \
+                      'proguard-apache-commons-logging.pro',  \
+                      'proguard-google-play-services.pro'   \
             )
         }
         debug {
             minifyEnabled true
             shrinkResources true
             proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),  \
-                     'proguard-rules.pro',  \
-                     'proguard-square-otto.pro',  \
-                     'proguard-square-okhttp.pro',  \
-                     'proguard-crashlytics.pro',  \
-                     'proguard-butterknife.pro',  \
-                     'proguard-google-analytics.pro',  \
-                     'proguard-gson.pro',  \
-                     'proguard-picasso.pro',  \
-                     'proguard-retrofit.pro',  \
-                     'proguard-ormlite.pro',  \
-                     'proguard-nowplaying.pro',  \
-                     'proguard-parceler.pro', \
-                     'proguard-google-play-services.pro'  \
+                    getDefaultProguardFile('proguard-android.txt'),   \
+                      'proguard-rules.pro',   \
+                      'proguard-otto.pro',   \
+                      'proguard-okhttp.pro',   \
+                      'proguard-crashlytics.pro',   \
+                      'proguard-butterknife.pro',   \
+                      'proguard-google-analytics.pro',   \
+                      'proguard-gson.pro',   \
+                      'proguard-picasso.pro',   \
+                      'proguard-retrofit.pro',   \
+                      'proguard-ormlite.pro',   \
+                      'proguard-nowplaying.pro',   \
+                      'proguard-parceler.pro',  \
+                      'proguard-apache-commons-logging.pro',  \
+                      'proguard-google-play-services.pro'   \
             )
         }
+    }
+
+    // Removes this warning:
+    //      WARNING: Dependency commons-logging:commons-logging:1.1.1 is ignored for debug as it may be conflicting with the internal version provided by Android.
+    //      In case of problem, please repackage it with jarjar to change the class packages
+    configurations {
+        all*.exclude group: 'commons-logging', module: 'commons-logging'
     }
 
     packagingOptions {
