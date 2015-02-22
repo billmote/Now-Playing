@@ -11,10 +11,10 @@ import retrofit.RetrofitError;
  * Created by billmote on 9/7/14.
  */
 @DebugLog
-public abstract class APIHandler<T> implements Callback<T> {
+public abstract class RestCallback<T> implements Callback<T> {
     private int callNumber;
 
-    public APIHandler(int callNumber) {
+    public RestCallback(int callNumber) {
         this.callNumber = callNumber;
     }
 

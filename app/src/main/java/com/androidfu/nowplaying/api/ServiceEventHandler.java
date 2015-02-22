@@ -25,11 +25,11 @@ import retrofit.client.Response;
  * Created by billmote on 9/7/14.
  */
 @DebugLog
-public class APIEventHandler {
+public class ServiceEventHandler {
     private final AppSettingsLocalStorageHandler mApplicationSettingsLocalStorageHandler;
     private final Context mContext;
 
-    public APIEventHandler(Context context) {
+    public ServiceEventHandler(Context context) {
         mApplicationSettingsLocalStorageHandler = new AppSettingsLocalStorageHandler(context);
         mContext = context;
     }
@@ -40,11 +40,11 @@ public class APIEventHandler {
     @Subscribe
     public void getApplicationSettings(final GetApplicationSettingsEvent event) {
         ApiService apiService = new RestClient(mContext, mContext.getString(R.string.application_settings_url)).getApiService();
-        apiService.getApplicationSettings(new APIHandler<ApplicationSettings>(event.getCallNumber()) {
+        apiService.getApplicationSettings(new RestCallback<ApplicationSettings>(event.getCallNumber()) {
             @Override
             public void success(ApplicationSettings applicationSettings, Response response) {
                 try {
-                    APIEventHandler.this.mApplicationSettingsLocalStorageHandler.saveCurrentApplicationSettings(applicationSettings);
+                    ServiceEventHandler.this.mApplicationSettingsLocalStorageHandler.saveCurrentApplicationSettings(applicationSettings);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -67,7 +67,7 @@ public class APIEventHandler {
          * key and the app will run as expected.
          */
         ApiService apiService = new RestClient(mContext, mContext.getString(R.string.movies_url)).getApiService();
-        apiService.getMovies(mContext.getString(R.string.rotten_tomatoes_api_key /* Look in res/values/secret.xml */), event.getPageNumber(), event.getPageLimit(), new APIHandler<Movies>(event.getCallNumber()) {
+        apiService.getMovies(mContext.getString(R.string.rotten_tomatoes_api_key /* Look in res/values/secret.xml */), event.getPageNumber(), event.getPageLimit(), new RestCallback<Movies>(event.getCallNumber()) {
             @Override
             public void success(Movies movies, Response response) {
                 if (response.getBody().length() > 0) {

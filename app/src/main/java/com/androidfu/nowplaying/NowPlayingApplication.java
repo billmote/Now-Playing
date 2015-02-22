@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.androidfu.nowplaying.api.APIEventHandler;
+import com.androidfu.nowplaying.api.ServiceEventHandler;
 import com.androidfu.nowplaying.localcache.DBManager;
 import com.androidfu.nowplaying.util.EventBus;
 import com.androidfu.nowplaying.util.GoogleAnalyticsHelper;
@@ -272,7 +272,7 @@ public class NowPlayingApplication extends Application {
      */
     private void registerHandlersWithEventBus() {
         // Register all our Handlers on the EventBus.
-        EventBus.register(new APIEventHandler(this));
+        EventBus.register(new ServiceEventHandler(this));
     }
 
     /**
