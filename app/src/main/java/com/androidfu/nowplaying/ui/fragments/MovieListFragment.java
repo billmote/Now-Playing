@@ -252,6 +252,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
             if (movieCount > DEFAULT_PAGE_SIZE) {
                 mPageNumber = movieCount / DEFAULT_PAGE_SIZE;
             }
+            // Only increment our page number if we received a movies result
+            mPageNumber++;
         }
         if (mMovieAdapter == null) {
             mMovieAdapter = new MovieAdapter(mHost, R.layout.listview_movie_row, mMovies);
@@ -264,7 +266,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
             mEndOfList = true;
         }
         setFooterText();
-        mPageNumber++;
     }
 
     private void setFooterText() {
