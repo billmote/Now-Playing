@@ -1,5 +1,11 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
+
+repositories {
+    maven { url 'http://download.crashlytics.com/maven' }
+}
+
 apply plugin: 'hugo'
 apply plugin: 'findbugs'
 
@@ -86,9 +92,11 @@ android {
 buildscript {
     repositories {
         jcenter()
+        maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.8'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.14.7'
     }
 }
 apply plugin: 'com.github.ben-manes.versions'
@@ -106,6 +114,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-base:6.5.87'
     compile 'org.parceler:parceler-api:0.2.10'
     provided 'org.parceler:parceler:0.2.10'
+    compile 'com.crashlytics.android:crashlytics:1.1.13'
 }
 
 //  Usage:

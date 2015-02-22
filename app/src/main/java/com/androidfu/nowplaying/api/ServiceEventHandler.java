@@ -84,7 +84,7 @@ public class ServiceEventHandler {
         apiService.getMovies(rottenTomatoesApiKey, event.getPageNumber(), event.getPageLimit(), new RestCallback<Movies>(event.getCallNumber()) {
             @Override
             public void success(Movies movies, Response response) {
-                if (response.getBody().length() > 0) {
+                if (movies != null && !movies.getMovies().isEmpty()) {
                     EventBus.post(movies);
                 } else {
                     EventBus.post(new APIErrorEvent(RetrofitError.unexpectedError(response.getUrl(), new HttpException("Empty Body")), event.getCallNumber()));

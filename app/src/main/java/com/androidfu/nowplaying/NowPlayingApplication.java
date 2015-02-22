@@ -12,6 +12,7 @@ import com.androidfu.nowplaying.util.GoogleAnalyticsHelper;
 import com.androidfu.nowplaying.util.Log;
 import com.androidfu.nowplaying.util.SharedPreferencesHelper;
 import com.androidfu.nowplaying.util.SoundManager;
+import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Picasso;
 
 import hugo.weaving.DebugLog;
@@ -229,7 +230,7 @@ public class NowPlayingApplication extends Application {
         super.onCreate();
 
         if (!BuildConfig.DEBUG) {
-            // Crashlytics.start(this);
+            Crashlytics.start(this);
         }
 
         try {

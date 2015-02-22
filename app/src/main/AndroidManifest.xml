@@ -51,6 +51,7 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="394e68317c8bbf6094bd8059e9972fdfc2920773"/>
     </application>
 
 </manifest>
