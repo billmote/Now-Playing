@@ -81,6 +81,16 @@ public class ApplicationSettings {
     private String privacyPolicyText;
 
     @Expose
+    @SerializedName("play_store_http_url")
+    @DatabaseField
+    private String playStoreHttpUrl;
+    
+    @Expose
+    @SerializedName("play_store_market_url")
+    @DatabaseField
+    private String playStoreMarketUrl;
+
+    @Expose
     private List<Version> versions = new ArrayList<Version>();
     @ForeignCollectionField(eager = true)
 
@@ -200,6 +210,22 @@ public class ApplicationSettings {
 
     public void setVersionsCollections(ForeignCollection<Version> versionsCollections) {
         this.versionsCollections = versionsCollections;
+    }
+
+    public String getPlayStoreHttpUrl() {
+        return playStoreHttpUrl;
+    }
+
+    public void setPlayStoreHttpUrl(String playStoreHttpUrl) {
+        this.playStoreHttpUrl = playStoreHttpUrl;
+    }
+
+    public String getPlayStoreMarketUrl() {
+        return playStoreMarketUrl;
+    }
+
+    public void setPlayStoreMarketUrl(String playStoreMarketUrl) {
+        this.playStoreMarketUrl = playStoreMarketUrl;
     }
 
     public String getChangeLog() {

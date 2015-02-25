@@ -63,6 +63,8 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
     private boolean mCatastrophicFailure;
     private DialogFragment mInterruptTheUserDialog;
     private boolean mHideMotd;
+    private String mPlayStoreHttpUrl;
+    private String mPlayStoreMarketUrl;
 
     @Override
     protected void onStart() {
@@ -190,6 +192,9 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             return;
         }
 
+        mPlayStoreHttpUrl = appSettings.getPlayStoreHttpUrl();
+        mPlayStoreMarketUrl = appSettings.getPlayStoreMarketUrl();
+        
         if (appSettings.isAppDisabled()) {
             /* The application has been disabled via the kill-switch */
             Log.wtf(TAG, "The developer has decided that this application should not be run.");
@@ -285,9 +290,9 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         mInterruptTheUserDialog = null;
         // Positive will only be available as an "update" option
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_market_url))));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mPlayStoreMarketUrl)));
         } catch (ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_http_url))));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mPlayStoreHttpUrl)));
         }
     }
 
