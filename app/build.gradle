@@ -34,42 +34,42 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),   \
-                      'proguard-rules.pro',   \
-                      'proguard-otto.pro',   \
-                      'proguard-okhttp.pro',   \
-                      'proguard-crashlytics.pro',   \
-                      'proguard-butterknife.pro',   \
-                      'proguard-google-analytics.pro',   \
-                      'proguard-gson.pro',   \
-                      'proguard-picasso.pro',   \
-                      'proguard-retrofit.pro',   \
-                      'proguard-ormlite.pro',   \
-                      'proguard-nowplaying.pro',   \
-                      'proguard-parceler.pro',  \
-                      'proguard-apache-commons-logging.pro',  \
-                      'proguard-google-play-services.pro'   \
+                    getDefaultProguardFile('proguard-android.txt'),     \
+                        'proguard-rules.pro',     \
+                        'proguard-otto.pro',     \
+                        'proguard-okhttp.pro',     \
+                        'proguard-crashlytics.pro',     \
+                        'proguard-butterknife.pro',     \
+                        'proguard-google-analytics.pro',     \
+                        'proguard-gson.pro',     \
+                        'proguard-picasso.pro',     \
+                        'proguard-retrofit.pro',     \
+                        'proguard-ormlite.pro',     \
+                        'proguard-nowplaying.pro',     \
+                        'proguard-parceler.pro',    \
+                        'proguard-apache-commons-logging.pro',    \
+                        'proguard-google-play-services.pro'     \
             )
         }
         debug {
             minifyEnabled true
             shrinkResources true
             proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),   \
-                      'proguard-rules.pro',   \
-                      'proguard-otto.pro',   \
-                      'proguard-okhttp.pro',   \
-                      'proguard-crashlytics.pro',   \
-                      'proguard-butterknife.pro',   \
-                      'proguard-google-analytics.pro',   \
-                      'proguard-gson.pro',   \
-                      'proguard-picasso.pro',   \
-                      'proguard-retrofit.pro',   \
-                      'proguard-ormlite.pro',   \
-                      'proguard-nowplaying.pro',   \
-                      'proguard-parceler.pro',  \
-                      'proguard-apache-commons-logging.pro',  \
-                      'proguard-google-play-services.pro'   \
+                    getDefaultProguardFile('proguard-android.txt'),     \
+                        'proguard-rules.pro',     \
+                        'proguard-otto.pro',     \
+                        'proguard-okhttp.pro',     \
+                        'proguard-crashlytics.pro',     \
+                        'proguard-butterknife.pro',     \
+                        'proguard-google-analytics.pro',     \
+                        'proguard-gson.pro',     \
+                        'proguard-picasso.pro',     \
+                        'proguard-retrofit.pro',     \
+                        'proguard-ormlite.pro',     \
+                        'proguard-nowplaying.pro',     \
+                        'proguard-parceler.pro',    \
+                        'proguard-apache-commons-logging.pro',    \
+                        'proguard-google-play-services.pro'     \
             )
         }
     }

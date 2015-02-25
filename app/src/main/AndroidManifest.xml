@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.androidfu.nowplaying">
+    package="com.androidfu.nowplaying.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,21 +12,21 @@
         android:xlargeScreens="false" />
 
     <application
-        android:name="com.androidfu.nowplaying.NowPlayingApplication"
+        android:name=".NowPlayingApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.androidfu.nowplaying.ui.activities.SplashActivity"
+            android:name=".ui.activities.SplashActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="com.androidfu.nowplaying.ui.activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/app_name" />
 
         <activity-alias
-            android:name="com.androidfu.nowplaying.NowPlayingLauncher"
-            android:targetActivity="com.androidfu.nowplaying.ui.activities.SplashActivity">
+            android:name="com.androidfu.nowplaying.app.NowPlayingLauncher"
+            android:targetActivity=".ui.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
         </activity-alias>
 
         <receiver
-            android:name="com.androidfu.nowplaying.receivers.NetworkStateReceiver"
+            android:name=".receivers.NetworkStateReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -43,7 +43,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.androidfu.nowplaying.receivers.PackageReplacedReceiver"
+            android:name=".receivers.PackageReplacedReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -51,7 +51,10 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="394e68317c8bbf6094bd8059e9972fdfc2920773"/>
+
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="394e68317c8bbf6094bd8059e9972fdfc2920773" />
     </application>
 
 </manifest>
