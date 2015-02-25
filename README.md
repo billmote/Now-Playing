@@ -46,4 +46,6 @@ Well, that's really up to you to decide ;)  One of the reasons I put this applic
 
 ### Screen Shots ###
 
+** NOTE: Movie Posters will _NOT_ be shown in the signed APK **
+
 ![Alt Movie List](/2015-02-21%2020.04.52.png?raw=true "Movie List")
