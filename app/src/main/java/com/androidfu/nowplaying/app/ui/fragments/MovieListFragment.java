@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,10 @@ import com.androidfu.nowplaying.app.util.EventBus;
 import com.androidfu.nowplaying.app.util.GoogleAnalyticsHelper;
 import com.androidfu.nowplaying.app.util.Log;
 import com.androidfu.nowplaying.app.util.SoundManager;
+import com.felipecsl.quickreturn.library.AbsListViewQuickReturnAttacher;
+import com.felipecsl.quickreturn.library.QuickReturnAttacher;
+import com.felipecsl.quickreturn.library.widget.QuickReturnAdapter;
+import com.felipecsl.quickreturn.library.widget.QuickReturnTargetView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.otto.Subscribe;
@@ -75,6 +80,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     private OnFragmentInteractionListener mListener;
     private Activity mHost;
     private boolean mEndOfList = false;
+    private boolean mRequiresRefresh;
 
     public MovieListFragment() {
         // Required empty constructor
@@ -97,7 +103,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movielist, container, false);
         ButterKnife.inject(this, rootView);
 
@@ -106,8 +112,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         tracker.send(new HitBuilders.AppViewBuilder().build());
 
         mMovieListView.setEmptyView(mEmptyTextView);
-        mMovieListView.setOnItemClickListener(this);
-        mMovieListView.setOnScrollListener(this);
+        //mMovieListView.setOnItemClickListener(this);
+        //mMovieListView.setOnScrollListener(this);
 
         View mListFooterView = inflater.inflate(R.layout.footer_layout, mMovieListView, false);
         mFooterTextView = (TextView) mListFooterView.findViewById(R.id.tv_footer_text);
@@ -187,6 +193,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     @OnClick(R.id.button)
     public void getMovieList(View v) {
+        mRequiresRefresh = false;
         int pageLimit = DEFAULT_PAGE_SIZE;
         if (!mMovies.isEmpty()) {
             if (--mPageNumber > 0) {
@@ -216,6 +223,9 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        if (mRequiresRefresh) {
+            return;
+        }
         boolean shouldFetchMoreMovies = firstVisibleItem + visibleItemCount >= totalItemCount && visibleItemCount > 0; /* visibleItemCount == 0 when the device is rotated and the view is recreated. */
         //Log.d(TAG, String.format("%1$d + %2$d >= %3$d ? %4$s", firstVisibleItem, visibleItemCount, totalItemCount, String.valueOf(shouldFetchMoreMovies)));
         if (shouldFetchMoreMovies && /* Already fetching movies? */ mProgressBar.getVisibility() != View.VISIBLE && /* End of our result list? */ totalItemCount < mTotalMovies) {
@@ -252,7 +262,14 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         }
         if (mMovieAdapter == null) {
             mMovieAdapter = new MovieAdapter(mHost, R.layout.listview_movie_row, mMovies);
-            mMovieListView.setAdapter(mMovieAdapter);
+            QuickReturnAdapter mQuickReturnAdapter = new QuickReturnAdapter(mMovieAdapter);
+            mMovieListView.setAdapter(mQuickReturnAdapter);
+            QuickReturnAttacher quickReturnAttacher = AbsListViewQuickReturnAttacher.forView(mMovieListView);
+            quickReturnAttacher.addTargetView(mFetchMoviesBtn, QuickReturnTargetView.POSITION_TOP, mFetchMoviesBtn.getMeasuredHeight());
+            final AbsListViewQuickReturnAttacher attacher = (AbsListViewQuickReturnAttacher) quickReturnAttacher;
+            attacher.setOnItemClickListener(this);
+            attacher.addOnScrollListener(this);
+            //quickReturnAttacher.addOnScrollListener(this);
         } else if (movies != null) {
             mMovieAdapter.notifyDataSetChanged();
         }
@@ -295,6 +312,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mProgressBar.setVisibility(View.GONE);
         SoundManager.stopSound(mSoundID);
         mSoundID = SoundManager.playSound(R.raw.fail);
+        mFooterTextView.setText("An Error Occurred. Please Refresh the Data.");
+        mRequiresRefresh = true;
         if (error.isNetworkError()) {
             try {
                 // Surrounded with try/catch because too many things can throw an NPE here.
@@ -310,6 +329,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         switch (error.getCallNumber()) {
             case R.id.api_call_get_movies:
                 Toast.makeText(mHost, "Failed to get our list of movies.", Toast.LENGTH_SHORT).show();
+                //noinspection ThrowableResultOfMethodCallIgnored
                 mEmptyTextView.setText(String.format("URL: '%1$s'\nHTTP Status Code: '%2$d'\nError: '%3$s'", error.getError().getUrl(), error.getHttpStatusCode(), error.getError().getMessage()));
                 return;
             default:
