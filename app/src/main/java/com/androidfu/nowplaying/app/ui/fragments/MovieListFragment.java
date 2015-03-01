@@ -112,8 +112,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         tracker.send(new HitBuilders.AppViewBuilder().build());
 
         mMovieListView.setEmptyView(mEmptyTextView);
-        //mMovieListView.setOnItemClickListener(this);
-        //mMovieListView.setOnScrollListener(this);
 
         View mListFooterView = inflater.inflate(R.layout.footer_layout, mMovieListView, false);
         mFooterTextView = (TextView) mListFooterView.findViewById(R.id.tv_footer_text);
@@ -194,6 +192,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     @OnClick(R.id.button)
     public void getMovieList(View v) {
         mRequiresRefresh = false;
+        mFooterTextView.setText(getString(R.string.footer_fetching_more));
         int pageLimit = DEFAULT_PAGE_SIZE;
         if (!mMovies.isEmpty()) {
             if (--mPageNumber > 0) {
@@ -210,6 +209,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
                 mEndOfList = false;
             }
             mMovies.clear();
+            mMovieAdapter.notifyDataSetChanged();
             mMovieAdapter = null;
             mPageNumber = 1;
         }
@@ -269,7 +269,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
             final AbsListViewQuickReturnAttacher attacher = (AbsListViewQuickReturnAttacher) quickReturnAttacher;
             attacher.setOnItemClickListener(this);
             attacher.addOnScrollListener(this);
-            //quickReturnAttacher.addOnScrollListener(this);
         } else if (movies != null) {
             mMovieAdapter.notifyDataSetChanged();
         }
@@ -303,8 +302,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-    }
+    public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
     @Subscribe
     public void apiErrorEvent(APIErrorEvent error) {

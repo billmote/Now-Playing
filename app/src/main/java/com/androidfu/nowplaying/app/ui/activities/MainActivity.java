@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity implements MovieListFragment.OnFr
 
     @Override
     public void onMovieSelected(Movie movie) {
-        Toast.makeText(this, String.format("You chose: %1$s", movie.getTitle()), Toast.LENGTH_SHORT).show();
+        if (movie != null) {
+            Toast.makeText(this, String.format("You chose: %1$s", movie.getTitle()), Toast.LENGTH_SHORT).show();
+        }
     }
 }
