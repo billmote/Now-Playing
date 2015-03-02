@@ -169,7 +169,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             // update and then abandon the update coming back to the app.
         }
 
-        DialogFragment dialogFragment;
+        ReusableDialogFragment dialogFragment;
         ApplicationSettings appSettings = null;
         mInterruptedTheUser = false;
         AppSettingsLocalStorageHandler appSettingsDBHandler = new AppSettingsLocalStorageHandler(this);
@@ -275,10 +275,11 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
      * @param isCancelable   whether or not the user should be able to cancel the dialog without selecting an
      *                       option.
      */
-    private void displayDialogFragment(DialogFragment dialogFragment, boolean isCancelable) {
+    private void displayDialogFragment(ReusableDialogFragment dialogFragment, boolean isCancelable) {
         mAlreadyHandledDialogResult = false;
         mInterruptTheUserDialog = dialogFragment;
         dialogFragment.setCancelable(isCancelable);
+        dialogFragment.setListener(this);
         if (getFragmentManager().findFragmentByTag(ReusableDialogFragment.TAG) == null) {
             dialogFragment.show(getFragmentManager(), ReusableDialogFragment.TAG);
         }

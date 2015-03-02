@@ -1,6 +1,5 @@
 package com.androidfu.nowplaying.app.ui.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -32,9 +31,9 @@ public class ReusableDialogFragment extends DialogFragment {
     public static final String KEY_BUNDLE_NEGATIVE_BUTTON_LABEL = "negative_button_label";
     public static final String KEY_BUNDLE_PATH_TO_ICON_FILE = "icon_path";
 
-    private ReusableDialogListener mHost;
+    private ReusableDialogListener mListener;
 
-    public static ReusableDialogFragment newInstance(String dialogTitle, String dialogBodyText, String positiveButtonLabel, String neutralButtonLabel, String negativeButtonLabel, String iconFilePath) {
+    public static ReusableDialogFragment newInstance(String dialogTitle, String dialogBodyText, String positiveButtonLabel, String neutralButtonLabel, String negativeButtonLabel, String iconFilePath, ReusableDialogListener listener) {
         Log.v(TAG, "newInstance()");
         ReusableDialogFragment reusableDialogFragment = new ReusableDialogFragment();
         Bundle bundle = new Bundle();
@@ -43,15 +42,18 @@ public class ReusableDialogFragment extends DialogFragment {
         bundle.putString(ReusableDialogFragment.KEY_BUNDLE_POSITIVE_BUTTON_LABEL, positiveButtonLabel);
         bundle.putString(ReusableDialogFragment.KEY_BUNDLE_NEUTRAL_BUTTON_LABEL, neutralButtonLabel);
         bundle.putString(ReusableDialogFragment.KEY_BUNDLE_NEGATIVE_BUTTON_LABEL, negativeButtonLabel);
-        bundle.putString(ReusableDialogFragment.KEY_BUNDLE_PATH_TO_ICON_FILE, iconFilePath);
+        bundle.putString(ReusableDialogFragment.KEY_BUNDLE_PATH_TO_ICON_FILE, iconFilePath);        
         reusableDialogFragment.setArguments(bundle);
+        reusableDialogFragment.setListener(listener);
         return reusableDialogFragment;
     }
+    
+    public static ReusableDialogFragment newInstance(String dialogTitle, String dialogBodyText, String positiveButtonLabel, String neutralButtonLabel, String negativeButtonLabel, String iconFilePath) {
+        return newInstance(dialogTitle, dialogBodyText, positiveButtonLabel, neutralButtonLabel, negativeButtonLabel, iconFilePath, null);
+    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mHost = (ReusableDialogListener) activity;
+    public void setListener(ReusableDialogListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -81,7 +83,7 @@ public class ReusableDialogFragment extends DialogFragment {
             Log.i(TAG, "Added a positive button to dialog.");
             alertDialogBuilder.setPositiveButton(positiveButtonLabel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            mHost.handlePositiveResult();
+                            mListener.handlePositiveResult();
                         }
                     }
             );
@@ -90,7 +92,7 @@ public class ReusableDialogFragment extends DialogFragment {
             Log.i(TAG, "Added a neutral button to dialog");
             alertDialogBuilder.setNeutralButton(neutralButtonLabel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            mHost.handleNeutralResult();
+                            mListener.handleNeutralResult();
                         }
                     }
             );
@@ -99,7 +101,7 @@ public class ReusableDialogFragment extends DialogFragment {
             Log.i(TAG, "Added a negative button to dialog");
             alertDialogBuilder.setNegativeButton(negativeButtonLabel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            mHost.handleNegativeResult();
+                            mListener.handleNegativeResult();
                         }
                     }
             );
@@ -110,7 +112,7 @@ public class ReusableDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        //mHost.handleNeutralResult();
+        //mListener.handleNeutralResult();
     }
 
     @DebugLog

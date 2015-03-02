@@ -36,6 +36,7 @@
     <string name="footer_end_of_list">End of List</string>
     <string name="footer_fetching_more">Fetching More Movies, Please Wait …</string>
     <string name="error_replace_api_key">You must put your Rotten Tomatoes API Key in res/values/secret.xml (or some other Strings Resource file.</string>
+    <string name="footer_error_try_refresh">An Error Occurred. Please Refresh the Data.</string>
     <!-- Unsorted string resources will get added below this comment by default -->
 
 </resources>

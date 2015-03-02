@@ -226,7 +226,10 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         if (mRequiresRefresh) {
             return;
         }
-        boolean shouldFetchMoreMovies = firstVisibleItem + visibleItemCount >= totalItemCount && visibleItemCount > 0; /* visibleItemCount == 0 when the device is rotated and the view is recreated. */
+        boolean shouldFetchMoreMovies = 
+                firstVisibleItem + visibleItemCount >= totalItemCount
+                    && visibleItemCount > 2; /* visibleItemCount == 0 when the device is rotated and the view is recreated. */
+
         //Log.d(TAG, String.format("%1$d + %2$d >= %3$d ? %4$s", firstVisibleItem, visibleItemCount, totalItemCount, String.valueOf(shouldFetchMoreMovies)));
         if (shouldFetchMoreMovies && /* Already fetching movies? */ mProgressBar.getVisibility() != View.VISIBLE && /* End of our result list? */ totalItemCount < mTotalMovies) {
             //Log.d(TAG, String.format("%1$d < %2$d", totalItemCount, mTotalMovies));
@@ -302,7 +305,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {}
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+    }
 
     @Subscribe
     public void apiErrorEvent(APIErrorEvent error) {
@@ -310,7 +314,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mProgressBar.setVisibility(View.GONE);
         SoundManager.stopSound(mSoundID);
         mSoundID = SoundManager.playSound(R.raw.fail);
-        mFooterTextView.setText("An Error Occurred. Please Refresh the Data.");
         mRequiresRefresh = true;
         if (error.isNetworkError()) {
             try {
@@ -326,9 +329,31 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         }
         switch (error.getCallNumber()) {
             case R.id.api_call_get_movies:
-                Toast.makeText(mHost, "Failed to get our list of movies.", Toast.LENGTH_SHORT).show();
                 //noinspection ThrowableResultOfMethodCallIgnored
-                mEmptyTextView.setText(String.format("URL: '%1$s'\nHTTP Status Code: '%2$d'\nError: '%3$s'", error.getError().getUrl(), error.getHttpStatusCode(), error.getError().getMessage()));
+                ReusableDialogFragment dialogFragment = ReusableDialogFragment.newInstance(
+                        getString(R.string.dialog_title_catastrophic_failure),
+                        String.format("URL: '%1$s'\n\nHTTP Status Code: '%2$d'\n\nError: '%3$s'", error.getError().getUrl().replace(getString(R.string.rotten_tomatoes_api_key), "{API KEY}"), error.getHttpStatusCode(), error.getError().getMessage()),
+                        getString(android.R.string.ok),
+                        null,
+                        null,
+                        null,
+                        new ReusableDialogFragment.ReusableDialogListener() {
+                            @Override
+                            public void handlePositiveResult() {
+                                mFooterTextView.setText(getString(R.string.footer_error_try_refresh));
+                            }
+
+                            @Override
+                            public void handleNeutralResult() {
+                            }
+
+                            @Override
+                            public void handleNegativeResult() {
+                            }
+                        });
+                if (getFragmentManager().findFragmentByTag(ReusableDialogFragment.TAG) == null) {
+                    dialogFragment.show(getFragmentManager(), ReusableDialogFragment.TAG);
+                }
                 return;
             default:
                 try {
