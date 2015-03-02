@@ -18,33 +18,24 @@ public class RestClient {
 
     public RestClient(String endpoint, boolean enableLogging) {
 
-        GsonConverter jsonParserConverter = new GsonConverter(buildJsonParser(), "UTF-8");
-        
         Gson gson = new GsonBuilder()
                 .registerTypeAdapterFactory(new ItemTypeAdapterFactory())
                 .setDateFormat("yyyy-MM-dd")
                 .setPrettyPrinting()
                 .excludeFieldsWithoutExposeAnnotation()
+                .excludeFieldsWithModifiers()
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setLogLevel(BuildConfig.DEBUG && enableLogging ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setEndpoint(endpoint)
-                .setConverter(jsonParserConverter)
-                //.setConverter(new GsonConverter(gson))
+                .setConverter(new GsonConverter(gson, "UTF-8"))
                 .setRequestInterceptor(new SessionRequestInterceptor())
                 .build();
 
         apiService = restAdapter.create(ApiService.class);
     }
 
-    public static Gson buildJsonParser() {
-        GsonBuilder jsonParserBuilder = new GsonBuilder();
-        jsonParserBuilder.setPrettyPrinting();
-        jsonParserBuilder.excludeFieldsWithoutExposeAnnotation();
-        return jsonParserBuilder.create();
-    }
-    
     public ApiService getApiService() {
         return apiService;
     }
