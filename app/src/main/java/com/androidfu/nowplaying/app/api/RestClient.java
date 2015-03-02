@@ -23,7 +23,6 @@ public class RestClient {
                 .setDateFormat("yyyy-MM-dd")
                 .setPrettyPrinting()
                 .excludeFieldsWithoutExposeAnnotation()
-                .excludeFieldsWithModifiers()
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
