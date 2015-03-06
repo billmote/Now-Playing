@@ -2,7 +2,7 @@
 
 Now playing is an example consumption of Rotten Tomatoes' 'in_theaters.json' REST endpoint.  Now Playing is not intended to be a fully functional, feature rich application.
 
-Get it on [Google Play](https://play.google.com/store/apps/details?id=com.androidfu.nowplaying)
+Get it on [Google Play](https://play.google.com/store/apps/details?id=com.androidfu.nowplaying.app)
 
 ### What is this repository for? ###
 
