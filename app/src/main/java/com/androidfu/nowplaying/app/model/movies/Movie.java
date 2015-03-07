@@ -23,8 +23,6 @@ public class Movie {
     @SerializedName("mpaa_rating")
     @Expose
     public String mpaaRating;
-    @Expose
-    public Integer runtime;
     @SerializedName("critics_consensus")
     @Expose
     public String criticsConsensus;
@@ -45,6 +43,12 @@ public class Movie {
     public AlternateIds alternateIds;
     @Expose
     public Links links;
+
+    /*
+        This field must not match the JSON response so that we can manually parse the data.  See the
+        RestClient for details.
+    */
+    public Integer movieRuntime;
 
     public String getId() {
         return id;
@@ -78,12 +82,12 @@ public class Movie {
         this.mpaaRating = mpaaRating;
     }
 
-    public Integer getRuntime() {
-        return runtime;
+    public Integer getMovieRuntime() {
+        return movieRuntime;
     }
 
-    public void setRuntime(Integer runtime) {
-        this.runtime = runtime;
+    public void setMovieRuntime(Integer movieRuntime) {
+        this.movieRuntime = movieRuntime;
     }
 
     public String getCriticsConsensus() {
