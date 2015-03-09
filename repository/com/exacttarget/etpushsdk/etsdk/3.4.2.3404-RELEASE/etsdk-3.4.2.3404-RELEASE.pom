@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.exacttarget.etpushsdk</groupId>
+  <artifactId>etsdk</artifactId>
+  <version>3.4.2.3404-RELEASE</version>
+  <packaging>aar</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.android.gms</groupId>
+      <artifactId>play-services</artifactId>
+      <version>6.1.71</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>appcompat-v7</artifactId>
+      <version>21.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.j256.ormlite</groupId>
+      <artifactId>ormlite-android</artifactId>
+      <version>4.48</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.radiusnetworks</groupId>
+      <artifactId>AndroidIBeaconLibrary</artifactId>
+      <version>0.7.6</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
