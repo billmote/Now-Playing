@@ -17,7 +17,8 @@ public class Movies {
     @Expose
     public int total;
     @Expose
-    public List<Movie> movies = new ArrayList<>();
+    @SerializedName("movies")
+    public List<Movie> movieList = new ArrayList<>();
     @Expose
     public Links_ links;
     @SerializedName("link_template")
@@ -32,12 +33,12 @@ public class Movies {
         this.total = total;
     }
 
-    public List<Movie> getMovies() {
-        return movies;
+    public List<Movie> getMovieList() {
+        return movieList;
     }
 
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
     }
 
     public Links_ getLinks() {

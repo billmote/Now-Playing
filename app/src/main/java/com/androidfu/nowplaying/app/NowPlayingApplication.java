@@ -223,8 +223,8 @@ public class NowPlayingApplication extends Application {
 
     private static final String TAG = NowPlayingApplication.class.getSimpleName();
 
-    public static int APP_VERSION_CODE;
-    public static String APP_VERSION_NAME;
+    public static int appVersionCode;
+    public static String appVersionName;
 
     @Override
     public void onCreate() {
@@ -246,8 +246,8 @@ public class NowPlayingApplication extends Application {
             Picasso.with(this).setLoggingEnabled(Boolean.valueOf(getString(R.string.picasso_logging_enabled)));
         }
 
-        APP_VERSION_CODE = getApplicationVersionCode();
-        APP_VERSION_NAME = getApplicationVersionName();
+        appVersionCode = getApplicationVersionCode();
+        appVersionName = getApplicationVersionName();
 
         /* Turn on StrictMode for Development */
         new StrictModeHelper().setupStrictMode();

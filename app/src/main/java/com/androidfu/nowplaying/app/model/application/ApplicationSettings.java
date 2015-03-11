@@ -232,7 +232,7 @@ public class ApplicationSettings {
         StringBuilder changes = new StringBuilder();
         String delimiter = "";
         for (Version version : this.getVersionsCollections()) {
-            if (version.getVersionCode() > NowPlayingApplication.APP_VERSION_CODE) {
+            if (version.getVersionCode() > NowPlayingApplication.appVersionCode) {
                 changes.append(delimiter).append(version.getChanges());
                 delimiter = "<br/>";
             }

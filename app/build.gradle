@@ -34,42 +34,42 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),     \
-                        'proguard-rules.pro',     \
-                        'proguard-otto.pro',     \
-                        'proguard-okhttp.pro',     \
-                        'proguard-crashlytics.pro',     \
-                        'proguard-butterknife.pro',     \
-                        'proguard-google-analytics.pro',     \
-                        'proguard-gson.pro',     \
-                        'proguard-picasso.pro',     \
-                        'proguard-retrofit.pro',     \
-                        'proguard-ormlite.pro',     \
-                        'proguard-nowplaying.pro',     \
-                        'proguard-parceler.pro',    \
-                        'proguard-apache-commons-logging.pro',    \
-                        'proguard-google-play-services.pro'     \
+                    getDefaultProguardFile('proguard-android.txt'),       \
+                          'proguard-rules.pro',       \
+                          'proguard-otto.pro',       \
+                          'proguard-okhttp.pro',       \
+                          'proguard-crashlytics.pro',       \
+                          'proguard-butterknife.pro',       \
+                          'proguard-google-analytics.pro',       \
+                          'proguard-gson.pro',       \
+                          'proguard-picasso.pro',       \
+                          'proguard-retrofit.pro',       \
+                          'proguard-ormlite.pro',       \
+                          'proguard-nowplaying.pro',       \
+                          'proguard-parceler.pro',      \
+                          'proguard-apache-commons-logging.pro',      \
+                          'proguard-google-play-services.pro'       \
             )
         }
         debug {
             minifyEnabled true
             shrinkResources true
             proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),     \
-                        'proguard-rules.pro',     \
-                        'proguard-otto.pro',     \
-                        'proguard-okhttp.pro',     \
-                        'proguard-crashlytics.pro',     \
-                        'proguard-butterknife.pro',     \
-                        'proguard-google-analytics.pro',     \
-                        'proguard-gson.pro',     \
-                        'proguard-picasso.pro',     \
-                        'proguard-retrofit.pro',     \
-                        'proguard-ormlite.pro',     \
-                        'proguard-nowplaying.pro',     \
-                        'proguard-parceler.pro',    \
-                        'proguard-apache-commons-logging.pro',    \
-                        'proguard-google-play-services.pro'     \
+                    getDefaultProguardFile('proguard-android.txt'),       \
+                          'proguard-rules.pro',       \
+                          'proguard-otto.pro',       \
+                          'proguard-okhttp.pro',       \
+                          'proguard-crashlytics.pro',       \
+                          'proguard-butterknife.pro',       \
+                          'proguard-google-analytics.pro',       \
+                          'proguard-gson.pro',       \
+                          'proguard-picasso.pro',       \
+                          'proguard-retrofit.pro',       \
+                          'proguard-ormlite.pro',       \
+                          'proguard-nowplaying.pro',       \
+                          'proguard-parceler.pro',      \
+                          'proguard-apache-commons-logging.pro',      \
+                          'proguard-google-play-services.pro'       \
             )
         }
     }
@@ -131,5 +131,34 @@ task findbugs(type: FindBugs, dependsOn: assembleDebug) {
     reports {
         xml.enabled = false
         html.enabled = true
+    }
+}
+
+apply plugin: 'pmd'
+
+// Usage:
+// ./gradlew app:pmd
+// open YOVO/build/reports/pmd/pmd.html
+task pmd(type: Pmd, dependsOn: assembleDebug) {
+    ruleSetFiles = files("${project.rootDir}/config/pmd/pmd-ruleset.xml")
+    ignoreFailures = false
+    ruleSets = []
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/jp/co/cyberagent/android/gpuimage/*'
+    exclude '**/*Tests.java'
+    exclude '**/*TestCase.java'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination "$project.buildDir/reports/pmd/pmd.xml"
+        }
+        html {
+            destination "$project.buildDir/reports/pmd/pmd.html"
+        }
     }
 }

@@ -2,16 +2,11 @@ package com.androidfu.nowplaying.app.util;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.os.PowerManager;
+import android.view.WindowManager;
 
 import hugo.weaving.DebugLog;
-
-import static android.content.Context.KEYGUARD_SERVICE;
-import static android.content.Context.POWER_SERVICE;
-import static android.os.PowerManager.ACQUIRE_CAUSES_WAKEUP;
-import static android.os.PowerManager.FULL_WAKE_LOCK;
-import static android.os.PowerManager.ON_AFTER_RELEASE;
-import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 
 /**
  * Add this to your application's src/debug/... sources
@@ -26,14 +21,14 @@ public class DebugUtils {
      */
     public static void riseAndShine(Activity activity) {
 
-        KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(KEYGUARD_SERVICE);
+        KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
         final KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("Unlock!");
         keyguardLock.disableKeyguard();
 
-        activity.getWindow().addFlags(FLAG_SHOW_WHEN_LOCKED);
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
-        PowerManager powerManager = (PowerManager) activity.getSystemService(POWER_SERVICE);
-        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(FULL_WAKE_LOCK | ACQUIRE_CAUSES_WAKEUP | ON_AFTER_RELEASE, "Wakeup!");
+        PowerManager powerManager = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "Wakeup!");
         wakeLock.acquire();
         wakeLock.release();
 

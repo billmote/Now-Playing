@@ -114,10 +114,10 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_BUNDLE_USER_INTERRUPTED_STATE, mInterruptedTheUser);
         outState.putString(KEY_BUNDLE_ERROR_MESSAGE, mErrorMessage);
         outState.putBoolean(KEY_BUNDLE_CATASTROPHIC_FAILURE, mCatastrophicFailure);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -204,7 +204,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             mInterruptedTheUser = true;
         }
 
-        if (!mInterruptedTheUser && appSettings.getLwmVersionNum() > NowPlayingApplication.APP_VERSION_CODE) {
+        if (!mInterruptedTheUser && appSettings.getLwmVersionNum() > NowPlayingApplication.appVersionCode) {
             /* The developer has decided that your version should no longer be in use. */
             Log.wtf(TAG, "Displaying the mandatory update dialog.");
             dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_required), appSettings.getMandatoryUpdateMessageText(), getString(R.string.dialog_button_update), null, getString(R.string.dialog_button_quit), null);
@@ -213,7 +213,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             mInterruptedTheUser = true;
         }
 
-        if (!mInterruptedTheUser && appSettings.isUpdateNagEnabled() && appSettings.getProdVersionNum() > NowPlayingApplication.APP_VERSION_CODE) {
+        if (!mInterruptedTheUser && appSettings.isUpdateNagEnabled() && appSettings.getProdVersionNum() > NowPlayingApplication.appVersionCode) {
             /* Your version is older than the current version.  Display an update nag screen with a list of new features. */
             Log.i(TAG, "Displaying the update nag.");
             dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_available), appSettings.getChangeLog(), getString(R.string.dialog_button_update), getString(R.string.dialog_button_not_now), null, null);

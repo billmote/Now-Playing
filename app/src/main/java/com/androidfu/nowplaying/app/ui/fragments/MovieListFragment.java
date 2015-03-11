@@ -55,7 +55,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     private static final int DEFAULT_PAGE_SIZE = 16;
     private static final int MAX_PAGE_SIZE = 50;
     private static final String KEY_BUNDLE_PAGE_NUMBER = "page_number";
-    private static final String KEY_BUNDLE_MOVIES = "movies";
+    private static final String KEY_BUNDLE_MOVIES = "movieList";
     private static final String KEY_BUNDLE_FIRST_VISIBLE_ITEM = "first_visible_movie";
     private static final String KEY_BUNDLE_SCROLL_OFFSET = "scroll_offset";
     private static final String KEY_BUNDLE_TOTAL_MOVIES = "total_num_movies";
@@ -165,7 +165,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         /**
-         * Take a look at the model objects that comprise "movies" and you'll see
+         * Take a look at the model objects that comprise "movieList" and you'll see
          * why Parceler is so fantastic.  1 annotation in each model object and we
          * get to use Android's amazingly fast Parcelable.
          */
@@ -231,7 +231,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
                     && visibleItemCount > 2; /* visibleItemCount == 0 when the device is rotated and the view is recreated. */
 
         //Log.d(TAG, String.format("%1$d + %2$d >= %3$d ? %4$s", firstVisibleItem, visibleItemCount, totalItemCount, String.valueOf(shouldFetchMoreMovies)));
-        if (shouldFetchMoreMovies && /* Already fetching movies? */ mProgressBar.getVisibility() != View.VISIBLE && /* End of our result list? */ totalItemCount < mTotalMovies) {
+        if (shouldFetchMoreMovies && /* Already fetching movieList? */ mProgressBar.getVisibility() != View.VISIBLE && /* End of our result list? */ totalItemCount < mTotalMovies) {
             //Log.d(TAG, String.format("%1$d < %2$d", totalItemCount, mTotalMovies));
             fetchMoreMovies(DEFAULT_PAGE_SIZE);
         }
@@ -249,18 +249,18 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         mFetchMoviesBtn.setText(R.string.btn_refresh);
         if (movies != null) {
             /**
-             * We pass null from onResume() if we already have a list of movies otherwise we
-             * should be getting a response from our API call and we'll populate the movies
+             * We pass null from onResume() if we already have a list of movieList otherwise we
+             * should be getting a response from our API call and we'll populate the movieList
              * here.
              */
             mSoundID = SoundManager.playSound(R.raw.success);
-            mMovies.addAll(movies.getMovies());
+            mMovies.addAll(movies.getMovieList());
             mTotalMovies = movies.getTotal();
-            int movieCount = movies.getMovies().size();
+            int movieCount = movies.getMovieList().size();
             if (movieCount > DEFAULT_PAGE_SIZE) {
                 mPageNumber = movieCount / DEFAULT_PAGE_SIZE;
             }
-            // Only increment our page number if we received a movies result
+            // Only increment our page number if we received a movieList result
             mPageNumber++;
         }
         if (mMovieAdapter == null) {

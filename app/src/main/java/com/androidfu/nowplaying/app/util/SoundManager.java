@@ -36,11 +36,9 @@ public class SoundManager {
 
     public static int playSound(int soundID) {
         int streamID = 0;
-        if (soundEnabled) {
-            if (mAudioManager != null) {
-                int streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                streamID = mSoundPool.play(mSoundPoolMap.get(soundID), streamVolume, streamVolume, 1, 0, 1f);
-            }
+        if (soundEnabled && mAudioManager != null) {
+            int streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            streamID = mSoundPool.play(mSoundPoolMap.get(soundID), streamVolume, streamVolume, 1, 0, 1f);
         }
         return streamID;
     }

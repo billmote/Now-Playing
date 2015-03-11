@@ -38,7 +38,7 @@ public class Log {
      * @return if logging is on.
      */
     @DebugLog
-    public static boolean isLogging() {
+    public static boolean isLoggingEnabled() {
         return isLogging;
     }
 
