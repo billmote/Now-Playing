@@ -31,7 +31,7 @@ Get it on [Google Play](https://play.google.com/store/apps/details?id=com.androi
 
 ### How good is this code? ###
 
-Well, that's really up to you to decide ;)  One of the reasons I put this application into open source was to encourage comment, scrutiny and debate.  I can tell you that _findbugs_ only reports 1 warning and I've refused to remove it because 1) it's not a _bad_ bug and 2) I like it the way it is ;)
+Well, that's really up to you to decide ;)  One of the reasons I put this application into open source was to encourage comment, scrutiny and debate.  I can tell you that _findbugs_ and _PMD_ issues have all been resolved and the app gets a clean Bill of Health.
 
 ### How do I use this code? ###
 
