@@ -197,7 +197,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
         NowPlayingApplication nowPlayingApplication = (NowPlayingApplication) getApplication();
         int appVersionCode = nowPlayingApplication.getApplicationVersionCode();
-        
+
         if (appSettings.isAppDisabled()) {
             /* The application has been disabled via the kill-switch */
             Log.wtf(TAG, "The developer has decided that this application should not be run.");

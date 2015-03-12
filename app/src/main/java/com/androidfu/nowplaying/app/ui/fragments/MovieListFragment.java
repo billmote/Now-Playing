@@ -226,9 +226,9 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         if (mRequiresRefresh) {
             return;
         }
-        boolean shouldFetchMoreMovies = 
+        boolean shouldFetchMoreMovies =
                 firstVisibleItem + visibleItemCount >= totalItemCount
-                    && visibleItemCount > 2; /* visibleItemCount == 0 when the device is rotated and the view is recreated. */
+                        && visibleItemCount > 2; /* visibleItemCount == 0 when the device is rotated and the view is recreated. */
 
         //Log.d(TAG, String.format("%1$d + %2$d >= %3$d ? %4$s", firstVisibleItem, visibleItemCount, totalItemCount, String.valueOf(shouldFetchMoreMovies)));
         if (shouldFetchMoreMovies && /* Already fetching movieList? */ mProgressBar.getVisibility() != View.VISIBLE && /* End of our result list? */ totalItemCount < mTotalMovies) {

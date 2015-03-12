@@ -42,12 +42,12 @@ public class ReusableDialogFragment extends DialogFragment {
         bundle.putString(ReusableDialogFragment.KEY_BUNDLE_POSITIVE_BUTTON_LABEL, positiveButtonLabel);
         bundle.putString(ReusableDialogFragment.KEY_BUNDLE_NEUTRAL_BUTTON_LABEL, neutralButtonLabel);
         bundle.putString(ReusableDialogFragment.KEY_BUNDLE_NEGATIVE_BUTTON_LABEL, negativeButtonLabel);
-        bundle.putString(ReusableDialogFragment.KEY_BUNDLE_PATH_TO_ICON_FILE, iconFilePath);        
+        bundle.putString(ReusableDialogFragment.KEY_BUNDLE_PATH_TO_ICON_FILE, iconFilePath);
         reusableDialogFragment.setArguments(bundle);
         reusableDialogFragment.setListener(listener);
         return reusableDialogFragment;
     }
-    
+
     public static ReusableDialogFragment newInstance(String dialogTitle, String dialogBodyText, String positiveButtonLabel, String neutralButtonLabel, String negativeButtonLabel, String iconFilePath) {
         return newInstance(dialogTitle, dialogBodyText, positiveButtonLabel, neutralButtonLabel, negativeButtonLabel, iconFilePath, null);
     }

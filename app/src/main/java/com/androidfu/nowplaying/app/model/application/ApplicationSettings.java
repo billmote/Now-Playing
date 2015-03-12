@@ -83,7 +83,7 @@ public class ApplicationSettings {
     @SerializedName("play_store_http_url")
     @DatabaseField
     private String playStoreHttpUrl;
-    
+
     @Expose
     @SerializedName("play_store_market_url")
     @DatabaseField
