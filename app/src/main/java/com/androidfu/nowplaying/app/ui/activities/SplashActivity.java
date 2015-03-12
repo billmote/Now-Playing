@@ -194,6 +194,9 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
 
         mPlayStoreHttpUrl = appSettings.getPlayStoreHttpUrl();
         mPlayStoreMarketUrl = appSettings.getPlayStoreMarketUrl();
+
+        NowPlayingApplication nowPlayingApplication = (NowPlayingApplication) getApplication();
+        int appVersionCode = nowPlayingApplication.getApplicationVersionCode();
         
         if (appSettings.isAppDisabled()) {
             /* The application has been disabled via the kill-switch */
@@ -204,7 +207,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             mInterruptedTheUser = true;
         }
 
-        if (!mInterruptedTheUser && appSettings.getLwmVersionNum() > NowPlayingApplication.appVersionCode) {
+        if (!mInterruptedTheUser && appSettings.getLwmVersionNum() > appVersionCode) {
             /* The developer has decided that your version should no longer be in use. */
             Log.wtf(TAG, "Displaying the mandatory update dialog.");
             dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_required), appSettings.getMandatoryUpdateMessageText(), getString(R.string.dialog_button_update), null, getString(R.string.dialog_button_quit), null);
@@ -213,10 +216,10 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
             mInterruptedTheUser = true;
         }
 
-        if (!mInterruptedTheUser && appSettings.isUpdateNagEnabled() && appSettings.getProdVersionNum() > NowPlayingApplication.appVersionCode) {
+        if (!mInterruptedTheUser && appSettings.isUpdateNagEnabled() && appSettings.getProdVersionNum() > appVersionCode) {
             /* Your version is older than the current version.  Display an update nag screen with a list of new features. */
             Log.i(TAG, "Displaying the update nag.");
-            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_available), appSettings.getChangeLog(), getString(R.string.dialog_button_update), getString(R.string.dialog_button_not_now), null, null);
+            dialogFragment = ReusableDialogFragment.newInstance(getString(R.string.dialog_title_update_available), appSettings.getChangeLog(appVersionCode), getString(R.string.dialog_button_update), getString(R.string.dialog_button_not_now), null, null);
             displayDialogFragment(dialogFragment, false);
 
             // Display update icon on the options menu

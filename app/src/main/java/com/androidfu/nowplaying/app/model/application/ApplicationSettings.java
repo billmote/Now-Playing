@@ -1,6 +1,5 @@
 package com.androidfu.nowplaying.app.model.application;
 
-import com.androidfu.nowplaying.app.NowPlayingApplication;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.dao.ForeignCollection;
@@ -228,11 +227,11 @@ public class ApplicationSettings {
         this.playStoreMarketUrl = playStoreMarketUrl;
     }
 
-    public String getChangeLog() {
+    public String getChangeLog(int appVersionCode) {
         StringBuilder changes = new StringBuilder();
         String delimiter = "";
         for (Version version : this.getVersionsCollections()) {
-            if (version.getVersionCode() > NowPlayingApplication.appVersionCode) {
+            if (version.getVersionCode() > appVersionCode) {
                 changes.append(delimiter).append(version.getChanges());
                 delimiter = "<br/>";
             }

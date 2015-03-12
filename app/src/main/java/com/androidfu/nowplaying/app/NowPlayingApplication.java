@@ -223,9 +223,6 @@ public class NowPlayingApplication extends Application {
 
     private static final String TAG = NowPlayingApplication.class.getSimpleName();
 
-    public static int appVersionCode;
-    public static String appVersionName;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -245,9 +242,6 @@ public class NowPlayingApplication extends Application {
             Picasso.with(this).setIndicatorsEnabled(true);
             Picasso.with(this).setLoggingEnabled(Boolean.valueOf(getString(R.string.picasso_logging_enabled)));
         }
-
-        appVersionCode = getApplicationVersionCode();
-        appVersionName = getApplicationVersionName();
 
         /* Turn on StrictMode for Development */
         new StrictModeHelper().setupStrictMode();
@@ -282,7 +276,7 @@ public class NowPlayingApplication extends Application {
      *
      * @return the application version code as an int.
      */
-    private int getApplicationVersionCode() {
+    public int getApplicationVersionCode() {
         try {
             return this.getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
@@ -295,7 +289,7 @@ public class NowPlayingApplication extends Application {
      *
      * @return the application version name as a String.
      */
-    private String getApplicationVersionName() {
+    public String getApplicationVersionName() {
         String devBuild = BuildConfig.DEBUG ? "d" : "";
         try {
             return this.getPackageManager().getPackageInfo(getPackageName(), 0).versionName + devBuild;
