@@ -1,0 +1,599 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>FindBugs Report</title>
+<style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+
+		.tablerow0:hover, .tablerow1:hover {
+			background: #aaffaa;
+		}
+
+		.priority-1 {
+		    color: red;
+		    font-weight: bold;
+		}
+		.priority-2 {
+		    color: orange;
+		    font-weight: bold;
+		}
+		.priority-3 {
+		    color: green;
+		    font-weight: bold;
+		}
+		.priority-4 {
+		    color: blue;
+		    font-weight: bold;
+		}
+		</style>
+<script type="text/javascript">
+			function toggleRow(elid) {
+				if (document.getElementById) {
+					element = document.getElementById(elid);
+					if (element) {
+						if (element.style.display == 'none') {
+							element.style.display = 'block';
+							//window.status = 'Toggle on!';
+						} else {
+							element.style.display = 'none';
+							//window.status = 'Toggle off!';
+						}
+					}
+				}
+			}
+		</script>
+</head>
+<body>
+<h1>
+<a href="http://findbugs.sourceforge.net">FindBugs</a> Report</h1>
+<h2>Project Information</h2>
+<p>Project: 
+		</p>
+<p>FindBugs version: 3.0.0</p>
+<p>Code analyzed:</p>
+<ul>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/BuildConfig.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$StrictModeHelper$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$StrictModeHelper$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$StrictModeHelper$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$StrictModeHelper$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication$StrictModeHelper.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/NowPlayingApplication.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$attr.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$bool.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$color.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$dimen.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$drawable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$id.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$integer.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$layout.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$menu.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$mipmap.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$plurals.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$raw.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$string.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$style.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$styleable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R$xml.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/R.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ApiService.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ItemTypeAdapterFactory$1$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ItemTypeAdapterFactory$1$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ItemTypeAdapterFactory$1$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ItemTypeAdapterFactory$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ItemTypeAdapterFactory$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ItemTypeAdapterFactory$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ItemTypeAdapterFactory.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestCallback$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestCallback$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestCallback$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestCallback.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestClient$1$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestClient$1$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestClient$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestClient$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestClient$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/RestClient.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$1$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$1$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$2$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$2$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$2.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/ServiceEventHandler.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/api/SessionRequestInterceptor.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/APIErrorEvent$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/APIErrorEvent$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/APIErrorEvent$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/APIErrorEvent$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/APIErrorEvent.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/APIOkEvent$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/APIOkEvent.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/BaseEvent$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/BaseEvent$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/BaseEvent$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/BaseEvent.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/application/GetApplicationSettingsEvent$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/application/GetApplicationSettingsEvent.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/movies/GetMoviesEvent$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/movies/GetMoviesEvent$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/movies/GetMoviesEvent$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/movies/GetMoviesEvent$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/movies/GetMoviesEvent$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/movies/GetMoviesEvent.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/network/NetworkAvailableEvent$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/network/NetworkAvailableEvent$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/events/network/NetworkAvailableEvent.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/AppSettingsLocalStorageHandler$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/AppSettingsLocalStorageHandler$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/AppSettingsLocalStorageHandler$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/AppSettingsLocalStorageHandler$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/AppSettingsLocalStorageHandler.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBHelper$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBHelper$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBHelper$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBHelper$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBHelper$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBHelper$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBHelper.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBManager$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBManager$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBManager$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/DBManager.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/localcache/LocalStorageHandler.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure19.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure21.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure23.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure25.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure27.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure29.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure31.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure33.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure35.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure37.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure39.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure41.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure43.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure45.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure47.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure49.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure51.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure53.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure55.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure57.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure59.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure61.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure63.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure65.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure67.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/ApplicationSettings.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/Version$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/Version$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/Version$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/Version$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/Version$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/Version$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/application/Version.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$$Parcelable$Creator$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AbridgedCast.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds$$Parcelable$Creator$$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/AlternateIds.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$$Parcelable$Creator$$2.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure19.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure21.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$$Parcelable$Creator$$3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Links_.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$$Parcelable$Creator$$4.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure19.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure21.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure23.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure25.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure27.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure29.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure31.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure33.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure35.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure37.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure39.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure41.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure43.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure45.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure47.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure49.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure51.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure53.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movie.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$$Parcelable$Creator$$5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Movies.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$$Parcelable$Creator$$6.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Posters.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$$Parcelable$Creator$$7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/Ratings.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates$$Parcelable$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates$$Parcelable$Creator$$8.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates$$Parcelable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates$$Parcelable.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/model/movies/ReleaseDates.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/receivers/NetworkStateReceiver$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/receivers/NetworkStateReceiver$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/receivers/NetworkStateReceiver.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/receivers/PackageReplacedReceiver$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/receivers/PackageReplacedReceiver$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/receivers/PackageReplacedReceiver.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/BaseActivity$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/BaseActivity$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/BaseActivity$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/BaseActivity$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/BaseActivity$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/BaseActivity.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/MainActivity.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$$ViewInjector.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$$ViewInjector.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure19.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure21.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure23.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure25.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure27.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure29.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure31.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure33.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$SplashRunnable$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$SplashRunnable$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$SplashRunnable$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity$SplashRunnable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/activities/SplashActivity.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/adapters/MovieAdapter$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/adapters/MovieAdapter$ViewHolder$$ViewInjector.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/adapters/MovieAdapter$ViewHolder$$ViewInjector.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/adapters/MovieAdapter$ViewHolder.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/adapters/MovieAdapter.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$$ViewInjector$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$$ViewInjector.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$$ViewInjector.java</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$1$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$1$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$1$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$1$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure19.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure21.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure23.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure25.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure27.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure29.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure31.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure33.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure35.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure37.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure39.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment$OnFragmentInteractionListener.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/MovieListFragment.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$1$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$1$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$2$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$2$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$2.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$3$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$3$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$ImageGetter$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$ImageGetter$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$ImageGetter$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$ImageGetter.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$ReusableDialogListener.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$TagHandler$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$TagHandler$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$TagHandler$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment$TagHandler.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/ui/fragments/ReusableDialogFragment.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/DebugUtils$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/DebugUtils$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/DebugUtils.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$1$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$1$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/EventBus.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$TrackerName$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$TrackerName$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$TrackerName$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper$TrackerName.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/GoogleAnalyticsHelper.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/Log$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/Log$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/Log$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/Log$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/Log.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure17.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure19.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SharedPreferencesHelper.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure11.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure13.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure15.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure3.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure5.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure7.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager$AjcClosure9.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/androidfu/nowplaying/app/util/SoundManager.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/felipecsl/quickreturn/R$drawable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/felipecsl/quickreturn/R$string.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/felipecsl/quickreturn/R.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$attr.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$color.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$drawable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$id.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$integer.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$raw.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$string.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$style.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R$styleable.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/com/google/android/gms/R.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$1.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$AbridgedCast$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$AlternateIds$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$Links$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$Links_$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$Movie$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$Movies$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$Posters$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$Ratings$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels$ReleaseDates$$Parcelable$$0.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels.class</li>
+<li>/Users/bmote/git/Now-Playing/app/build/intermediates/classes/debug/org/parceler/Parceler$$Parcels.java</li>
+</ul>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Metrics</h2>
+<p>4540 lines of code analyzed,
+	in 441 classes, 
+	in 17 packages.</p>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Metric</th>
+<th align="right">Total</th>
+<th align="right">Density*</th>
+</tr>
+<tr class="tablerow0">
+<td>High Priority Warnings</td>
+<td align="right"/>
+<td align="right">0.00</td>
+</tr>
+<tr class="tablerow1">
+<td>Medium Priority Warnings</td>
+<td align="right"/>
+<td align="right">0.00</td>
+</tr>
+<tr class="$totalClass">
+<td>
+<b>Total Warnings</b>
+</td>
+<td align="right">
+<b>0</b>
+</td>
+<td align="right">
+<b>0.00</b>
+</td>
+</tr>
+</table>
+<p>
+<i>(* Defects per Thousand lines of non-commenting source statements)</i>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Contents</h2>
+<ul>
+<li>
+<a href="#Details">Details</a>
+</li>
+</ul>
+<h1>Summary</h1>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Warning Type</th>
+<th align="right">Number</th>
+</tr>
+<tr class="tablerow0">
+<td>
+<b>Total</b>
+</td>
+<td align="right">
+<b>0</b>
+</td>
+</tr>
+</table>
+<h1>Warnings</h1>
+<p>Click on a warning row to see full context information.</p>
+<h1>
+<a name="Details">Details</a>
+</h1>
+</body>
+</html>

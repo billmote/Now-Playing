@@ -1,0 +1,708 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Lint Report</title>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto" />
+<link rel="stylesheet" type="text/css" href="lint_files/hololike.css" />
+<script language="javascript" type="text/javascript"> 
+<!--
+function reveal(id) {
+if (document.getElementById) {
+document.getElementById(id).style.display = 'block';
+document.getElementById(id+'Link').style.display = 'none';
+}
+}
+//--> 
+</script>
+</head>
+<body>
+<h1>Lint Report</h1>
+<div class="titleSeparator"></div>
+Check performed at Fri Mar 13 07:19:34 EDT 2015.<br/>
+3 errors and 23 warnings found:<br/><br/>
+<table class="overview">
+<tr><td></td><td class="categoryColumn"><a href="#Correctness">Correctness</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#CommitPrefEdits">CommitPrefEdits: Missing <code>commit()</code> on <code>SharedPreference</code> editor</a>
+</td></tr>
+<tr>
+<td class="countColumn">3</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-error.png" alt="Error" />
+<a href="#InvalidPackage">InvalidPackage: Package not included in Android</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#OldTargetApi">OldTargetApi: Target SDK attribute is not targeting latest version</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Performance">Performance</a>
+</td></tr>
+<tr>
+<td class="countColumn">2</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#Overdraw">Overdraw: Overdraw: Painting regions more than once</a>
+</td></tr>
+<tr>
+<td class="countColumn">14</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#UnusedResources">UnusedResources: Unused resources</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#UselessParent">UselessParent: Useless parent layout</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Usability:Typography">Usability:Typography</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#TypographyDashes">TypographyDashes: Hyphen can be replaced with dash</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Usability:Icons">Usability:Icons</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#IconMissingDensityFolder">IconMissingDensityFolder: Missing density folder</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Accessibility">Accessibility</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#ContentDescription">ContentDescription: Image without <code>contentDescription</code></a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#Bi-directional Text">Bi-directional Text</a>
+</td></tr>
+<tr>
+<td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint_files/lint-warning.png" alt="Warning" />
+<a href="#RtlEnabled">RtlEnabled: Using RTL attributes without enabling RTL support</a>
+</td></tr>
+<tr><td></td><td class="categoryColumn"><a href="#MissingIssues">Disabled Checks (11)</a>
+</td></tr></table>
+<br/>
+<a name="Correctness"></a>
+<div class="category"><a href="#" title="Return to top">Correctness</a><div class="categorySeparator"></div>
+</div>
+<a name="CommitPrefEdits"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">CommitPrefEdits: Missing <code>commit()</code> on <code>SharedPreference</code> editor</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/java/com/androidfu/nowplaying/app/util/SharedPreferencesHelper.java">../app/src/main/java/com/androidfu/nowplaying/app/util/SharedPreferencesHelper.java</a>:34</span>: <span class="message"><code>SharedPreferences.edit()</code> without a corresponding <code>commit()</code> or <code>apply()</code> call</span><br /><pre class="errorlines">
+<span class="lineno">  31</span>             mInstance = new SharedPreferencesHelper();
+<span class="lineno">  32</span>         }
+<span class="lineno">  33</span>         sharedPreferences = context.getSharedPreferences(TAG, Context.MODE_PRIVATE);
+<span class="lineno">  34</span>         sharedPreferencesEditor = <span class="errorspan">sharedPreferences.edit();</span>
+<span class="lineno">  35</span>         mContext = context;
+<span class="lineno">  36</span>     }
+</pre>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Priority: 6 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Missing <code>commit()</code> on <code>SharedPreference</code> editor.</div>
+<div class="explanation">
+After calling <code>edit()</code> on a <code>SharedPreference</code>, you must call <code>commit()</code> or <code>apply()</code> on the editor to save the results.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "CommitPrefEdits" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="InvalidPackage"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">InvalidPackage: Package not included in Android</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../../../.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.0.0/2534c458682c73f5b9871131ab3098d3f987ca3/okio-1.0.0.jar">../../../.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.0.0/2534c458682c73f5b9871131ab3098d3f987ca3/okio-1.0.0.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>java.nio.file</code>. Referenced from <code>okio.Okio</code>.</span><br />
+<span class="location"><a href="../../../.gradle/caches/modules-2/files-2.1/org.parceler/parceler/0.2.10/6fbf28456871698614925e2f1883eae57259969b/parceler-0.2.10.jar">../../../.gradle/caches/modules-2/files-2.1/org.parceler/parceler/0.2.10/6fbf28456871698614925e2f1883eae57259969b/parceler-0.2.10.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.inject</code>. Referenced from <code>com.sun_.codemodel.Parceler..JCodeModel..UnscopedProvider..0</code>.</span><br />
+<span class="location"><a href="../../../.gradle/caches/modules-2/files-2.1/org.androidtransfuse/transfuse-core/0.2.10/faa97baaa6e50dafccc390f317fb20845503566f/transfuse-core-0.2.10.jar">../../../.gradle/caches/modules-2/files-2.1/org.androidtransfuse/transfuse-core/0.2.10/faa97baaa6e50dafccc390f317fb20845503566f/transfuse-core-0.2.10.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.tools</code>. Referenced from <code>org.androidtransfuse.gen.FilerResourceWriter</code>.</span><br />
+</div>
+<div class="metadata">Priority: 6 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="error">Error</span><div class="summary">
+Explanation: Package not included in Android.</div>
+<div class="explanation">
+This check scans through libraries looking for calls to APIs that are not included in Android.<br/>
+<br/>
+When you create Android projects, the classpath is set up such that you can only access classes in the API packages that are included in Android. However, if you add other projects to your libs/ folder, there is no guarantee that those .jar files were built with an Android specific classpath, and in particular, they could be accessing unsupported APIs such as java.applet.<br/>
+<br/>
+This check scans through library jars and looks for references to API packages that are not included in Android and flags these. This is only an error if your code calls one of the library classes which wind up referencing the unsupported package.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "InvalidPackage" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="OldTargetApi"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">OldTargetApi: Target SDK attribute is not targeting latest version</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/build.gradle">../app/build.gradle</a>:39</span>: <span class="message">Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details.</span><br /><pre class="errorlines">
+<span class="lineno">  36</span> 
+<span class="lineno">  37</span>     defaultConfig {
+<span class="lineno">  38</span>         minSdkVersion 15
+<span class="lineno">  39</span>         <span class="errorspan">targetSdkVersion 21</span>
+<span class="lineno">  40</span>         versionCode 3
+<span class="lineno">  41</span>         versionName "1.2"
+</pre>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Priority: 6 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Target SDK attribute is not targeting latest version.</div>
+<div class="explanation">
+When your application runs on a version of Android that is more recent than your <code>targetSdkVersion</code> specifies that it has been tested with, various compatibility modes kick in. This ensures that your application continues to work, but it may look out of place. For example, if the <code>targetSdkVersion</code> is less than 14, your app may get an option button in the UI.<br/>
+<br/>
+To fix this issue, set the <code>targetSdkVersion</code> to the highest available value. Then test your app to make sure everything works correctly. You may want to consult the compatibility notes to see what changes apply to each version you are adding support for: <a href="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html">http://developer.android.com/reference/android/os/Build.VERSION_CODES.html</a>
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html">http://developer.android.com/reference/android/os/Build.VERSION_CODES.html</a>
+</div><br/>To suppress this error, use the issue id "OldTargetApi" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Performance"></a>
+<div class="category"><a href="#" title="Return to top">Performance</a><div class="categorySeparator"></div>
+</div>
+<a name="Overdraw"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">Overdraw: Overdraw: Painting regions more than once</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/res/layout/activity_splash.xml">../app/src/main/res/layout/activity_splash.xml</a>:6</span>: <span class="message">Possible overdraw: Root element paints background <code>@drawable/kung_fu_droid</code> with a theme that also paints a background (inferred theme is <code>@style/AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   3</span> &lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<span class="lineno">   4</span>     android:layout_width="match_parent"
+<span class="lineno">   5</span>     android:layout_height="match_parent"
+<span class="lineno">   6</span>     <span class="errorspan">android:background="@drawable/kung_fu_droid"></span>
+<span class="lineno">   7</span> 
+<span class="lineno">   8</span>     &lt;ProgressBar
+</pre>
+<span class="location"><a href="../app/src/main/res/layout/listview_movie_row.xml">../app/src/main/res/layout/listview_movie_row.xml</a>:8</span>: <span class="message">Possible overdraw: Root element paints background <code>#FFDDDDDD</code> with a theme that also paints a background (inferred theme is <code>@style/AppTheme</code>)</span><br /><pre class="errorlines">
+<span class="lineno">   5</span>     android:id="@+id/lv_row"
+<span class="lineno">   6</span>     android:layout_width="match_parent"
+<span class="lineno">   7</span>     android:layout_height="match_parent"
+<span class="lineno">   8</span>     <span class="errorspan">android:background="#FFDDDDDD"</span>
+<span class="lineno">   9</span>     android:orientation="vertical"
+<span class="lineno">  10</span>     android:padding="16dp">
+</pre>
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Overdraw: Painting regions more than once.</div>
+<div class="explanation">
+If you set a background drawable on a root view, then you should use a custom theme where the theme background is null. Otherwise, the theme background will be painted first, only to have your custom background completely cover it; this is called "overdraw".<br/>
+<br/>
+NOTE: This detector relies on figuring out which layouts are associated with which activities based on scanning the Java code, and it's currently doing that using an inexact pattern matching algorithm. Therefore, it can incorrectly conclude which activity the layout is associated with and then wrongly complain that a background-theme is hidden.<br/>
+<br/>
+If you want your custom background on multiple pages, then you should consider making a custom theme with your custom background and just using that theme instead of a root element background.<br/>
+<br/>
+Of course it's possible that your custom drawable is translucent and you want it to be mixed with the background. However, you will get better performance if you pre-mix the background with your drawable and use that resulting image or color as a custom theme background instead.<br/>
+
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "Overdraw" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="UnusedResources"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">UnusedResources: Unused resources</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/res/xml/application_tracker.xml">../app/src/main/res/xml/application_tracker.xml</a>:5</span>: <span class="message">The resource <code>R.integer.ga_sessionTimeout</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   2</span> &lt;resources xmlns:tools="http://schemas.android.com/tools"
+<span class="lineno">   3</span>     tools:ignore="TypographyDashes">
+<span class="lineno">   4</span> 
+<span class="lineno">   5</span>     &lt;integer <span class="errorspan">name="ga_sessionTimeout">300&lt;/integer></span>
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span>     &lt;!-- Enable automatic Activity measurement -->
+</pre>
+<span class="location"><a href="../app/src/main/res/xml/application_tracker.xml">../app/src/main/res/xml/application_tracker.xml</a>:8</span>: <span class="message">The resource <code>R.bool.ga_autoActivityTracking</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   5</span>     &lt;integer name="ga_sessionTimeout">300&lt;/integer>
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span>     &lt;!-- Enable automatic Activity measurement -->
+<span class="lineno">   8</span>     &lt;bool <span class="errorspan">name="ga_autoActivityTracking">true&lt;/bool></span>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span>     &lt;!-- Enable automatic exception tracking -->
+</pre>
+<span class="location"><a href="../app/src/main/res/xml/application_tracker.xml">../app/src/main/res/xml/application_tracker.xml</a>:11</span>: <span class="message">The resource <code>R.bool.ga_reportUncaughtExceptions</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   8</span>     &lt;bool name="ga_autoActivityTracking">true&lt;/bool>
+<span class="lineno">   9</span> 
+<span class="lineno">  10</span>     &lt;!-- Enable automatic exception tracking -->
+<span class="lineno">  11</span>     &lt;bool <span class="errorspan">name="ga_reportUncaughtExceptions">true&lt;/bool></span>
+<span class="lineno">  12</span> 
+<span class="lineno">  13</span>     &lt;!-- The screen names that will appear in reports -->
+</pre>
+<span class="location"><a href="../app/src/main/res/xml/application_tracker.xml">../app/src/main/res/xml/application_tracker.xml</a>:14</span>: <span class="message">The resource <code>R.screenName._ui_activities_MainActivity</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  11</span>     &lt;bool name="ga_reportUncaughtExceptions">true&lt;/bool>
+<span class="lineno">  12</span> 
+<span class="lineno">  13</span>     &lt;!-- The screen names that will appear in reports -->
+<span class="lineno">  14</span>     &lt;screenName <span class="errorspan">name=".ui.activities.MainActivity"></span>
+<span class="lineno">  15</span>         NowPlaying MainActivity
+<span class="lineno">  16</span>     &lt;/screenName>
+</pre>
+<span class="location"><a href="../app/src/main/res/xml/application_tracker.xml">../app/src/main/res/xml/application_tracker.xml</a>:19</span>: <span class="message">The resource <code>R.string.ga_trackingId</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  16</span>     &lt;/screenName>
+<span class="lineno">  17</span> 
+<span class="lineno">  18</span>     &lt;!--  The following value should be replaced with correct property id. -->
+<span class="lineno">  19</span>     &lt;string <span class="errorspan">name="ga_trackingId">UA-12345678-9&lt;/string></span>
+<span class="lineno">  20</span> 
+<span class="lineno">  21</span> &lt;/resources>
+</pre>
+<button id="UnusedResourcesDivLink" onclick="reveal('UnusedResourcesDiv');" />+ 9 More Occurrences...</button>
+<div id="UnusedResourcesDiv" style="display: none">
+<span class="location"><a href="../app/src/main/res/values/bools.xml">../app/src/main/res/values/bools.xml</a>:3</span>: <span class="message">The resource <code>R.bool.large_display</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   1</span> &lt;?xml version="1.0" encoding="utf-8"?>
+<span class="lineno">   2</span> &lt;resources>
+<span class="lineno">   3</span>     &lt;bool <span class="errorspan">name="large_display">false&lt;/bool></span>
+<span class="lineno">   4</span> &lt;/resources>
+
+</pre>
+<ul></ul><button id="Location6DivLink" onclick="reveal('Location6Div');" />+ 1 Additional Locations...</button>
+<div id="Location6Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../app/src/main/res/values-sw600dp/bools.xml">../app/src/main/res/values-sw600dp/bools.xml</a>:3</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../app/src/main/res/values/com_crashlytics_export_strings.xml">../app/src/main/res/values/com_crashlytics_export_strings.xml</a>:9</span>: <span class="message">The resource <code>R.string.com_crashlytics_android_build_id</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span>   Do NOT modify, delete, or commit to source control!
+<span class="lineno">   8</span> -->
+<span class="lineno">   9</span> &lt;string <span class="errorspan">name="com.crashlytics.android.build_id" translatable="false">352ab4aa-d7b5-430f-8043-31862d3f6718&lt;/string></span>
+<span class="lineno">  10</span> &lt;/resources>
+<span class="lineno">  11</span> 
+</pre>
+<span class="location"><a href="../app/src/main/res/values/dimens.xml">../app/src/main/res/values/dimens.xml</a>:3</span>: <span class="message">The resource <code>R.dimen.activity_horizontal_margin</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   1</span> &lt;resources>
+<span class="lineno">   2</span>     &lt;!-- Default screen margins, per the Android Design guidelines. -->
+<span class="lineno">   3</span>     &lt;dimen <span class="errorspan">name="activity_horizontal_margin">16dp&lt;/dimen></span>
+<span class="lineno">   4</span>     &lt;dimen name="activity_vertical_margin">16dp&lt;/dimen>
+<span class="lineno">   5</span> &lt;/resources>
+</pre>
+<ul></ul><button id="Location8DivLink" onclick="reveal('Location8Div');" />+ 1 Additional Locations...</button>
+<div id="Location8Div" style="display: none">
+Additional locations: <ul>
+<li> <span class="location"><a href="../app/src/main/res/values-w820dp/dimens.xml">../app/src/main/res/values-w820dp/dimens.xml</a>:5</span>
+</ul>
+</div><br/><br/>
+<span class="location"><a href="../app/src/main/res/values/dimens.xml">../app/src/main/res/values/dimens.xml</a>:4</span>: <span class="message">The resource <code>R.dimen.activity_vertical_margin</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   1</span> &lt;resources>
+<span class="lineno">   2</span>     &lt;!-- Default screen margins, per the Android Design guidelines. -->
+<span class="lineno">   3</span>     &lt;dimen name="activity_horizontal_margin">16dp&lt;/dimen>
+<span class="lineno">   4</span>     &lt;dimen <span class="errorspan">name="activity_vertical_margin">16dp&lt;/dimen></span>
+<span class="lineno">   5</span> &lt;/resources>
+<span class="lineno">   6</span> 
+</pre>
+<span class="location"><a href="../app/src/main/res/values/strings.xml">../app/src/main/res/values/strings.xml</a>:6</span>: <span class="message">The resource <code>R.string.title_activity_base</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   3</span> 
+<span class="lineno">   4</span>     &lt;string name="app_name">Now Playing&lt;/string>
+<span class="lineno">   5</span> 
+<span class="lineno">   6</span>     &lt;string <span class="errorspan">name="title_activity_base">BaseActivity&lt;/string></span>
+<span class="lineno">   7</span> 
+<span class="lineno">   8</span>     &lt;string name="error_application_settings">Failed to get our Application Settings.&lt;/string>
+</pre>
+<span class="location"><a href="../app/src/main/res/values/strings.xml">../app/src/main/res/values/strings.xml</a>:12</span>: <span class="message">The resource <code>R.string.error_something_went_wrong</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">   9</span>     &lt;string name="error_no_network">Are you sure you have network connectivity?&lt;/string>
+<span class="lineno">  10</span>     &lt;string name="error_preferences_illegal_state">You must call initialize() with an Application context first.&lt;/string>
+<span class="lineno">  11</span>     &lt;string name="error_server_error">Server Error&lt;/string>
+<span class="lineno">  12</span>     &lt;string <span class="errorspan">name="error_something_went_wrong">Something went wrong.  Please contact the developer.&lt;/string></span>
+<span class="lineno">  13</span> 
+<span class="lineno">  14</span>     &lt;string name="actionview_progress_indicator" />
+</pre>
+<span class="location"><a href="../app/src/main/res/values/strings.xml">../app/src/main/res/values/strings.xml</a>:14</span>: <span class="message">The resource <code>R.string.actionview_progress_indicator</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  11</span>     &lt;string name="error_server_error">Server Error&lt;/string>
+<span class="lineno">  12</span>     &lt;string name="error_something_went_wrong">Something went wrong.  Please contact the developer.&lt;/string>
+<span class="lineno">  13</span> 
+<span class="lineno">  14</span>     &lt;string <span class="errorspan">name="actionview_progress_indicator" /></span>
+<span class="lineno">  15</span> 
+<span class="lineno">  16</span>     &lt;string name="developer_action_force_crash">Force Crash&lt;/string>
+</pre>
+<span class="location"><a href="../app/src/main/res/values/strings.xml">../app/src/main/res/values/strings.xml</a>:20</span>: <span class="message">The resource <code>R.string.dialog_title_no_addressees</code> appears to be unused</span><br /><pre class="errorlines">
+<span class="lineno">  17</span>     &lt;string name="developer_action_reset_application_preferences">Reset Prefs&lt;/string>
+<span class="lineno">  18</span> 
+<span class="lineno">  19</span>     &lt;string name="dialog_title_catastrophic_failure">CATASTROPHIC FAILURE&lt;/string>
+<span class="lineno">  20</span>     &lt;string <span class="errorspan">name="dialog_title_no_addressees">NO ADDRESSEES&lt;/string></span>
+<span class="lineno">  21</span>     &lt;string name="dialog_title_temporarily_disabled">APPLICATION DISABLED&lt;/string>
+<span class="lineno">  22</span>     &lt;string name="dialog_title_update_required">MANDATORY UPDATE&lt;/string>
+</pre>
+<span class="location"><a href="../app/src/main/res/raw/web_hi_res_512.png">../app/src/main/res/raw/web_hi_res_512.png</a></span>: <img class="embedimage" align="right" src="../app/src/main/res/raw/web_hi_res_512.png" /><span class="message">The resource <code>R.raw.web_hi_res_512</code> appears to be unused</span><br clear="right"/>
+</div>
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Unused resources.</div>
+<div class="explanation">
+Unused resources make applications larger and slow down builds.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "UnusedResources" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="UselessParent"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">UselessParent: Useless parent layout</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/res/layout/listview_movie_row.xml">../app/src/main/res/layout/listview_movie_row.xml</a>:13</span>: <span class="message">This <code>LinearLayout</code> layout or its <code>LinearLayout</code> parent is useless; transfer the <code>background</code> attribute to the other view</span><br /><pre class="errorlines">
+<span class="lineno">  10</span>     android:padding="16dp">
+<span class="lineno">  11</span> 
+<span class="lineno">  12</span> 
+<span class="lineno">  13</span>     <span class="errorspan">&lt;LinearLayout</span>
+<span class="lineno">  14</span>         android:layout_width="match_parent"
+<span class="lineno">  15</span>         android:layout_height="wrap_content"
+</pre>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Priority: 2 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Useless parent layout.</div>
+<div class="explanation">
+A layout with children that has no siblings, is not a scrollview or a root layout, and does not have a background, can be removed and have its children moved directly into the parent for a flatter and more efficient layout hierarchy.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "UselessParent" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Usability:Typography"></a>
+<div class="category"><a href="#" title="Return to top">Usability:Typography</a><div class="categorySeparator"></div>
+</div>
+<a name="TypographyDashes"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">TypographyDashes: Hyphen can be replaced with dash</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/res/values/com_crashlytics_export_strings.xml">../app/src/main/res/values/com_crashlytics_export_strings.xml</a>:9</span>: <span class="message">Replace "-" with an "en dash" character (&#8211;, &amp;#8211;) ?</span><br /><pre class="errorlines">
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span>   Do NOT modify, delete, or commit to source control!
+<span class="lineno">   8</span> -->
+<span class="lineno">   9</span> &lt;string name="com.crashlytics.android.build_id" translatable="false"><span class="errorspan">352ab4aa-d7b5-430f-8043-31862d3f6718&lt;/string></span>
+<span class="lineno">  10</span> &lt;/resources>
+<span class="lineno">  11</span> 
+</pre>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT & Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Priority: 5 / 10<br/>
+Category: Usability:Typography</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Hyphen can be replaced with dash.</div>
+<div class="explanation">
+The "n dash" (&#8211;, &amp;#8211;) and the "m dash" (&#8212;, &amp;#8212;) characters are used for ranges (n dash) and breaks (m dash). Using these instead of plain hyphens can make text easier to read and your application will look more polished.
+</div>
+<br/><div class="moreinfo">More info: <a href="http://en.wikipedia.org/wiki/Dash">http://en.wikipedia.org/wiki/Dash</a>
+</div><br/>To suppress this error, use the issue id "TypographyDashes" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Usability:Icons"></a>
+<div class="category"><a href="#" title="Return to top">Usability:Icons</a><div class="categorySeparator"></div>
+</div>
+<a name="IconMissingDensityFolder"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">IconMissingDensityFolder: Missing density folder</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/res">../app/src/main/res</a></span>: <span class="message">Missing density variation folders in <code>src/main/res</code>: drawable-hdpi, drawable-xhdpi, drawable-xxxhdpi</span><br />
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Usability:Icons</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Missing density folder.</div>
+<div class="explanation">
+Icons will look best if a custom version is provided for each of the major screen density classes (low, medium, high, extra-high, extra-extra-high). This lint check identifies folders which are missing, such as <code>drawable-hdpi</code>.<br/>
+Low density is not really used much anymore, so this check ignores the ldpi density. To force lint to include it, set the environment variable <code>ANDROID_LINT_INCLUDE_LDPI=true</code>. For more information on current density usage, see <a href="http://developer.android.com/resources/dashboard/screens.html">http://developer.android.com/resources/dashboard/screens.html</a>
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/guide/practices/screens_support.html">http://developer.android.com/guide/practices/screens_support.html</a>
+</div><br/>To suppress this error, use the issue id "IconMissingDensityFolder" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Accessibility"></a>
+<div class="category"><a href="#" title="Return to top">Accessibility</a><div class="categorySeparator"></div>
+</div>
+<a name="ContentDescription"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">ContentDescription: Image without <code>contentDescription</code></a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/res/layout/listview_movie_row.xml">../app/src/main/res/layout/listview_movie_row.xml</a>:18</span>: <span class="message">[Accessibility] Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno">  15</span>         android:layout_height="wrap_content"
+<span class="lineno">  16</span>         android:orientation="horizontal">
+<span class="lineno">  17</span> 
+<span class="lineno">  18</span>         <span class="errorspan">&lt;ImageView</span>
+<span class="lineno">  19</span>             android:id="@+id/iv_thumbnail"
+<span class="lineno">  20</span>             android:layout_width="54dp"
+</pre>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT & Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Priority: 3 / 10<br/>
+Category: Accessibility</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Image without <code>contentDescription</code></div>
+<div class="explanation">
+Non-textual widgets like ImageViews and ImageButtons should use the <code>contentDescription</code> attribute to specify a textual description of the widget such that screen readers and other accessibility tools can adequately describe the user interface.<br/>
+<br/>
+Note that elements in application screens that are purely decorative and do not provide any content or enable a user action should not have accessibility content descriptions. In this case, just suppress the lint warning with a tools:ignore="ContentDescription" attribute.<br/>
+<br/>
+Note that for text fields, you should not set both the <code>hint</code> and the <code>contentDescription</code> attributes since the hint will never be shown. Just set the <code>hint</code>. See <a href="http://developer.android.com/guide/topics/ui/accessibility/checklist.html#special-cases">http://developer.android.com/guide/topics/ui/accessibility/checklist.html#special-cases</a>.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "ContentDescription" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="Bi-directional Text"></a>
+<div class="category"><a href="#" title="Return to top">Bi-directional Text</a><div class="categorySeparator"></div>
+</div>
+<a name="RtlEnabled"></a>
+<div class="issue">
+<div class="id"><a href="#" title="Return to top">RtlEnabled: Using RTL attributes without enabling RTL support</a><div class="issueSeparator"></div>
+</div>
+<div class="warningslist">
+<span class="location"><a href="../app/src/main/AndroidManifest.xml">../app/src/main/AndroidManifest.xml</a></span>: <span class="message">The project references RTL attributes, but does not explicitly enable or disable RTL support with <code>android:supportsRtl</code> in the manifest</span><br />
+</div>
+<div class="metadata">Priority: 3 / 10<br/>
+Category: Bi-directional Text</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Using RTL attributes without enabling RTL support.</div>
+<div class="explanation">
+To enable right-to-left support, when running on API 17 and higher, you must set the <code>android:supportsRtl</code> attribute in the manifest <code>&lt;application></code> element.<br/>
+If you have started adding RTL attributes, but have not yet finished the migration, you can set the attribute to false to satisfy this lint check.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "RtlEnabled" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="MissingIssues"></a>
+<div class="category">Disabled Checks<div class="categorySeparator"></div>
+</div>
+The following issues were not run by lint, either because the check is not enabled by default, or because it was disabled with a command line flag or via one or more lint.xml configuration files in the project directories.
+<br/><br/>
+<a name="BackButton"></a>
+<div class="issue">
+<div class="id">BackButton<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 6 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Back button.</div>
+<div class="explanation">
+According to the Android Design Guide,<br/>
+<br/>
+"Other platforms use an explicit back button with label to allow the user to navigate up the application's hierarchy. Instead, Android uses the main action bar's app icon for hierarchical navigation and the navigation bar's back button for temporal navigation."<br/>
+This check is not very sophisticated (it just looks for buttons with the label "Back"), so it is disabled by default to not trigger on common scenarios like pairs of Back/Next buttons to paginate through screens.
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/design/patterns/pure-android.html">http://developer.android.com/design/patterns/pure-android.html</a>
+</div><br/>To suppress this error, use the issue id "BackButton" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="EasterEgg"></a>
+<div class="issue">
+<div class="id">EasterEgg<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 6 / 10<br/>
+Category: Security</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Code contains easter egg.</div>
+<div class="explanation">
+An "easter egg" is code deliberately hidden in the code, both from potential users and even from other developers. This lint check looks for code which looks like it may be hidden from sight.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "EasterEgg" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="FieldGetter"></a>
+<div class="issue">
+<div class="id">FieldGetter<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 4 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Using getter instead of field.</div>
+<div class="explanation">
+Accessing a field within the class that defines a getter for that field is at least 3 times faster than calling the getter. For simple getters that do nothing other than return the field, you might want to just reference the local field directly instead.<br/>
+<br/>
+<b>NOTE</b>: As of Android 2.3 (Gingerbread), this optimization is performed automatically by Dalvik, so there is no need to change your code; this is only relevant if you are targeting older versions of Android.
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/guide/practices/design/performance.html#internal_get_set">http://developer.android.com/guide/practices/design/performance.html#internal_get_set</a>
+</div><br/>To suppress this error, use the issue id "FieldGetter" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="IconExpectedSize"></a>
+<div class="issue">
+<div class="id">IconExpectedSize<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 5 / 10<br/>
+Category: Usability:Icons</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Icon has incorrect size.</div>
+<div class="explanation">
+There are predefined sizes (for each density) for launcher icons. You should follow these conventions to make sure your icons fit in with the overall look of the platform.
+</div>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/design/style/iconography.html">http://developer.android.com/design/style/iconography.html</a>
+</div><br/>To suppress this error, use the issue id "IconExpectedSize" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="LogConditional"></a>
+<div class="issue">
+<div class="id">LogConditional<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 5 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Unconditional Logging Calls.</div>
+<div class="explanation">
+The BuildConfig class (available in Tools 17) provides a constant, "DEBUG", which indicates whether the code is being built in release mode or in debug mode. In release mode, you typically want to strip out all the logging calls. Since the compiler will automatically remove all code which is inside a "if (false)" check, surrounding your logging calls with a check for BuildConfig.DEBUG is a good idea.<br/>
+<br/>
+If you <b>really</b> intend for the logging to be present in release mode, you can suppress this warning with a @SuppressLint annotation for the intentional logging calls.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "LogConditional" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="NegativeMargin"></a>
+<div class="issue">
+<div class="id">NegativeMargin<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 4 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Negative Margins.</div>
+<div class="explanation">
+Margin values should be positive. Negative values are generally a sign that you are making assumptions about views surrounding the current one, or may be tempted to turn off child clipping to allow a view to escape its parent. Turning off child clipping to do this not only leads to poor graphical performance, it also results in wrong touch event handling since touch events are based strictly on a chain of parent-rect hit tests. Finally, making assumptions about the size of strings can lead to localization problems.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "NegativeMargin" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="NewerVersionAvailable"></a>
+<div class="issue">
+<div class="id">NewerVersionAvailable<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 4 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Newer Library Versions Available.</div>
+<div class="explanation">
+This detector checks with a central repository to see if there are newer versions available for the dependencies used by this project.<br/>
+This is similar to the <code>GradleDependency</code> check, which checks for newer versions available in the Android SDK tools and libraries, but this works with any MavenCentral dependency, and connects to the library every time, which makes it more flexible but also <b>much</b> slower.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "NewerVersionAvailable" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="SelectableText"></a>
+<div class="issue">
+<div class="id">SelectableText<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 7 / 10<br/>
+Category: Usability</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Dynamic text should probably be selectable.</div>
+<div class="explanation">
+If a <code>&lt;TextView></code> is used to display data, the user might want to copy that data and paste it elsewhere. To allow this, the <code>&lt;TextView></code> should specify <code>android:textIsSelectable="true"</code>.<br/>
+<br/>
+This lint check looks for TextViews which are likely to be displaying data: views whose text is set dynamically. This value will be ignored on platforms older than API 11, so it is okay to set it regardless of your <code>minSdkVersion</code>.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "SelectableText" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="StopShip"></a>
+<div class="issue">
+<div class="id">StopShip<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 10 / 10<br/>
+Category: Correctness</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Code contains <code>STOPSHIP</code> marker.</div>
+<div class="explanation">
+Using the comment <code>// STOPSHIP</code> can be used to flag code that is incomplete but checked in. This comment marker can be used to indicate that the code should not be shipped until the issue is addressed, and lint will look for these.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "StopShip" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="TypographyQuotes"></a>
+<div class="issue">
+<div class="id">TypographyQuotes<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Note: This issue has an associated quickfix operation in Eclipse/ADT & Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint_files/lint-run.png" />
+<br>
+Disabled By: Default<br/>
+Priority: 5 / 10<br/>
+Category: Usability:Typography</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Straight quotes can be replaced with curvy quotes.</div>
+<div class="explanation">
+Straight single quotes and double quotes, when used as a pair, can be replaced by "curvy quotes" (or directional quotes). This can make the text more readable.<br/>
+<br/>
+Note that you should never use grave accents and apostrophes to quote, `like this'.<br/>
+<br/>
+(Also note that you should not use curvy quotes for code fragments.)
+</div>
+<br/><div class="moreinfo">More info: <a href="http://en.wikipedia.org/wiki/Quotation_mark">http://en.wikipedia.org/wiki/Quotation_mark</a>
+</div><br/>To suppress this error, use the issue id "TypographyQuotes" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+<a name="UnusedIds"></a>
+<div class="issue">
+<div class="id">UnusedIds<div class="issueSeparator"></div>
+</div>
+<div class="metadata">Disabled By: Default<br/>
+Priority: 1 / 10<br/>
+Category: Performance</div>
+Severity: <span class="warning">Warning</span><div class="summary">
+Explanation: Unused id.</div>
+<div class="explanation">
+This resource id definition appears not to be needed since it is not referenced from anywhere. Having id definitions, even if unused, is not necessarily a bad idea since they make working on layouts and menus easier, so there is not a strong reason to delete these.
+</div>
+<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "UnusedIds" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+</div>
+
+<a name="SuppressInfo"></a>
+<div class="category">Suppressing Warnings and Errors<div class="categorySeparator"></div>
+</div>
+Lint errors can be suppressed in a variety of ways:<br/>
+<br/>
+1. With a <code>@SuppressLint</code> annotation in the Java code<br/>
+2. With a <code>tools:ignore</code> attribute in the XML file<br/>
+3. With ignore flags specified in the <code>build.gradle</code> file, as explained below<br/>
+4. With a <code>lint.xml</code> configuration file in the project<br/>
+5. With a <code>lint.xml</code> configuration file passed to lint via the --config flag<br/>
+6. With the --ignore flag passed to lint.<br/>
+<br/>
+To suppress a lint warning with an annotation, add a <code>@SuppressLint("id")</code> annotation on the class, method or variable declaration closest to the warning instance you want to disable. The id can be one or more issue id's, such as <code>"UnusedResources"</code> or <code>{"UnusedResources","UnusedIds"}</code>, or it can be <code>"all"</code> to suppress all lint warnings in the given scope.<br/>
+<br/>
+To suppress a lint warning in an XML file, add a <code>tools:ignore="id"</code> attribute on the element containing the error, or one of its surrounding elements. You also need to define the namespace for the tools prefix on the root element in your document, next to the <code>xmlns:android</code> declaration:<br/>
+<code>xmlns:tools="http://schemas.android.com/tools"</code><br/>
+<br/>
+To suppress a lint warning in a <code>build.gradle</code> file, add a section like this:<br/>
+<br/>
+android {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;lintOptions {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disable 'TypographyFractions','TypographyQuotes'<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+}<br/>
+<br/>
+Here we specify a comma separated list of issue id's after the disable command. You can also use <code>warning</code> or <code>error</code> instead of <code>disable</code> to change the severity of issues.<br/>
+<br/>
+To suppress lint warnings with a configuration XML file, create a file named <code>lint.xml</code> and place it at the root directory of the project in which it applies.<br/>
+<br/>
+The format of the <code>lint.xml</code> file is something like the following:<br/>
+<br/>
+&lt;?xml version="1.0" encoding="UTF-8"?><br/>
+&lt;lint><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Disable this given check in this project --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="IconMissingDensityFolder" severity="ignore" /><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Ignore the ObsoleteLayoutParam issue in the given files --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="ObsoleteLayoutParam"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ignore path="res/layout/activation.xml" /><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ignore path="res/layout-xlarge/activation.xml" /><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/issue><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Ignore the UselessLeaf issue in the given file --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="UselessLeaf"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ignore path="res/layout/main.xml" /><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/issue><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Change the severity of hardcoded strings to "error" --><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;issue id="HardcodedText" severity="error" /><br/>
+&lt;/lint><br/>
+<br/>
+To suppress lint checks from the command line, pass the --ignore flag with a comma separated list of ids to be suppressed, such as:<br/>
+<code>$ lint --ignore UnusedResources,UselessLeaf /my/project/path</code><br/>
+<br/>
+For more information, see <a href="http://tools.android.com/tips/lint/suppressing-lint-warnings">http://tools.android.com/tips/lint/suppressing-lint-warnings</a><br/>
+
+
+</body>
+</html>
