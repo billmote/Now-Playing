@@ -15,8 +15,15 @@ android {
 
     lintOptions {
         abortOnError true
-        lintConfig file('lint.xml')
+
+        lintConfig file("${project.rootDir}/config/lint/lint.xml")
+
+        // if true, generate an HTML report (with issue explanations, sourcecode, etc)
         htmlReport true
+        // optional path to report (default will be lint-results.html in the builddir)
+        htmlOutput file("$project.buildDir/reports/lint/lint.html")
+
+
     }
 
     defaultConfig {
@@ -160,5 +167,28 @@ task pmd(type: Pmd, dependsOn: assembleDebug) {
         html {
             destination "$project.buildDir/reports/pmd/pmd.html"
         }
+    }
+}
+
+apply plugin: 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/config/checkstyle/suppressions.xml").absolutePath
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
+
+    reports {
+        xml.enabled = true
+        xml {
+            destination "$project.buildDir/reports/checkstyle/checkstyle.xml"
+        }
+//        html.enabled = true
+//        html {
+//            destination "$project.buildDir/reports/checkstyle/checkstyle.html"
+//        }
     }
 }
