@@ -10,6 +10,7 @@ crashlytics-build.properties
 .gradle
 .idea
 build
+gen/
 
 # Local Configuration Files
 /local.properties
