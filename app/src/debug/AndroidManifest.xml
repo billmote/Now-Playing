@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Add this as a debug manifest so the permissions won't be required by your production app -->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        Permissions required to automatically wake and unlock the phone/emulator if we're in
+        development mode.  Add this as a debug manifest so the permissions won't be required by
+        your production app.
+    -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <application android:vmSafeMode="true"/>
+    <!-- Avoid AOT compilation if we're in development mode to speed up launches -->
+    <application android:vmSafeMode="true" />
 </manifest>
