@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Add this as a debug manifest so the permissions won't be required by your production app -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <application android:vmSafeMode="true"/>
 </manifest>
