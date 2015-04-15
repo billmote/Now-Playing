@@ -1,14 +1,16 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'hugo'
+apply plugin: 'findbugs'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
 
 repositories {
     maven { url 'http://download.crashlytics.com/maven' }
 }
-
-// Look for newer versions of our dependencies
-apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     repositories {
@@ -18,88 +20,6 @@ buildscript {
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.8'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.14.7'
-    }
-}
-
-android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
-
-    lintOptions {
-        abortOnError true
-        lintConfig file("${project.rootDir}/config/lint/lint.xml")
-        // if true, generate an HTML report (with issue explanations, sourcecode, etc)
-        htmlReport true
-        // optional path to report (default will be lint-results.html in the builddir)
-        htmlOutput file("$project.rootDir/reports/lint.html")
-    }
-
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 21
-        versionCode 3
-        versionName "1.2"
-        resConfigs "en"
-        resConfigs "nodpi", "hdpi", "xhdpi",
-                "xxhdpi", "xxxhdpi"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),         \
-                            'proguard-rules.pro',         \
-                            'proguard-otto.pro',         \
-                            'proguard-okhttp.pro',         \
-                            'proguard-crashlytics.pro',         \
-                            'proguard-butterknife.pro',         \
-                            'proguard-google-analytics.pro',         \
-                            'proguard-gson.pro',         \
-                            'proguard-picasso.pro',         \
-                            'proguard-retrofit.pro',         \
-                            'proguard-ormlite.pro',         \
-                            'proguard-nowplaying.pro',         \
-                            'proguard-parceler.pro',        \
-                            'proguard-apache-commons-logging.pro',        \
-                            'proguard-google-play-services.pro'         \
-            )
-        }
-        debug {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles( \
-                    getDefaultProguardFile('proguard-android.txt'),         \
-                            'proguard-rules.pro',         \
-                            'proguard-otto.pro',         \
-                            'proguard-okhttp.pro',         \
-                            'proguard-crashlytics.pro',         \
-                            'proguard-butterknife.pro',         \
-                            'proguard-google-analytics.pro',         \
-                            'proguard-gson.pro',         \
-                            'proguard-picasso.pro',         \
-                            'proguard-retrofit.pro',         \
-                            'proguard-ormlite.pro',         \
-                            'proguard-nowplaying.pro',         \
-                            'proguard-parceler.pro',        \
-                            'proguard-apache-commons-logging.pro',        \
-                            'proguard-google-play-services.pro'         \
-            )
-        }
-    }
-
-    // Removes this warning:
-    //      WARNING: Dependency commons-logging:commons-logging:1.1.1 is ignored for debug as it may be conflicting with the internal version provided by Android.
-    //      In case of problem, please repackage it with jarjar to change the class packages
-    configurations {
-        all*.exclude group: 'commons-logging', module: 'commons-logging'
-    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 }
 
@@ -120,10 +40,82 @@ dependencies {
     compile 'com.felipecsl.quickreturn:library:1.5.1'
 }
 
-// Usage:
-//      ./gradlew app:findbugs
-//      open ./reports/findbugs.html
-apply plugin: 'findbugs'
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    lintOptions {
+        abortOnError true
+        lintConfig file("${project.rootDir}/config/lint/lint.xml")
+        htmlReport true
+        htmlOutput file("$project.rootDir/reports/lint.html")
+    }
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 3
+        versionName "1.2"
+        resConfigs "en"
+        resConfigs "nodpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles(getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    'proguard-otto.pro',
+                    'proguard-okhttp.pro',
+                    'proguard-crashlytics.pro',
+                    'proguard-butterknife.pro',
+                    'proguard-google-analytics.pro',
+                    'proguard-gson.pro',
+                    'proguard-picasso.pro',
+                    'proguard-retrofit.pro',
+                    'proguard-ormlite.pro',
+                    'proguard-nowplaying.pro',
+                    'proguard-parceler.pro',
+                    'proguard-apache-commons-logging.pro',
+                    'proguard-google-play-services.pro'
+            )
+        }
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles(getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    'proguard-otto.pro',
+                    'proguard-okhttp.pro',
+                    'proguard-crashlytics.pro',
+                    'proguard-butterknife.pro',
+                    'proguard-google-analytics.pro',
+                    'proguard-gson.pro',
+                    'proguard-picasso.pro',
+                    'proguard-retrofit.pro',
+                    'proguard-ormlite.pro',
+                    'proguard-nowplaying.pro',
+                    'proguard-parceler.pro',
+                    'proguard-apache-commons-logging.pro',
+                    'proguard-google-play-services.pro'
+            )
+        }
+    }
+
+    // Removes this warning:
+    //      WARNING: Dependency commons-logging:commons-logging:1.1.1 is ignored for debug as it may be conflicting with the internal version provided by Android.
+    //      In case of problem, please repackage it with jarjar to change the class packages
+    configurations {
+        all*.exclude group: 'commons-logging', module: 'commons-logging'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+}
 
 task findbugs(type: FindBugs, dependsOn: assembleDebug) {
     excludeFilter file("${project.rootDir}/config/findbugs/exclude.xml")
@@ -145,11 +137,6 @@ task findbugs(type: FindBugs, dependsOn: assembleDebug) {
 
     }
 }
-
-// Usage:
-//      ./gradlew app:pmd
-//      open ./reports/pmd.html
-apply plugin: 'pmd'
 
 task pmd(type: Pmd, dependsOn: assembleDebug) {
     ruleSetFiles = files("${project.rootDir}/config/pmd/pmd-ruleset.xml")
@@ -176,11 +163,6 @@ task pmd(type: Pmd, dependsOn: assembleDebug) {
         }
     }
 }
-
-// Usage:
-//      ./gradlew app:checkstyle
-//      open reports/checkstyle.xml
-apply plugin: 'checkstyle'
 
 task checkstyle(type: Checkstyle) {
     configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")

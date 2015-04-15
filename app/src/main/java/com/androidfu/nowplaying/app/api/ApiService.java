@@ -20,7 +20,7 @@ public interface ApiService {
     @GET(APPSETTINGS)
     void getApplicationSettings(Callback<ApplicationSettings> cb);
 
-    // QUOTE OF THE DAY
+    // IN THEATERS
     @GET(MOVIES)
     void getMovies(@Query("apikey") String key, @Query("page") int page, @Query("page_limit") int page_limit, Callback<Movies> cb);
 }
