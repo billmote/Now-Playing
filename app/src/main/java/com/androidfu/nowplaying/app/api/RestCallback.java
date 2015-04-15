@@ -1,6 +1,7 @@
 package com.androidfu.nowplaying.app.api;
 
 import com.androidfu.nowplaying.app.events.APIErrorEvent;
+import com.androidfu.nowplaying.app.events.CaptivePortalAuthReqEvent;
 import com.androidfu.nowplaying.app.util.EventBus;
 
 import hugo.weaving.DebugLog;
@@ -20,7 +21,11 @@ public abstract class RestCallback<T> implements Callback<T> {
 
     @Override
     public void failure(RetrofitError error) {
-        EventBus.post(new APIErrorEvent(error, this.callNumber));
+        if (error.getMessage().contains("Trust anchor for certification path not found.")) {
+            EventBus.post(new CaptivePortalAuthReqEvent());
+        } else {
+            EventBus.post(new APIErrorEvent(error, this.callNumber));
+        }
     }
 
     public int getCallNumber() {

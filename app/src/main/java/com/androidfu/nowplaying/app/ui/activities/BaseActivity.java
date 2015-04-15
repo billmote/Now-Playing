@@ -9,9 +9,12 @@ import android.widget.Toast;
 
 import com.androidfu.nowplaying.app.BuildConfig;
 import com.androidfu.nowplaying.app.R;
+import com.androidfu.nowplaying.app.events.CaptivePortalAuthReqEvent;
 import com.androidfu.nowplaying.app.util.DebugUtils;
+import com.androidfu.nowplaying.app.util.EventBus;
 import com.androidfu.nowplaying.app.util.Log;
 import com.androidfu.nowplaying.app.util.SharedPreferencesHelper;
+import com.google.common.eventbus.Subscribe;
 
 import hugo.weaving.DebugLog;
 
@@ -28,6 +31,7 @@ public class BaseActivity extends Activity {
             Log.d(TAG, "Wakeup!");
             DebugUtils.riseAndShine(this);
         }
+        EventBus.register(this);
     }
 
     @Override
@@ -63,5 +67,16 @@ public class BaseActivity extends Activity {
             default:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void onCaptivePortalEvent(CaptivePortalAuthReqEvent event) {
+        Toast.makeText(this, "You need to login.", Toast.LENGTH_LONG).show();
     }
 }
