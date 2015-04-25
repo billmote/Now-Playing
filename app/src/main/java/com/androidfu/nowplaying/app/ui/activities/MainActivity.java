@@ -20,7 +20,7 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public class MainActivity extends BaseActivity implements MovieListFragment.OnFragmentInteractionListener {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

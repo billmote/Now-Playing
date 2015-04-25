@@ -22,7 +22,7 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public class ReusableDialogFragment extends DialogFragment {
 
-    public static final String TAG = ReusableDialogFragment.class.getSimpleName();
+    public static final String TAG = "ReusableDialogFragment";
 
     public static final String KEY_BUNDLE_DIALOG_TITLE = "dialog_title";
     public static final String KEY_BUNDLE_DIALOG_MESSAGE = "dialog_message";

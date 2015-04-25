@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 
 import hugo.weaving.DebugLog;
 import retrofit.RestAdapter;
+import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 /**
@@ -55,6 +56,7 @@ public class RestClient {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
+                .setClient(new OkClient(CachingOkHttpClient.getClient()))
                 .setLogLevel(BuildConfig.DEBUG && enableLogging ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(gsonBuilder, "UTF-8"))

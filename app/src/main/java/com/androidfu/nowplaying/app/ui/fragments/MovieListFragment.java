@@ -50,7 +50,7 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
-    public static final String TAG = MovieListFragment.class.getSimpleName();
+    public static final String TAG = "MovieListFragment";
 
     private static final int DEFAULT_PAGE_SIZE = 16;
     private static final int MAX_PAGE_SIZE = 50;

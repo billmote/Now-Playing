@@ -37,7 +37,7 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public class SplashActivity extends Activity implements ReusableDialogFragment.ReusableDialogListener {
 
-    public static final String TAG = SplashActivity.class.getSimpleName();
+    public static final String TAG = "SplashActivity";
 
     private static final String KEY_BUNDLE_USER_INTERRUPTED_STATE = "is_user_interrupted";
     private static final String KEY_BUNDLE_ERROR_MESSAGE = "error_message";

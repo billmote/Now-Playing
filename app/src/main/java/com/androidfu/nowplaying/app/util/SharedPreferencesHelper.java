@@ -13,7 +13,7 @@ import hugo.weaving.DebugLog;
  */
 @DebugLog
 public class SharedPreferencesHelper {
-    public static final String TAG = SharedPreferencesHelper.class.getSimpleName();
+    public static final String TAG = "SharedPreferencesHelper";
 
     public static final String KEY_PREFS_LAST_SEEN_MOTD_TIME_IN_MILLIS = "last_seen_motd_time";
     public static final String KEY_PREFS_FIRST_RUN = "first_run";

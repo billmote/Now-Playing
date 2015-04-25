@@ -18,7 +18,7 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public class BaseActivity extends Activity {
 
-    public static final String TAG = BaseActivity.class.getSimpleName();
+    public static final String TAG = "BaseActivity";
 
     @Override
     protected void onStart() {

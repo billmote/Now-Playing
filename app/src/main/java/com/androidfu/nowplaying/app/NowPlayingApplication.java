@@ -221,7 +221,7 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public class NowPlayingApplication extends Application {
 
-    private static final String TAG = NowPlayingApplication.class.getSimpleName();
+    private static final String TAG = "NowPlayingApplication";
 
     @Override
     public void onCreate() {
@@ -301,7 +301,7 @@ public class NowPlayingApplication extends Application {
     @DebugLog
     public class StrictModeHelper {
 
-        public final String TAG = StrictModeHelper.class.getSimpleName();
+        public final String TAG = "StrictModeHelper";
 
         public void setupStrictMode() {
             if (shouldEnableStrictMode()) {
