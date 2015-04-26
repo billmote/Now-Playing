@@ -6,7 +6,7 @@
     <!-- 2 (Verbose) through 6 (Error) are valid -->
     <string name="logging_level">6</string>
     <string name="analytics_logging_enabled">false</string>
-    <string name="retrofit_logging_enabled">true</string>
+    <string name="retrofit_logging_enabled">false</string>
     <string name="picasso_logging_enabled">false</string>
 
     <!-- URLs, etc -->
