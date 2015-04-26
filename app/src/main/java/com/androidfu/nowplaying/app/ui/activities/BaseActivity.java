@@ -14,7 +14,7 @@ import com.androidfu.nowplaying.app.util.DebugUtils;
 import com.androidfu.nowplaying.app.util.EventBus;
 import com.androidfu.nowplaying.app.util.Log;
 import com.androidfu.nowplaying.app.util.SharedPreferencesHelper;
-import com.google.common.eventbus.Subscribe;
+import com.squareup.otto.Subscribe;
 
 import hugo.weaving.DebugLog;
 
