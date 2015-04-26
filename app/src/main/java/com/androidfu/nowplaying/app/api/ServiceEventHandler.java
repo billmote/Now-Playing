@@ -1,6 +1,6 @@
 package com.androidfu.nowplaying.app.api;
 
-import android.content.Context;
+import android.app.Application;
 import android.widget.Toast;
 
 import com.androidfu.nowplaying.app.R;
@@ -32,12 +32,14 @@ import retrofit.client.Response;
 public class ServiceEventHandler {
 
     private final AppSettingsLocalStorageHandler mApplicationSettingsLocalStorageHandler;
+    private final Application context;
     private boolean isRetrofitLoggingEnabled;
     private String appSettingsUrl;
     private String rottenTomatoesUrl;
     private String rottenTomatoesApiKey;
 
-    public ServiceEventHandler(Context context) {
+    public ServiceEventHandler(Application context) {
+        this.context = context;
         mApplicationSettingsLocalStorageHandler = new AppSettingsLocalStorageHandler(context);
         isRetrofitLoggingEnabled = Boolean.valueOf(context.getString(R.string.retrofit_logging_enabled));
         appSettingsUrl = context.getString(R.string.application_settings_url);
@@ -53,7 +55,7 @@ public class ServiceEventHandler {
      */
     @Subscribe
     public void getApplicationSettings(final GetApplicationSettingsEvent event) {
-        ApiService apiService = new RestClient(appSettingsUrl, isRetrofitLoggingEnabled).getApiService();
+        ApiService apiService = new RestClient(context, appSettingsUrl, isRetrofitLoggingEnabled).getApiService();
         apiService.getApplicationSettings(new RestCallback<ApplicationSettings>(event.getCallNumber()) {
             @Override
             public void success(ApplicationSettings applicationSettings, Response response) {
@@ -80,7 +82,7 @@ public class ServiceEventHandler {
          * simply create your own res/values/secret.xml file with your own Rotten Tomatoes API
          * key and the app will run as expected.
          */
-        ApiService apiService = new RestClient(rottenTomatoesUrl, isRetrofitLoggingEnabled).getApiService();
+        ApiService apiService = new RestClient(context, rottenTomatoesUrl, isRetrofitLoggingEnabled).getApiService();
         apiService.getMovies(rottenTomatoesApiKey, event.getPageNumber(), event.getPageLimit(), new RestCallback<Movies>(event.getCallNumber()) {
             @Override
             public void success(Movies movies, Response response) {

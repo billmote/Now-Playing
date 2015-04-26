@@ -6,6 +6,7 @@ import com.androidfu.nowplaying.app.model.movies.Movies;
 import hugo.weaving.DebugLog;
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.Query;
 
 /**
@@ -17,6 +18,7 @@ public interface ApiService {
     final static String MOVIES = "/in_theaters.json";
 
     // APPLICATION SETTINGS
+    @Headers("Cache-Control: no-cache")
     @GET(APPSETTINGS)
     void getApplicationSettings(Callback<ApplicationSettings> cb);
 

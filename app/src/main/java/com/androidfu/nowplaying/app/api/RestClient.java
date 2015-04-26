@@ -1,5 +1,7 @@
 package com.androidfu.nowplaying.app.api;
 
+import android.app.Application;
+
 import com.androidfu.nowplaying.app.BuildConfig;
 import com.androidfu.nowplaying.app.model.movies.Movie;
 import com.google.gson.Gson;
@@ -9,6 +11,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.squareup.okhttp.OkHttpClient;
 
 import java.lang.reflect.Type;
 
@@ -25,7 +28,9 @@ public class RestClient {
 
     private ApiService apiService;
 
-    public RestClient(String endpoint, boolean enableLogging) {
+    public RestClient(Application context, String endpoint, boolean enableLogging) {
+
+        OkHttpClient client = new CachingOkHttpClient.Builder(context).build().getClient();
 
         Gson gsonBuilder = new GsonBuilder()
                 .registerTypeAdapterFactory(new ItemTypeAdapterFactory())
@@ -56,7 +61,7 @@ public class RestClient {
                 .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setClient(new OkClient(CachingOkHttpClient.getClient()))
+                .setClient(new OkClient(client))
                 .setLogLevel(BuildConfig.DEBUG && enableLogging ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(gsonBuilder, "UTF-8"))
