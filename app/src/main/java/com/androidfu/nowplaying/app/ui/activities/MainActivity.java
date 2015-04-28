@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.androidfu.nowplaying.app.NowPlayingApplication;
 import com.androidfu.nowplaying.app.R;
 import com.androidfu.nowplaying.app.model.movies.Movie;
 import com.androidfu.nowplaying.app.ui.fragments.MovieListFragment;
@@ -42,6 +43,9 @@ public class MainActivity extends BaseActivity implements MovieListFragment.OnFr
                     //.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_left, R.anim.slide_in_from_left, R.anim.slide_out_right)
                     .replace(R.id.fragment_container, movieListFragment, MovieListFragment.TAG)
                     .commit();
+        }
+        if (getActionBar() != null) {
+            getActionBar().setTitle(String.format("%s v%s (%d)", getString(R.string.app_name), NowPlayingApplication.versionName, NowPlayingApplication.versionCode));
         }
     }
 

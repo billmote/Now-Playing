@@ -1,3 +1,5 @@
+import java.util.regex.Pattern
+
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
@@ -55,8 +57,6 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 5
-        versionName "1.3"
         resConfigs "en"
         resConfigs "nodpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
     }
@@ -83,6 +83,8 @@ android {
             )
         }
         debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix 'd'
             minifyEnabled true
             shrinkResources true
             proguardFiles(getDefaultProguardFile('proguard-android.txt'),
@@ -179,5 +181,43 @@ task checkstyle(type: Checkstyle) {
         xml {
             destination "$project.rootDir/reports/checkstyle.xml"
         }
+    }
+}
+
+task('increaseVersionCode') << {
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
+    def manifestText = manifestFile.getText()
+    def matcher = pattern.matcher(manifestText)
+    matcher.find()
+    def versionCode = Integer.parseInt(matcher.group(1))
+    def manifestContent = matcher.replaceAll("versionCode=\"" + ++versionCode + "\"")
+    manifestFile.write(manifestContent)
+}
+
+task('incrementVersionName') << {
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def patternVersionNumber = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\"")
+//"\\.(\\d+)\\-(\\d+)\"")
+    def manifestText = manifestFile.getText()
+    def matcherVersionNumber = patternVersionNumber.matcher(manifestText)
+    matcherVersionNumber.find()
+    def majorVersion = Integer.parseInt(matcherVersionNumber.group(1))
+    def minorVersion = Integer.parseInt(matcherVersionNumber.group(2))
+    //def pointVersion = Integer.parseInt(matcherVersionNumber.group(3))
+    //def buildVersion = Integer.parseInt(matcherVersionNumber.group(4))
+    def mNextVersionName = majorVersion + "." + ++minorVersion
+    //+ "." + pointVersion + "-" + ++buildVersion
+    def manifestContent = matcherVersionNumber.replaceAll("versionName=\"" + mNextVersionName + "\"")
+    manifestFile.write(manifestContent)
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'generateDebugBuildConfig') {
+        task.dependsOn 'increaseVersionCode'
+    }
+    if (task.name == 'generateReleaseBuildConfig') {
+        task.dependsOn 'incrementVersionName'
+        task.dependsOn 'increaseVersionCode'
     }
 }

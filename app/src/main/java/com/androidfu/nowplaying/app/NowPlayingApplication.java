@@ -223,6 +223,9 @@ public class NowPlayingApplication extends Application {
 
     private static final String TAG = "NowPlayingApplication";
 
+    public static String versionName;
+    public static int versionCode;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -230,6 +233,9 @@ public class NowPlayingApplication extends Application {
         if (!BuildConfig.DEBUG) {
             Crashlytics.start(this);
         }
+
+        versionName = getApplicationVersionName();
+        versionCode = getApplicationVersionCode();
 
         try {
             Log.setLogging(BuildConfig.DEBUG && Boolean.valueOf(getString(R.string.logging)));
@@ -290,9 +296,9 @@ public class NowPlayingApplication extends Application {
      * @return the application version name as a String.
      */
     public String getApplicationVersionName() {
-        String devBuild = BuildConfig.DEBUG ? "d" : "";
+        //String devBuild = BuildConfig.DEBUG ? "d" : "";
         try {
-            return this.getPackageManager().getPackageInfo(getPackageName(), 0).versionName + devBuild;
+            return this.getPackageManager().getPackageInfo(getPackageName(), 0).versionName;// + devBuild;
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e.getMessage());
         }
