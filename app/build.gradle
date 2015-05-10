@@ -1,3 +1,5 @@
+import groovy.xml.Namespace
+
 import java.util.regex.Pattern
 
 apply plugin: 'android-sdk-manager'
@@ -59,6 +61,12 @@ android {
         targetSdkVersion 21
         resConfigs "en"
         resConfigs "nodpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def file = output.outputFile
+                output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + manifestVersionName() + ".apk"))
+            }
+        }
     }
 
     buildTypes {
@@ -195,29 +203,39 @@ task('increaseVersionCode') << {
     manifestFile.write(manifestContent)
 }
 
-task('incrementVersionName') << {
+def nextVersionName
+
+task('incrementVersionName').dependsOn('increaseVersionCode') << {
+    // Get our Manifest File
     def manifestFile = file("src/main/AndroidManifest.xml")
-    def patternVersionNumber = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\"")
-//"\\.(\\d+)\\-(\\d+)\"")
     def manifestText = manifestFile.getText()
-    def matcherVersionNumber = patternVersionNumber.matcher(manifestText)
-    matcherVersionNumber.find()
-    def majorVersion = Integer.parseInt(matcherVersionNumber.group(1))
-    def minorVersion = Integer.parseInt(matcherVersionNumber.group(2))
-    //def pointVersion = Integer.parseInt(matcherVersionNumber.group(3))
-    //def buildVersion = Integer.parseInt(matcherVersionNumber.group(4))
-    def mNextVersionName = majorVersion + "." + ++minorVersion
-    //+ "." + pointVersion + "-" + ++buildVersion
-    def manifestContent = matcherVersionNumber.replaceAll("versionName=\"" + mNextVersionName + "\"")
+
+    // Find our versionCode
+    def versionCodePattern = Pattern.compile("versionCode=\"(\\d+)\"")
+    def versionCodeMatcher = versionCodePattern.matcher(manifestText)
+    versionCodeMatcher.find()
+    def versionCode = Integer.parseInt(versionCodeMatcher.group(1))
+
+    // Find our versionName
+    def versionNamePattern = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)\"")
+    def versionNameMatcher = versionNamePattern.matcher(manifestText)
+    versionNameMatcher.find()
+    def majorVersion = Integer.parseInt(versionNameMatcher.group(1))
+    def minorVersion = Integer.parseInt(versionNameMatcher.group(2))
+    def pointVersion = Integer.parseInt(versionNameMatcher.group(3))
+    //def buildVersion = Integer.parseInt(versionNameMatcher.group(4))
+
+    // Update our versionName
+    nextVersionName = majorVersion + "." + minorVersion + "." + pointVersion + "." + versionCode
+
+    // Update our Manifest File
+    def manifestContent = versionNameMatcher.replaceAll("versionName=\"" + nextVersionName + "\"")
     manifestFile.write(manifestContent)
 }
 
-tasks.whenTaskAdded { task ->
-    if (task.name == 'generateDebugBuildConfig') {
-        task.dependsOn 'increaseVersionCode'
-    }
-    if (task.name == 'generateReleaseBuildConfig') {
-        task.dependsOn 'incrementVersionName'
-        task.dependsOn 'increaseVersionCode'
-    }
+def manifestVersionName() {
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def ns = new Namespace("http://schemas.android.com/apk/res/android", "android")
+    def xml = new XmlParser().parse(manifestFile)
+    return xml.attributes()[ns.versionName].toString()
 }
