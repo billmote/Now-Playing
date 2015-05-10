@@ -203,8 +203,6 @@ task('increaseVersionCode') << {
     manifestFile.write(manifestContent)
 }
 
-def nextVersionName
-
 task('incrementVersionName').dependsOn('increaseVersionCode') << {
     // Get our Manifest File
     def manifestFile = file("src/main/AndroidManifest.xml")
@@ -226,7 +224,7 @@ task('incrementVersionName').dependsOn('increaseVersionCode') << {
     //def buildVersion = Integer.parseInt(versionNameMatcher.group(4))
 
     // Update our versionName
-    nextVersionName = majorVersion + "." + minorVersion + "." + pointVersion + "." + versionCode
+    def nextVersionName = majorVersion + "." + minorVersion + "." + pointVersion + "." + versionCode
 
     // Update our Manifest File
     def manifestContent = versionNameMatcher.replaceAll("versionName=\"" + nextVersionName + "\"")
