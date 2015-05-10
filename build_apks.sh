@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-./gradlew clean && ./gradlew incrementVersionName && ./gradlew assembleDebug && ./gradlew assembleRelease
+./gradlew clean && ./gradlew updateVersionName && ./gradlew assembleDebug && ./gradlew assembleRelease
