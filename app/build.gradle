@@ -209,7 +209,6 @@ task('increaseVersionCode') << {
 }
 
 task('updateVersionName').dependsOn('increaseVersionCode') << {
-    def manifestContent
     def pattern
     def matcher
 
@@ -236,7 +235,7 @@ task('updateVersionName').dependsOn('increaseVersionCode') << {
     def nextVersionName = majorVersion + "." + minorVersion + "." + pointVersion + "." + versionCode
 
     // Update our Manifest File
-    manifestContent = matcher.replaceAll("versionName=\"" + nextVersionName + "\"")
+    def manifestContent = matcher.replaceAll("versionName=\"" + nextVersionName + "\"")
     manifestFile.write(manifestContent)
 }
 
