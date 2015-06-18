@@ -12,8 +12,8 @@ public class GetMoviesEvent extends BaseEvent {
     private int pageLimit;
     private int pageNumber;
 
-    public GetMoviesEvent(int callNumber, int pageNumber, int pageLimit) {
-        super(callNumber);
+    public GetMoviesEvent(int pageNumber, int pageLimit) {
+        super();
         this.pageNumber = pageNumber;
         this.pageLimit = pageLimit;
     }

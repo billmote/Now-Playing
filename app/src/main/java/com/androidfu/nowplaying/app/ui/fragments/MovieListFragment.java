@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.androidfu.nowplaying.app.R;
 import com.androidfu.nowplaying.app.events.APIErrorEvent;
+import com.androidfu.nowplaying.app.events.BaseEvent;
 import com.androidfu.nowplaying.app.events.movies.GetMoviesEvent;
 import com.androidfu.nowplaying.app.model.movies.Movie;
 import com.androidfu.nowplaying.app.model.movies.Movies;
@@ -240,7 +241,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     private void fetchMoreMovies(int pageLimit) {
         recordScrollPosition();
         mProgressBar.setVisibility(View.VISIBLE);
-        EventBus.post(new GetMoviesEvent(R.id.api_call_get_movies, mPageNumber, pageLimit));
+        EventBus.post(new GetMoviesEvent(mPageNumber, pageLimit));
     }
 
     @Subscribe
@@ -327,41 +328,39 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
             default:
                 Log.e(TAG, String.format("Failed with HTTP Status code: %1$d", error.getHttpStatusCode()));
         }
-        switch (error.getCallNumber()) {
-            case R.id.api_call_get_movies:
-                //noinspection ThrowableResultOfMethodCallIgnored
-                ReusableDialogFragment dialogFragment = ReusableDialogFragment.newInstance(
-                        getString(R.string.dialog_title_catastrophic_failure),
-                        String.format("URL: '%1$s'\n\nHTTP Status Code: '%2$d'\n\nError: '%3$s'", error.getError().getUrl().replace(getString(R.string.rotten_tomatoes_api_key), "{API KEY}"), error.getHttpStatusCode(), error.getError().getMessage()),
-                        getString(android.R.string.ok),
-                        null,
-                        null,
-                        null,
-                        new ReusableDialogFragment.ReusableDialogListener() {
-                            @Override
-                            public void handlePositiveResult() {
-                                mFooterTextView.setText(getString(R.string.footer_error_try_refresh));
-                            }
+        if (error.compareCallNumber(GetMoviesEvent.class)) {
+            //noinspection ThrowableResultOfMethodCallIgnored
+            ReusableDialogFragment dialogFragment = ReusableDialogFragment.newInstance(
+                    getString(R.string.dialog_title_catastrophic_failure),
+                    String.format("URL: '%1$s'\n\nHTTP Status Code: '%2$d'\n\nError: '%3$s'", error.getError().getUrl().replace(getString(R.string.rotten_tomatoes_api_key), "{API KEY}"), error.getHttpStatusCode(), error.getError().getMessage()),
+                    getString(android.R.string.ok),
+                    null,
+                    null,
+                    null,
+                    new ReusableDialogFragment.ReusableDialogListener() {
+                        @Override
+                        public void handlePositiveResult() {
+                            mFooterTextView.setText(getString(R.string.footer_error_try_refresh));
+                        }
 
-                            @Override
-                            public void handleNeutralResult() {
-                            }
+                        @Override
+                        public void handleNeutralResult() {
+                        }
 
-                            @Override
-                            public void handleNegativeResult() {
-                            }
-                        });
-                if (getFragmentManager().findFragmentByTag(ReusableDialogFragment.TAG) == null) {
-                    dialogFragment.show(getFragmentManager(), ReusableDialogFragment.TAG);
-                }
-                return;
-            default:
-                try {
-                    // Surrounded with try/catch because too many things can throw an NPE here.
-                    Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
-                } catch (Resources.NotFoundException e) {
-                    e.printStackTrace();
-                }
+                        @Override
+                        public void handleNegativeResult() {
+                        }
+                    });
+            if (getFragmentManager().findFragmentByTag(ReusableDialogFragment.TAG) == null) {
+                dialogFragment.show(getFragmentManager(), ReusableDialogFragment.TAG);
+            }
+        } else {
+            try {
+                // Surrounded with try/catch because too many things can throw an NPE here.
+                Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

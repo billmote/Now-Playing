@@ -17,6 +17,7 @@ import com.androidfu.nowplaying.app.NowPlayingApplication;
 import com.androidfu.nowplaying.app.R;
 import com.androidfu.nowplaying.app.events.APIErrorEvent;
 import com.androidfu.nowplaying.app.events.APIOkEvent;
+import com.androidfu.nowplaying.app.events.BaseEvent;
 import com.androidfu.nowplaying.app.events.application.GetApplicationSettingsEvent;
 import com.androidfu.nowplaying.app.localcache.AppSettingsLocalStorageHandler;
 import com.androidfu.nowplaying.app.model.application.ApplicationSettings;
@@ -85,7 +86,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
         ButterKnife.inject(this);
         if (savedInstanceState == null) {
             mInterruptedTheUser = true; // Careful, this is used in onResume()
-            EventBus.post(new GetApplicationSettingsEvent(R.id.api_call_get_application_settings));
+            EventBus.post(new GetApplicationSettingsEvent());
         } else {
             try {
                 mInterruptedTheUser = savedInstanceState.getBoolean(KEY_BUNDLE_USER_INTERRUPTED_STATE, true);
@@ -145,7 +146,7 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
              */
             return;
         }
-        if (event != null && event.getCallNumber() != R.id.api_call_get_application_settings) {
+        if (event != null && !event.compareCallNumber(GetApplicationSettingsEvent.class)) {
             /**
              * We call this method passing in a null argument when we're coming from onResume() or
              * from an APIErrorEvent.  So, if we have a non-null "event" and the event was the result
@@ -346,17 +347,15 @@ public class SplashActivity extends Activity implements ReusableDialogFragment.R
                 Toast.makeText(this, R.string.error_server_error, Toast.LENGTH_SHORT).show();
                 interruptTheUser(null);
         }
-        switch (error.getCallNumber()) {
-            case R.id.api_call_get_application_settings:
-                Toast.makeText(this, R.string.error_application_settings, Toast.LENGTH_SHORT).show();
-                Log.e(TAG, getString(R.string.error_application_settings), error.getError());
-                break;
-            default:
-                try {
-                    Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
-                } catch (Resources.NotFoundException e) {
-                    e.printStackTrace();
-                }
+        if (error.compareCallNumber(GetApplicationSettingsEvent.class)) {
+            Toast.makeText(this, R.string.error_application_settings, Toast.LENGTH_SHORT).show();
+            Log.e(TAG, getString(R.string.error_application_settings), error.getError());
+        } else {
+            try {
+                Log.wtf(TAG, String.format("Unhandled call %1$s error in our class: ", getResources().getResourceEntryName(error.getCallNumber())), error.getError());
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
+            }
         }
         interruptTheUser(null);
     }

@@ -9,7 +9,7 @@ import hugo.weaving.DebugLog;
  */
 @DebugLog
 public class GetApplicationSettingsEvent extends BaseEvent {
-    public GetApplicationSettingsEvent(int callNumber) {
-        super(callNumber);
+    public GetApplicationSettingsEvent() {
+        super();
     }
 }

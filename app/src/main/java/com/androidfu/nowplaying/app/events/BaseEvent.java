@@ -13,7 +13,15 @@ public class BaseEvent {
     public static final int ERROR_NOT_FOUND = 404;
     public static final int ERROR_METHOD_UNALLOWED = 405;
 
+    public static int getClassCallNumber(Class<?> obj) {
+        return obj.getSimpleName().hashCode();
+    }
+
     private int callNumber;
+
+    public BaseEvent() {
+        this.callNumber = getClassCallNumber(this.getClass());
+    }
 
     public BaseEvent(int callNumber) {
         this.callNumber = callNumber;
@@ -25,5 +33,9 @@ public class BaseEvent {
 
     public void setCallNumber(int callNumber) {
         this.callNumber = callNumber;
+    }
+
+    public boolean compareCallNumber(Class<?> obj) {
+        return this.callNumber == getClassCallNumber(obj);
     }
 }
